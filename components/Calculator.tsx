@@ -206,14 +206,14 @@ export const Calculator: React.FC = () => {
     : `https://maps.google.com/maps?q=from:Austin,+TX+to:${encodeURIComponent(destQuery)}&t=m&output=embed`;
 
   return (
-    <section className="py-12 lg:py-16 bg-slate-950 relative overflow-hidden" id="estimator">
+    <section className="py-8 lg:py-10 bg-slate-950 relative overflow-hidden" id="estimator">
       {/* Background grid */}
       <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none">
         <CalcIcon size={250} />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-start">
 
           {/* Left Column: Calculator Controls */}
           <div>
@@ -242,7 +242,7 @@ export const Calculator: React.FC = () => {
                 </button>
               </div>
 
-              <div className="p-4 lg:p-6 space-y-4">
+              <div className="p-4 lg:p-5 space-y-3">
 
                 {mode === 'ground' ? (
                   <>
@@ -393,7 +393,7 @@ export const Calculator: React.FC = () => {
           </div>
 
           {/* Right Column: Interactive Map Preview */}
-          <div className="flex flex-col h-full min-h-[250px] lg:min-h-[350px] lg:mt-0 mt-6">
+          <div className="flex flex-col h-full min-h-[200px] lg:min-h-[300px] lg:mt-0 mt-4">
             <div className="flex items-center space-x-2 mb-4">
               {mode === 'ground' ? <Navigation className="text-red-500 h-5 w-5" /> : <Plane className="text-blue-500 h-5 w-5" />}
               <h3 className="text-sm font-bold text-slate-300 uppercase tracking-wider">Route Preview</h3>
@@ -414,7 +414,7 @@ export const Calculator: React.FC = () => {
                   className="w-full h-full opacity-100"
                 ></iframe>
               ) : (
-                <div ref={mapContainer} className="w-full h-full min-h-[250px] lg:min-h-[350px] z-0 bg-slate-100"></div>
+                <div ref={mapContainer} className="w-full h-full min-h-[200px] lg:min-h-[300px] z-0 bg-slate-100"></div>
               )}
 
               {/* Overlay Data Card */}

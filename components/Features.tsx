@@ -20,8 +20,8 @@ const features: FeatureData[] = [
     icon: Briefcase
   },
   {
-    title: "On-Board Courier (Hand Carry)",
-    description: "Domestic & International air courier service. Your critical asset never leaves our personal possession, flying in the cabin for immediate hand-off at any major airport globally.",
+    title: "Air Hand Carry Austin",
+    description: "On-board courier service (OBC) for domestic & international air delivery. Your critical asset never leaves our personal possession, flying in the cabin for immediate hand-off at any major airport globally.",
     icon: Plane
   }
 ];

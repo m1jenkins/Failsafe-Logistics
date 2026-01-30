@@ -392,8 +392,8 @@ export const Calculator: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Interactive Map Preview */}
-          <div className="flex flex-col h-full min-h-[180px] lg:min-h-[240px] lg:mt-0 mt-4">
+          {/* Right Column: Interactive Map Preview - Hidden on Mobile */}
+          <div className="hidden lg:flex flex-col h-full min-h-[240px]">
             <div className="flex items-center space-x-2 mb-4">
               {mode === 'ground' ? <Navigation className="text-red-500 h-5 w-5" /> : <Plane className="text-blue-500 h-5 w-5" />}
               <h3 className="text-sm font-bold text-slate-300 uppercase tracking-wider">Route Preview</h3>

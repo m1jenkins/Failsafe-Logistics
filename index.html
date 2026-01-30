@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <title>Courier Austin | Last Minute Delivery & Expedited Service Texas</title>
+    <meta name="description" content="FailSafe Logistics is Austin's top-rated courier service for last minute delivery, expedited ground transport, and emergency logistics. 24/7 same day delivery in Austin, Round Rock & Nationwide." />
+    <meta name="keywords" content="courier austin, last minute delivery austin, same day delivery austin, expedited delivery austin, emergency courier texas, medical courier austin, round rock courier, georgetown courier, san marcos courier" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://failsafelogistics.com" />
+    
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content="Courier Austin | FailSafe Logistics Last Minute Delivery" />
+    <meta property="og:description" content="Time-critical, secure direct-drive delivery and hand carry services for Austin and Nationwide." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Structured Data (Local SEO) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CourierService",
+      "name": "FailSafe Logistics - Courier Austin",
+      "image": "", 
+      "telephone": "555-019-2834",
+      "priceRange": "$$$",
+      "url": "https://failsafelogistics.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Commerce Way",
+        "addressLocality": "Austin",
+        "addressRegion": "TX",
+        "postalCode": "78701",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 30.2672,
+        "longitude": -97.7431
+      },
+      "areaServed": [
+        { "@type": "City", "name": "Austin" },
+        { "@type": "City", "name": "Round Rock" },
+        { "@type": "City", "name": "Georgetown" },
+        { "@type": "City", "name": "San Marcos" },
+        { "@type": "City", "name": "Cedar Park" },
+        { "@type": "City", "name": "Pflugerville" },
+        { "@type": "City", "name": "San Antonio" },
+        { "@type": "City", "name": "Houston" },
+        { "@type": "City", "name": "Dallas" }
+      ],
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "00:00",
+        "closes": "23:59"
+      },
+      "sameAs": [
+        "https://www.facebook.com/failsafelogistics",
+        "https://twitter.com/failsafelogistics"
+      ],
+      "description": "Austin's premier same day courier service specializing in last minute delivery, expedited logistics, and US Domestic Hand Carry."
+    }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              slate: {
+                850: '#1e293b', 
+                900: '#0f172a', 
+                950: '#020617',
+              },
+              red: {
+                600: '#dc2626',
+                700: '#b91c1c',
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            animation: {
+              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #0f172a;
+        color: #f8fafc;
+      }
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0f172a; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #334155; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #475569; 
+      }
+
+      /* Leaflet Customization */
+      .leaflet-container {
+        background: #f8fafc !important; 
+        font-family: 'Inter', sans-serif;
+      }
+      
+      /* Route Animation */
+      .route-path-ground {
+        stroke: #dc2626;
+        stroke-width: 3;
+        stroke-dasharray: 10 10;
+        animation: dash-flow 1s linear infinite;
+        opacity: 0.8;
+      }
+      
+      .route-path-air {
+        stroke: #3b82f6;
+        stroke-width: 3;
+        stroke-dasharray: 10 10;
+        animation: dash-flow 1s linear infinite;
+        opacity: 0.8;
+      }
+
+      @keyframes dash-flow {
+        from {
+          stroke-dashoffset: 20;
+        }
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      /* Markers */
+      .marker-pin {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        position: relative;
+      }
+      
+      .marker-origin {
+        background-color: #0f172a; 
+        box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.2);
+      }
+
+      .marker-destination-ground {
+        background-color: #dc2626;
+        box-shadow: 0 0 10px #dc2626, 0 0 0 4px rgba(220, 38, 38, 0.2);
+      }
+
+      .marker-destination-air {
+        background-color: #3b82f6;
+        box-shadow: 0 0 10px #3b82f6, 0 0 0 4px rgba(59, 130, 246, 0.2);
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "leaflet": "https://esm.sh/leaflet@1.9.4"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

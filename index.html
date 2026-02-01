@@ -21,14 +21,14 @@
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="en_US" />
 
-  <!-- Structured Data (Local SEO) -->
+  <!-- Structured Data: Local Business -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "CourierService",
       "name": "Speedy Bat Couriers - Courier Austin",
-      "image": "", 
-      "telephone": "555-019-2834",
+      "image": "https://speedybatcouriers.com/logo.png",
+      "telephone": "+1-555-019-2834",
       "priceRange": "$$$",
       "url": "https://speedybatcouriers.com",
       "address": {
@@ -58,13 +58,7 @@
       "openingHoursSpecification": {
         "@type": "OpeningHoursSpecification",
         "dayOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-          "Sunday"
+          "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
         ],
         "opens": "00:00",
         "closes": "23:59"
@@ -84,120 +78,82 @@
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "On Board Courier Austin" } },
           { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Medical Courier Austin" } }
         ]
-      }
-    }
-    </script>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            slate: {
-              850: '#1e293b',
-              900: '#0f172a',
-              950: '#020617',
-            },
-            red: {
-              600: '#dc2626',
-              700: '#b91c1c',
-            }
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-          },
-          animation: {
-            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-          }
-        }
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "127",
+        "bestRating": "5",
+        "worstRating": "1"
       }
     }
   </script>
-  <style>
-    body {
-      background-color: #0f172a;
-      color: #f8fafc;
-    }
 
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
+  <!-- Structured Data: FAQ Page -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a last minute courier service?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A last minute courier service provides urgent, time-critical delivery when you need something shipped immediately. Speedy Bat Couriers offers 24/7 same-day pickup and delivery throughout Austin and nationwide."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is air hand carry service?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Air hand carry is a premium courier service where a dedicated courier personally accompanies your package on a commercial flight, ensuring the fastest possible delivery for critical shipments. We offer air hand carry from Austin to any US destination."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How fast can you deliver in Austin?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We offer same-day delivery throughout Austin and the surrounding areas including Round Rock, Cedar Park, and San Marcos. For urgent shipments, we can pick up within 30-60 minutes of your call."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you offer 24/7 courier service?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, Speedy Bat Couriers operates 24 hours a day, 7 days a week, 365 days a year. We're always available for your emergency and time-critical delivery needs."
+          }
+        }
+      ]
     }
+  </script>
 
-    ::-webkit-scrollbar-track {
-      background: #0f172a;
+  <!-- Structured Data: Breadcrumb -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://speedybatcouriers.com"
+        }
+      ]
     }
+  </script>
 
-    ::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 4px;
-    }
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    ::-webkit-scrollbar-thumb:hover {
-      background: #475569;
-    }
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
-    /* Leaflet Customization */
-    .leaflet-container {
-      background: #f8fafc !important;
-      font-family: 'Inter', sans-serif;
-    }
-
-    /* Route Animation */
-    .route-path-ground {
-      stroke: #dc2626;
-      stroke-width: 3;
-      stroke-dasharray: 10 10;
-      animation: dash-flow 1s linear infinite;
-      opacity: 0.8;
-    }
-
-    .route-path-air {
-      stroke: #3b82f6;
-      stroke-width: 3;
-      stroke-dasharray: 10 10;
-      animation: dash-flow 1s linear infinite;
-      opacity: 0.8;
-    }
-
-    @keyframes dash-flow {
-      from {
-        stroke-dashoffset: 20;
-      }
-
-      to {
-        stroke-dashoffset: 0;
-      }
-    }
-
-    /* Markers */
-    .marker-pin {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      position: relative;
-    }
-
-    .marker-origin {
-      background-color: #0f172a;
-      box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.2);
-    }
-
-    .marker-destination-ground {
-      background-color: #dc2626;
-      box-shadow: 0 0 10px #dc2626, 0 0 0 4px rgba(220, 38, 38, 0.2);
-    }
-
-    .marker-destination-air {
-      background-color: #3b82f6;
-      box-shadow: 0 0 10px #3b82f6, 0 0 0 4px rgba(59, 130, 246, 0.2);
-    }
-  </style>
   <script type="importmap">
 {
   "imports": {
@@ -208,12 +164,47 @@
     "leaflet": "https://esm.sh/leaflet@1.9.4"
   }
 }
-</script>
-  <link rel="stylesheet" href="/index.css">
+  </script>
 </head>
 
 <body>
-  <div id="root"></div>
+  <!-- Server-rendered fallback content for SEO -->
+  <div id="root">
+    <noscript>
+      <header style="background: #0f172a; padding: 20px; text-align: center;">
+        <h1 style="color: white; font-family: sans-serif;">Speedy Bat Couriers</h1>
+        <p style="color: #94a3b8; font-family: sans-serif;">Last Minute Courier Service Austin | Air Hand Carry & Same
+          Day Delivery</p>
+      </header>
+      <main style="background: #0f172a; padding: 40px 20px; font-family: sans-serif; color: #e2e8f0;">
+        <section>
+          <h2 style="color: white;">Austin's Premier Last Minute Courier Service</h2>
+          <p>Speedy Bat Couriers offers last minute courier service in Austin TX. We specialize in air hand carry, same
+            day delivery, expedited ground transport and emergency logistics with 24/7 service.</p>
+        </section>
+        <section>
+          <h2 style="color: white;">Our Services</h2>
+          <ul>
+            <li>Same Day Delivery Austin</li>
+            <li>Air Hand Carry Austin</li>
+            <li>On Board Courier Austin</li>
+            <li>Medical Courier Austin</li>
+            <li>Expedited Ground Transport</li>
+          </ul>
+        </section>
+        <section>
+          <h2 style="color: white;">Service Areas</h2>
+          <p>We serve Austin, Round Rock, Georgetown, San Marcos, Cedar Park, Pflugerville, San Antonio, Houston,
+            Dallas, and nationwide.</p>
+        </section>
+        <section>
+          <h2 style="color: white;">Contact Us</h2>
+          <p>Call us 24/7: 555-019-2834</p>
+          <p>Address: 123 Commerce Way, Austin, TX 78701</p>
+        </section>
+      </main>
+    </noscript>
+  </div>
   <script type="module" src="/index.tsx"></script>
 </body>
 

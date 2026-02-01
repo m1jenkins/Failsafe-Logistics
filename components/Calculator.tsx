@@ -199,11 +199,20 @@ export const Calculator: React.FC = () => {
   const currentMiles = selectedDest.name === 'Custom Route' ? customMiles : selectedDest.miles;
 
   // Google Map Source (Ground Mode)
+  // Calculate appropriate zoom level based on distance to show entire route
+  const getZoomForDistance = (miles: number) => {
+    if (miles <= 100) return 9;
+    if (miles <= 200) return 8;
+    if (miles <= 400) return 7;
+    return 6;
+  };
+
   const isCustom = selectedDest.name === 'Custom Route';
   const destQuery = `${selectedDest.name}, TX`;
+  const routeZoom = getZoomForDistance(isCustom ? customMiles : selectedDest.miles);
   const googleMapSrc = isCustom
     ? `https://maps.google.com/maps?q=Texas&t=m&z=6&output=embed&iwloc=near`
-    : `https://maps.google.com/maps?q=from:Austin,+TX+to:${encodeURIComponent(destQuery)}&t=m&output=embed`;
+    : `https://maps.google.com/maps?saddr=Austin,+TX&daddr=${encodeURIComponent(destQuery)}&z=${routeZoom}&output=embed`;
 
   return (
     <section className="py-8 lg:py-10 bg-slate-950 relative overflow-hidden" id="estimator">

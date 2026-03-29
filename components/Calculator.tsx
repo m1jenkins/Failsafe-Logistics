@@ -66,8 +66,8 @@ export const Calculator: React.FC = () => {
   const markersRef = useRef<L.Marker[]>([]);
 
   // Constants
-  const BASE_FEE = 175;
-  const RATE_PER_MILE = 2.45;
+  const BASE_FEE = 95;
+  const RATE_PER_MILE = 1.50;
   const ROUND_TRIP_MULTIPLIER = 2;
 
   // Ground Calculation

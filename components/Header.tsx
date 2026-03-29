@@ -25,7 +25,7 @@ export const Header: React.FC = () => {
 
         <a href="tel:5129104938" className="flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-5 py-2 font-bold uppercase tracking-wide transition-colors animate-pulse-heartbeat shadow-lg shadow-red-900/20 rounded">
           <Phone className="h-4 w-4" />
-          <span>Call (512) 910-4938</span>
+          <span>Call or Text (512) 910-4938</span>
         </a>
       </div>
     </header>

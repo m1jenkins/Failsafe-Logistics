@@ -23,10 +23,7 @@ export const Hero: React.FC = () => {
 
       <div className="container mx-auto px-4 relative z-20">
         <div className="max-w-4xl">
-          <div className="inline-flex items-center space-x-2 bg-slate-800/50 border border-slate-700 px-3 py-1 mb-8 rounded-full">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-xs font-medium text-slate-300 uppercase tracking-widest">Status: Available | 24/7 Service</span>
-          </div>
+
 
           <h1 className="text-5xl md:text-7xl font-bold text-white uppercase leading-tight mb-2 tracking-tight">
             Austin's Premier <br />

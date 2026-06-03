@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle, Phone } from 'lucide-react';
+import { CheckCircle, MessageSquare } from 'lucide-react';
 import { Button } from './Button';
 import { Header } from './Header';
 import { Footer } from './Footer';
@@ -15,13 +15,13 @@ export const Success: React.FC = () => {
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Request Logged</h1>
           <p className="text-slate-400 text-lg md:text-xl max-w-lg mx-auto mb-12 leading-relaxed">
-            Our dispatch team has received your details. Please be advised that <span className="text-white font-bold">CALLING is the fastest way to reach us</span>, especially after hours or for urgent dispatch requirements.
+            Our dispatch team has received your details. Please be advised that <span className="text-white font-bold">TEXTING is the fastest way to reach us</span>, especially after hours or for urgent dispatch requirements.
           </p>
 
           <div className="flex flex-col items-center max-w-xs mx-auto gap-4">
-            <Button variant="alert" href="tel:5129104938" className="rounded-lg w-full flex items-center justify-center space-x-2 py-4">
-              <Phone className="h-5 w-5" />
-              <span>CALL NOW</span>
+            <Button variant="alert" href="sms:5129104938" className="rounded-lg w-full flex items-center justify-center space-x-2 py-4">
+              <MessageSquare className="h-5 w-5" />
+              <span>TEXT US NOW</span>
             </Button>
 
             <a

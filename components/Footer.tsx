@@ -12,11 +12,11 @@ export const Footer: React.FC = () => {
         </p>
         <div className="mb-8">
           <a
-            href="tel:5129104938"
-            aria-label="Call Speedy Bat Couriers at (512) 910-4938"
+            href="sms:5129104938"
+            aria-label="Text Speedy Bat Couriers at (512) 910-4938"
             className="inline-flex items-center space-x-2 text-red-500 hover:text-red-400 font-bold text-xl transition-colors"
           >
-            <span>(512) 910-4938</span>
+            <span>Text or Call: (512) 910-4938</span>
           </a>
         </div>
         <div className="text-slate-700 text-xs font-mono">

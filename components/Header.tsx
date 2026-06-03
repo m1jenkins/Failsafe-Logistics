@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Phone } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 
 export const Header: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -23,9 +23,9 @@ export const Header: React.FC = () => {
           </div>
         </div>
 
-        <a href="tel:5129104938" className="flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-5 py-2 font-bold uppercase tracking-wide transition-colors animate-pulse-heartbeat shadow-lg shadow-red-900/20 rounded">
-          <Phone className="h-4 w-4" />
-          <span>Call or Text (512) 910-4938</span>
+        <a href="sms:5129104938" className="flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-5 py-2 font-bold uppercase tracking-wide transition-colors animate-pulse-heartbeat shadow-lg shadow-red-900/20 rounded">
+          <MessageSquare className="h-4 w-4" />
+          <span>Text or Call (512) 910-4938</span>
         </a>
       </div>
     </header>

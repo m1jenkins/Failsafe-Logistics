@@ -45,7 +45,7 @@ export const ContactForm: React.FC = () => {
       }
     } catch (error) {
       console.error("Submission Error:", error);
-      alert("There was a connection error. Please call our dispatch line directly.");
+      alert("There was a connection error. Please text our dispatch line directly at (512) 910-4938.");
       setIsSubmitting(false);
     }
   };

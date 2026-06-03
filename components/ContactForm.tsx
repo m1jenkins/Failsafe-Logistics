@@ -11,26 +11,38 @@ export const ContactForm: React.FC = () => {
     setIsSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-
-    // GOOGLE SHEETS INTEGRATION
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwuYuhre90uLdf6n7VHLGI7jFp2Vrp_iyS1ixGQm87l4uOREtdwV8J7XqPN3TvbruiEyA/exec";
+    const fullName = formData.get("fullName") as string;
+    const phone = formData.get("phone") as string;
+    const email = formData.get("email") as string;
+    const pickupAddress = formData.get("pickupAddress") as string;
+    const deliveryAddress = formData.get("deliveryAddress") as string;
+    const itemDescription = formData.get("itemDescription") as string;
 
     try {
-      if (GOOGLE_SCRIPT_URL) {
-        await fetch(GOOGLE_SCRIPT_URL, {
-          method: 'POST',
-          body: JSON.stringify(data),
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        });
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          access_key: "252fa1f4-869b-4891-9ff1-fd5165e7d0a8",
+          name: fullName,
+          email: email,
+          phone: phone,
+          pickupAddress: pickupAddress,
+          deliveryAddress: deliveryAddress,
+          itemDescription: itemDescription,
+          message: `Booking Request from ${fullName}\nPhone: ${phone}\nPickup: ${pickupAddress}\nDelivery: ${deliveryAddress}\nItem Description: ${itemDescription}`
+        })
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        window.location.href = '/success';
       } else {
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        console.log("Form Data Captured:", data);
+        throw new Error(result.message || "Submission failed");
       }
-      window.location.href = '/success';
     } catch (error) {
       console.error("Submission Error:", error);
       alert("There was a connection error. Please call our dispatch line directly.");

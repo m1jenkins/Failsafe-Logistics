@@ -115,7 +115,7 @@ const App: React.FC = () => {
             <Calculator onBook={handleBook} />
             <Reviews />
             <ContactForm prefilledDetails={bookingDetails} />
-            <ServiceArea />
+            <ServiceArea onNavigate={handleNavigate} />
           </main>
         )}
         <Footer />

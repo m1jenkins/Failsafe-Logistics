@@ -1,6 +1,7 @@
 import React from 'react';
 import { SectionHeading } from './SectionHeading';
-import { Crosshair, Map, Plane } from 'lucide-react';
+import { Crosshair, Map, Plane, MapPin } from 'lucide-react';
+import { locations } from '../data/locations';
 
 const hubs = [
   "Houston", "Dallas / Fort Worth", "San Antonio", "El Paso"
@@ -14,7 +15,11 @@ const centralTexasCities = [
   "Buda", "Bastrop", "Elgin", "New Braunfels", "San Marcos"
 ];
 
-export const ServiceArea: React.FC = () => {
+interface ServiceAreaProps {
+  onNavigate?: (locationId: string) => void;
+}
+
+export const ServiceArea: React.FC<ServiceAreaProps> = ({ onNavigate }) => {
   return (
     <section id="service-area" className="py-20 bg-obsidian relative overflow-hidden">
       {/* Subtle bottom background glow — warm */}
@@ -56,11 +61,34 @@ export const ServiceArea: React.FC = () => {
               Immediate dispatch to the following cities within <span className="text-white font-bold">60 minutes</span> of driving from Austin HQ:
             </p>
             <div className="flex flex-wrap gap-2">
-              {centralTexasCities.map(city => (
-                <span key={city} className="text-[10px] font-bold text-slate-400 bg-white/[0.02] border border-white/[0.04] px-3 py-1.5 uppercase hover:border-white/[0.1] hover:text-white transition-all duration-300 cursor-default rounded-full font-display">
-                  {city}
-                </span>
-              ))}
+              {centralTexasCities.map(city => {
+                // Find if this city exists in our location routes
+                const matchedLoc = Object.values(locations).find(
+                  l => l.name.toLowerCase() === city.toLowerCase()
+                );
+                
+                if (matchedLoc) {
+                  return (
+                    <a
+                      key={city}
+                      href={`/${matchedLoc.id}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (onNavigate) onNavigate(matchedLoc.id);
+                      }}
+                      className="text-[10px] font-bold text-red-400 bg-red-950/15 border border-red-500/30 px-3 py-1.5 uppercase hover:border-red-500/60 hover:text-white transition-all duration-300 rounded-full font-display cursor-pointer"
+                    >
+                      {city} *
+                    </a>
+                  );
+                }
+
+                return (
+                  <span key={city} className="text-[10px] font-bold text-slate-400 bg-white/[0.02] border border-white/[0.04] px-3 py-1.5 uppercase hover:border-white/[0.1] hover:text-white transition-all duration-300 cursor-default rounded-full font-display">
+                    {city}
+                  </span>
+                );
+              })}
               <span className="text-[10px] font-bold text-red-400 bg-red-950/20 border border-red-500/20 px-3 py-1.5 uppercase rounded-full font-display">
                 + All Points Between
               </span>
@@ -101,8 +129,31 @@ export const ServiceArea: React.FC = () => {
 
         </div>
 
+        {/* Dedicated Austin Neighborhood Hubs Directory */}
+        <div className="mt-16 pt-12 border-t border-white/[0.03]">
+          <h3 className="text-center text-lg font-bold text-white uppercase tracking-wider font-display mb-8">
+            Austin Neighborhood Dispatch Hubs
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            {Object.values(locations).map((loc) => (
+              <a
+                key={loc.id}
+                href={`/${loc.id}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (onNavigate) onNavigate(loc.id);
+                }}
+                className="glass-panel p-4 text-center rounded-xl border border-white/[0.03] hover:border-red-500/25 hover:bg-white/[0.01] transition-all duration-300 font-display font-medium text-xs text-slate-400 hover:text-white uppercase tracking-wider cursor-pointer flex flex-col items-center justify-center"
+              >
+                <MapPin className="h-3.5 w-3.5 text-red-500/60 mb-2" />
+                <span>{loc.name}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+
         {/* SEO content paragraph */}
-        <p className="mt-12 text-slate-500 text-xs md:text-sm leading-relaxed max-w-3xl mx-auto text-center font-sans font-light">
+        <p className="mt-16 text-slate-500 text-xs md:text-sm leading-relaxed max-w-3xl mx-auto text-center font-sans font-light">
           Speedy Bat Couriers is the trusted courier in Austin, Texas for businesses that need reliable, time-critical delivery. From our Austin headquarters, we provide same day courier service to every community in Central Texas — whether you need a package delivered across town to Round Rock, a legal filing rushed to the courthouse, or a critical shipment hand-carried on the next flight out of Austin-Bergstrom International Airport. Our dedicated vehicles and professional couriers are available 24/7/365.
         </p>
       </div>

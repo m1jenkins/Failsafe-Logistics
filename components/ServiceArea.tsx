@@ -44,7 +44,7 @@ export const ServiceArea: React.FC<ServiceAreaProps> = ({ onNavigate }) => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
 
-          {/* Central Texas Rapid Response */}
+          {/* Austin Neighborhood Dispatch Hubs */}
           <div className="glass-panel p-8 relative overflow-hidden group rounded-2xl">
             {/* Hover top border glow */}
             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -55,42 +55,27 @@ export const ServiceArea: React.FC<ServiceAreaProps> = ({ onNavigate }) => {
             
             <h3 className="text-lg font-bold text-white uppercase mb-4 flex items-center font-display tracking-wider">
               <span className="w-1.5 h-6 bg-red-600 mr-3 rounded-full"></span>
-              Austin Last Minute Delivery Zone
+              Austin Neighborhood Dispatch Hubs
             </h3>
             <p className="text-slate-400 mb-6 font-light leading-relaxed text-sm">
-              Immediate dispatch to the following cities within <span className="text-white font-bold">60 minutes</span> of driving from Austin HQ:
+              Select a neighborhood below to view specialized local dispatch details, transit routes, and pricing:
             </p>
             <div className="flex flex-wrap gap-2">
-              {centralTexasCities.map(city => {
-                const matchedLoc = Object.values(locations).find(
-                  l => l.name.toLowerCase() === city.toLowerCase()
-                );
-                
-                if (matchedLoc) {
-                  return (
-                    <a
-                      key={city}
-                      href={`/${matchedLoc.id}`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        if (onNavigate) onNavigate(matchedLoc.id);
-                      }}
-                      className="text-[10px] font-bold text-red-400 bg-red-950/15 border border-red-500/25 px-3 py-1.5 uppercase hover:bg-red-950/25 hover:border-red-500/50 hover:text-white transition-all duration-300 rounded-full font-display cursor-pointer"
-                    >
-                      {city}
-                    </a>
-                  );
-                }
-
-                return (
-                  <span key={city} className="text-[10px] font-bold text-slate-400 bg-white/[0.02] border border-white/[0.04] px-3 py-1.5 uppercase hover:border-white/[0.1] hover:text-white transition-all duration-300 cursor-default rounded-full font-display">
-                    {city}
-                  </span>
-                );
-              })}
-              <span className="text-[10px] font-bold text-red-400 bg-red-950/20 border border-red-500/20 px-3 py-1.5 uppercase rounded-full font-display">
-                + All Points Between
-              </span>
+              {Object.values(locations)
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map(loc => (
+                  <a
+                    key={loc.id}
+                    href={`/${loc.id}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (onNavigate) onNavigate(loc.id);
+                    }}
+                    className="text-[10px] font-bold text-red-400 bg-red-950/15 border border-red-500/25 px-3 py-1.5 uppercase hover:bg-red-950/25 hover:border-red-500/50 hover:text-white transition-all duration-300 rounded-full font-display cursor-pointer"
+                  >
+                    {loc.name}
+                  </a>
+                ))}
             </div>
           </div>
 
@@ -126,29 +111,6 @@ export const ServiceArea: React.FC<ServiceAreaProps> = ({ onNavigate }) => {
             </ul>
           </div>
 
-        </div>
-
-        {/* Dedicated Austin Neighborhood Hubs Directory */}
-        <div className="mt-16 pt-12 border-t border-white/[0.03]">
-          <h3 className="text-center text-lg font-bold text-white uppercase tracking-wider font-display mb-8">
-            Austin Neighborhood Dispatch Hubs
-          </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto">
-            {Object.values(locations).map((loc) => (
-              <a
-                key={loc.id}
-                href={`/${loc.id}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (onNavigate) onNavigate(loc.id);
-                }}
-                className="glass-panel p-4 text-center rounded-xl border border-white/[0.03] hover:border-red-500/25 hover:bg-white/[0.01] transition-all duration-300 font-display font-medium text-xs text-slate-400 hover:text-white uppercase tracking-wider cursor-pointer flex flex-col items-center justify-center"
-              >
-                <MapPin className="h-3.5 w-3.5 text-red-500/60 mb-2" />
-                <span>{loc.name}</span>
-              </a>
-            ))}
-          </div>
         </div>
 
         {/* SEO content paragraph */}

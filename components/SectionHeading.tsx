@@ -17,8 +17,8 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({ title, subtitle,
       </h2>
       <div className={`h-[1px] w-32 mb-6 ${
         align === 'center' 
-          ? 'mx-auto bg-gradient-to-r from-transparent via-red-600/40 to-transparent' 
-          : 'bg-gradient-to-r from-red-600/40 to-transparent'
+          ? 'mx-auto bg-gradient-to-r from-transparent via-ember/40 to-transparent' 
+          : 'bg-gradient-to-r from-ember/40 to-transparent'
       }`}></div>
       {subtitle && (
         <p className={`text-slate-400 text-base md:text-lg font-light tracking-wide max-w-2xl leading-relaxed ${align === 'center' ? 'mx-auto' : ''}`}>

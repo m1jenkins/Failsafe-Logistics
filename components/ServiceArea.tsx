@@ -17,8 +17,8 @@ const centralTexasCities = [
 export const ServiceArea: React.FC = () => {
   return (
     <section id="service-area" className="py-20 bg-obsidian relative overflow-hidden">
-      {/* Subtle bottom background glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-royal-indigo/5 rounded-full blur-[100px] pointer-events-none" />
+      {/* Subtle bottom background glow — warm */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-ember/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="container mx-auto px-6">
         <SectionHeading title="Austin Courier Service Area" subtitle="Last-minute delivery and expedited delivery solutions originating from Austin/Waco Hub to all major Texas metros." />
@@ -30,8 +30,8 @@ export const ServiceArea: React.FC = () => {
             <span className="text-white font-bold uppercase tracking-widest text-xs font-display">Austin (HQ)</span>
           </div>
           {hubs.map((hub) => (
-            <div key={hub} className="flex items-center space-x-2 bg-white/[0.02] px-5 py-3 border border-white/5 opacity-80 rounded-full hover:border-white/10 hover:opacity-100 transition-all duration-300">
-              <div className="w-1.5 h-1.5 bg-slate-500 rounded-full"></div>
+            <div key={hub} className="flex items-center space-x-2 bg-white/[0.02] px-5 py-3 border border-white/[0.04] opacity-80 rounded-full hover:border-white/[0.08] hover:opacity-100 transition-all duration-300">
+              <div className="w-1.5 h-1.5 bg-smoke rounded-full"></div>
               <span className="text-slate-300 font-bold uppercase tracking-widest text-xs font-display">{hub}</span>
             </div>
           ))}
@@ -42,9 +42,9 @@ export const ServiceArea: React.FC = () => {
           {/* Central Texas Rapid Response */}
           <div className="glass-panel p-8 relative overflow-hidden group rounded-2xl">
             {/* Hover top border glow */}
-            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             
-            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-[0.08] transition-opacity duration-300 text-slate-300 pointer-events-none">
+            <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-300 text-slate-300 pointer-events-none">
               <Map size={100} />
             </div>
             
@@ -57,7 +57,7 @@ export const ServiceArea: React.FC = () => {
             </p>
             <div className="flex flex-wrap gap-2">
               {centralTexasCities.map(city => (
-                <span key={city} className="text-[10px] font-bold text-slate-400 bg-white/[0.02] border border-white/5 px-3 py-1.5 uppercase hover:border-white/15 hover:text-white transition-all duration-300 cursor-default rounded-full font-display">
+                <span key={city} className="text-[10px] font-bold text-slate-400 bg-white/[0.02] border border-white/[0.04] px-3 py-1.5 uppercase hover:border-white/[0.1] hover:text-white transition-all duration-300 cursor-default rounded-full font-display">
                   {city}
                 </span>
               ))}
@@ -70,9 +70,9 @@ export const ServiceArea: React.FC = () => {
           {/* US Domestic Hand Carry */}
           <div className="glass-panel p-8 relative overflow-hidden group rounded-2xl">
             {/* Hover top border glow */}
-            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             
-            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-[0.08] transition-opacity duration-300 text-slate-300 pointer-events-none">
+            <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-300 text-slate-300 pointer-events-none">
               <Plane size={100} />
             </div>
             

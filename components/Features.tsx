@@ -25,10 +25,10 @@ export const Features: React.FC = () => {
   return (
     <section
       id="services"
-      className="py-24 border-b border-white/5 relative overflow-hidden bg-obsidian"
+      className="py-24 border-b border-white/[0.03] relative overflow-hidden bg-obsidian"
     >
       {/* Subtle top glow accent */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[1px] bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[1px] bg-gradient-to-r from-transparent via-ember/15 to-transparent" />
 
       <div className="container mx-auto px-6 relative z-10">
         <SectionHeading
@@ -44,9 +44,9 @@ export const Features: React.FC = () => {
               className="group relative glass-panel p-8 flex flex-col rounded-2xl"
             >
               {/* Card accent top corner highlight */}
-              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-              <div className="bg-white/[0.02] border border-white/8 w-12 h-12 flex items-center justify-center mb-6 group-hover:border-red-500/30 group-hover:bg-red-950/20 transition-all duration-300 rounded-xl">
+              <div className="bg-white/[0.02] border border-white/[0.06] w-12 h-12 flex items-center justify-center mb-6 group-hover:border-ember/30 group-hover:bg-red-950/20 transition-all duration-300 rounded-xl">
                 <feature.icon className="text-slate-300 h-5 w-5 group-hover:text-red-500 transition-colors duration-300" />
               </div>
 

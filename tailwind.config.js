@@ -7,10 +7,17 @@ export default {
     theme: {
         extend: {
             colors: {
+                obsidian: '#08080c',
+                'deep-space': '#0e0e14',
+                soot: '#141419',
+                graphite: '#1c1c24',
+                smoke: '#26262f',
+                ember: '#c4421a',
+                molten: '#e85d2c',
                 slate: {
-                    850: '#1e293b',
-                    900: '#0f172a',
-                    950: '#020617',
+                    850: '#1e1e28',
+                    900: '#121218',
+                    950: '#0a0a0f',
                 },
                 red: {
                     600: '#dc2626',
@@ -18,7 +25,8 @@ export default {
                 }
             },
             fontFamily: {
-                sans: ['Inter', 'sans-serif'],
+                sans: ['DM Sans', 'Inter', 'sans-serif'],
+                display: ['Outfit', 'sans-serif'],
             },
             animation: {
                 'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',

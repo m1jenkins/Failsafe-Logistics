@@ -6,7 +6,7 @@ export const Hero: React.FC = () => {
   return (
     <section id="hero" className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden bg-obsidian">
       {/* Background Grid Pattern */}
-      <div className="absolute inset-0 opacity-5 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+      <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:32px_32px]"></div>
 
       {/* Hero Image */}
       <div className="absolute right-0 top-0 bottom-0 w-full lg:w-2/3 pointer-events-none">
@@ -15,7 +15,7 @@ export const Hero: React.FC = () => {
         <img
           src="/austin-bats.png"
           alt="Speedy Bat Couriers - Premier courier service in Austin Texas providing same day delivery and rush logistics"
-          className="w-full h-full object-cover object-center lg:object-right opacity-45 mix-blend-lighten"
+          className="w-full h-full object-cover object-center lg:object-right opacity-40 mix-blend-lighten"
           width="1200"
           height="800"
           fetchPriority="high"
@@ -29,7 +29,7 @@ export const Hero: React.FC = () => {
       <div className="container mx-auto px-6 md:px-8 relative z-20">
         <div className="max-w-3xl">
           {/* Dispatch Badge */}
-          <div className="inline-flex items-center space-x-2 bg-red-950/30 border border-red-500/20 px-3.5 py-1.5 rounded-full mb-6 backdrop-blur-md">
+          <div className="inline-flex items-center space-x-2 bg-red-950/30 border border-red-500/20 px-3.5 py-1.5 rounded-full mb-6 backdrop-blur-md liquid-shimmer">
             <Shield className="h-3.5 w-3.5 text-red-500 animate-pulse" />
             <span className="text-[10px] text-red-400 font-bold uppercase tracking-widest font-display">24/7 Priority Emergency Dispatch</span>
           </div>
@@ -41,7 +41,7 @@ export const Hero: React.FC = () => {
             <span className="text-slate-200">Rush Logistics.</span>
           </h1>
 
-          <div className="backdrop-blur-md bg-white/[0.01] border border-white/5 rounded-2xl p-6 mb-8 max-w-2xl shadow-xl shadow-black/20">
+          <div className="backdrop-blur-md bg-white/[0.02] border border-white/[0.04] rounded-2xl p-6 mb-8 max-w-2xl shadow-xl shadow-black/30">
             <p className="text-base md:text-lg text-slate-300 font-light leading-relaxed">
               The time-critical infrastructure partner for <strong className="text-white font-medium">Austin</strong>, <strong className="text-white font-medium">Round Rock</strong>, and the <strong className="text-white font-medium">Taylor Semiconductor Corridor</strong>. Delivering hot shot parts, medical STAT, and secure chain of custody documents with dedicated direct-drive vehicles.
             </p>

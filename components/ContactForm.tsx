@@ -73,11 +73,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
     }
   };
 
-  const inputClasses = "w-full glass-input text-slate-200 px-5 py-4 rounded-xl outline-none placeholder:text-slate-600 text-sm md:text-base font-accent";
+  const inputClasses = "w-full glass-input text-slate-200 px-5 py-4 rounded-xl outline-none placeholder:text-slate-600 text-sm md:text-base";
   const labelClasses = "block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 font-display";
 
   return (
-    <section className="py-24 bg-obsidian border-b border-white/5 relative overflow-hidden" id="booking">
+    <section className="py-24 bg-obsidian border-b border-white/[0.03] relative overflow-hidden" id="booking">
       {/* Background soft glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-600/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -88,12 +88,12 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
           align="center"
         />
 
-        <div className="mt-12 glass-panel rounded-3xl p-8 md:p-12 shadow-2xl relative">
+        <div className="mt-12 glass-panel-elevated rounded-3xl p-8 md:p-12 shadow-2xl relative">
           {/* Card highlight lines */}
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
 
           {/* Form Mode Tabs (Pill Control Style) */}
-          <div className="flex p-1 bg-white/[0.02] border border-white/5 rounded-full mb-8 max-w-md mx-auto">
+          <div className="flex p-1 bg-white/[0.02] border border-white/[0.04] rounded-full mb-8 max-w-md mx-auto">
             <button
               type="button"
               onClick={() => setFormMode('quick')}
@@ -247,8 +247,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
             </div>
 
             {/* Trust Badges */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-8 border-t border-white/5 mt-8 text-left">
-              <div className="flex items-center space-x-3 bg-white/[0.01] p-4 border border-white/5 rounded-2xl hover:bg-white/[0.02] hover:border-white/10 transition-all duration-300">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-8 border-t border-white/[0.04] mt-8 text-left">
+              <div className="flex items-center space-x-3 bg-white/[0.02] p-4 border border-white/[0.04] rounded-2xl hover:bg-white/[0.03] hover:border-white/[0.08] transition-all duration-300">
                 <div className="bg-red-950/20 border border-red-500/20 p-2.5 rounded-xl text-red-500 shrink-0">
                   <Zap className="h-5 w-5" />
                 </div>
@@ -257,7 +257,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
                   <div className="text-[10px] text-slate-500">Rapid local dispatch</div>
                 </div>
               </div>
-              <div className="flex items-center space-x-3 bg-white/[0.01] p-4 border border-white/5 rounded-2xl hover:bg-white/[0.02] hover:border-white/10 transition-all duration-300">
+              <div className="flex items-center space-x-3 bg-white/[0.02] p-4 border border-white/[0.04] rounded-2xl hover:bg-white/[0.03] hover:border-white/[0.08] transition-all duration-300">
                 <div className="bg-red-950/20 border border-red-500/20 p-2.5 rounded-xl text-red-500 shrink-0">
                   <ShieldCheck className="h-5 w-5" />
                 </div>
@@ -266,7 +266,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
                   <div className="text-[10px] text-slate-500">HIPAA & Chain of Custody</div>
                 </div>
               </div>
-              <div className="flex items-center space-x-3 bg-white/[0.01] p-4 border border-white/5 rounded-2xl hover:bg-white/[0.02] hover:border-white/10 transition-all duration-300">
+              <div className="flex items-center space-x-3 bg-white/[0.02] p-4 border border-white/[0.04] rounded-2xl hover:bg-white/[0.03] hover:border-white/[0.08] transition-all duration-300">
                 <div className="bg-red-950/20 border border-red-500/20 p-2.5 rounded-xl text-red-500 shrink-0">
                   <MessageSquare className="h-5 w-5" />
                 </div>

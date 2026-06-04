@@ -209,7 +209,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
     : `https://maps.google.com/maps?saddr=Austin,+TX&daddr=${encodeURIComponent(destQuery)}&z=${routeZoom}&output=embed`;
 
   return (
-    <section className="py-20 bg-obsidian border-b border-white/5 relative overflow-hidden" id="estimator">
+    <section className="py-20 bg-obsidian border-b border-white/[0.03] relative overflow-hidden" id="estimator">
       {/* Background grid ornament */}
       <div className="absolute top-0 right-0 p-10 opacity-[0.02] pointer-events-none">
         <CalcIcon size={250} />
@@ -225,12 +225,12 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
               subtitle="Select your service level to estimate logistics costs."
             />
 
-            <div className="glass-panel rounded-3xl overflow-hidden shadow-2xl relative">
+            <div className="glass-panel-elevated rounded-3xl overflow-hidden shadow-2xl relative">
               {/* Card top border highlight */}
-              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
 
               {/* Mode Tabs (Pill Control Style) */}
-              <div className="grid grid-cols-2 p-1.5 bg-white/[0.01] border-b border-white/5">
+              <div className="grid grid-cols-2 p-1.5 bg-white/[0.02] border-b border-white/[0.04]">
                 <button
                   onClick={() => setMode('ground')}
                   className={`py-3 flex items-center justify-center space-x-2 font-bold uppercase tracking-wider text-xs md:text-sm transition-all duration-300 rounded-2xl cursor-pointer ${
@@ -267,10 +267,10 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
                         <select
                           value={selectedDest.name}
                           onChange={handleDestChange}
-                          className="w-full glass-input text-white pl-12 pr-10 py-4 rounded-xl focus:outline-none appearance-none font-bold uppercase tracking-wide cursor-pointer text-sm font-accent"
+                          className="w-full glass-input text-white pl-12 pr-10 py-4 rounded-xl focus:outline-none appearance-none font-bold uppercase tracking-wide cursor-pointer text-sm"
                         >
                           {destinations.map(d => (
-                            <option key={d.name} value={d.name} className="bg-slate-950 text-white">{d.name}</option>
+                            <option key={d.name} value={d.name} className="bg-[#0a0a0f] text-white">{d.name}</option>
                           ))}
                         </select>
                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
@@ -292,7 +292,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
                           max="800"
                           value={customMiles}
                           onChange={(e) => setCustomMiles(Number(e.target.value))}
-                          className="w-full h-1.5 bg-white/5 rounded-lg appearance-none cursor-pointer accent-red-600 focus:outline-none"
+                          className="w-full h-1.5 bg-white/[0.04] rounded-lg appearance-none cursor-pointer accent-red-600 focus:outline-none"
                         />
                       </div>
                     </div>
@@ -306,7 +306,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
                           className={`flex flex-col items-center justify-center p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${
                             isHeavy 
                               ? 'bg-red-950/20 border-red-500/50 text-white shadow-[0_0_15px_rgba(239,68,68,0.15)]' 
-                              : 'bg-white/[0.01] border-white/5 text-slate-500 hover:border-white/10 hover:text-slate-300'
+                              : 'bg-white/[0.02] border-white/[0.04] text-slate-500 hover:border-white/[0.08] hover:text-slate-300'
                           }`}
                         >
                           <Weight className={`mb-1.5 h-4.5 w-4.5 ${isHeavy ? 'text-red-500' : 'text-slate-500'}`} />
@@ -318,7 +318,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
                           className={`flex flex-col items-center justify-center p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${
                             isRefrigerated 
                               ? 'bg-blue-950/20 border-blue-500/50 text-white shadow-[0_0_15px_rgba(59,130,246,0.15)]' 
-                              : 'bg-white/[0.01] border-white/5 text-slate-500 hover:border-white/10 hover:text-slate-300'
+                              : 'bg-white/[0.02] border-white/[0.04] text-slate-500 hover:border-white/[0.08] hover:text-slate-300'
                           }`}
                         >
                           <Snowflake className={`mb-1.5 h-4.5 w-4.5 ${isRefrigerated ? 'text-blue-500' : 'text-slate-500'}`} />
@@ -330,7 +330,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
                           className={`flex flex-col items-center justify-center p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${
                             isHazmat 
                               ? 'bg-yellow-950/20 border-yellow-500/50 text-white shadow-[0_0_15px_rgba(234,179,8,0.15)]' 
-                              : 'bg-white/[0.01] border-white/5 text-slate-500 hover:border-white/10 hover:text-slate-300'
+                              : 'bg-white/[0.02] border-white/[0.04] text-slate-500 hover:border-white/[0.08] hover:text-slate-300'
                           }`}
                         >
                           <Zap className={`mb-1.5 h-4.5 w-4.5 ${isHazmat ? 'text-yellow-500' : 'text-slate-500'}`} />
@@ -342,7 +342,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
                           className={`flex flex-col items-center justify-center p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${
                             isAfterHours 
                               ? 'bg-purple-950/20 border-purple-500/50 text-white shadow-[0_0_15px_rgba(168,85,247,0.15)]' 
-                              : 'bg-white/[0.01] border-white/5 text-slate-500 hover:border-white/10 hover:text-slate-300'
+                              : 'bg-white/[0.02] border-white/[0.04] text-slate-500 hover:border-white/[0.08] hover:text-slate-300'
                           }`}
                         >
                           <Moon className={`mb-1.5 h-4.5 w-4.5 ${isAfterHours ? 'text-purple-500' : 'text-slate-500'}`} />
@@ -361,10 +361,10 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
                         <select
                           value={selectedAirDest.name}
                           onChange={handleAirDestChange}
-                          className="w-full glass-input text-white pl-12 pr-10 py-4 rounded-xl focus:outline-none appearance-none font-bold uppercase tracking-wide cursor-pointer text-sm font-accent"
+                          className="w-full glass-input text-white pl-12 pr-10 py-4 rounded-xl focus:outline-none appearance-none font-bold uppercase tracking-wide cursor-pointer text-sm"
                         >
                           {airDestinations.map(d => (
-                            <option key={d.name} value={d.name} className="bg-slate-950 text-white">{d.name}</option>
+                            <option key={d.name} value={d.name} className="bg-[#0a0a0f] text-white">{d.name}</option>
                           ))}
                         </select>
                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
@@ -373,14 +373,14 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
                       </div>
                     </div>
 
-                    <div className="flex items-center space-x-3 p-4 bg-white/[0.01] border border-white/5 rounded-xl">
+                    <div className="flex items-center space-x-3 p-4 bg-white/[0.02] border border-white/[0.04] rounded-xl">
                       <div className={`h-2.5 w-2.5 rounded-full ${selectedAirDest.type === 'Domestic' ? 'bg-blue-500' : 'bg-orange-500'} animate-pulse`}></div>
                       <span className="text-slate-300 font-bold text-xs uppercase font-display tracking-wider">{selectedAirDest.type} Hand Carry Dispatch</span>
                     </div>
                   </>
                 )}
 
-                <div className="h-[1px] bg-white/5 my-4"></div>
+                <div className="h-[1px] bg-white/[0.04] my-4"></div>
 
                 {/* Pricing Details Breakdown */}
                 {mode === 'ground' ? (
@@ -394,7 +394,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
                       <span className="text-white">{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(currentMiles * 2 * RATE_PER_MILE)}</span>
                     </div>
                     {(isHeavy || isRefrigerated || isHazmat || isAfterHours) && (
-                      <div className="flex justify-between items-center font-medium text-red-400/80 pt-2 border-t border-white/5 mt-1">
+                      <div className="flex justify-between items-center font-medium text-red-400/80 pt-2 border-t border-white/[0.04] mt-1">
                         <span>Surcharges & Fees:</span>
                         <span className="font-bold">+ {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(groundCost - ((currentMiles * ROUND_TRIP_MULTIPLIER * RATE_PER_MILE) + BASE_FEE))}</span>
                       </div>
@@ -414,7 +414,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
                 )}
 
                 {/* Total Cost Glow Box */}
-                <div className="bg-white/[0.01] border border-white/5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-6 flex flex-col items-start justify-center rounded-2xl relative overflow-hidden">
+                <div className="bg-white/[0.02] border border-white/[0.04] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-6 flex flex-col items-start justify-center rounded-2xl relative overflow-hidden">
                   <div className={`absolute -right-10 -top-10 w-32 h-32 rounded-full blur-3xl opacity-15 transition-all duration-500 pointer-events-none ${mode === 'ground' ? 'bg-red-600' : 'bg-blue-600'}`} />
                   
                   <span className={`${mode === 'ground' ? 'text-red-400' : 'text-blue-400'} font-bold uppercase tracking-widest text-[9px] mb-1 font-display`}>Estimated Total</span>
@@ -486,14 +486,14 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
                   loading="lazy"
                 ></iframe>
               ) : (
-                <div ref={mapContainer} className="w-full h-full z-0 bg-slate-100"></div>
+                <div ref={mapContainer} className="w-full h-full z-0 bg-[#f0eeeb]"></div>
               )}
 
               {/* Overlay Data Card */}
-              <div className="absolute bottom-0 left-0 w-full bg-slate-950/70 border-t border-white/5 p-6 backdrop-blur-md z-[1000]">
+              <div className="absolute bottom-0 left-0 w-full bg-[#0a0a0f]/75 border-t border-white/[0.04] p-6 backdrop-blur-md z-[1000]">
                 <div className="grid grid-cols-2 gap-6">
                   <div className="flex items-center space-x-4">
-                    <div className="bg-white/5 border border-white/8 p-3 rounded-2xl text-slate-300">
+                    <div className="bg-white/[0.04] border border-white/[0.06] p-3 rounded-2xl text-slate-300">
                       {mode === 'ground' ? <Navigation className="h-5 w-5" /> : <Globe className="h-5 w-5" />}
                     </div>
                     <div>
@@ -511,7 +511,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
                   </div>
 
                   <div className="flex items-center space-x-4">
-                    <div className="bg-white/5 border border-white/8 p-3 rounded-2xl text-slate-300">
+                    <div className="bg-white/[0.04] border border-white/[0.06] p-3 rounded-2xl text-slate-300">
                       <Clock className={`${mode === 'ground' ? 'text-red-500' : 'text-blue-500'} h-5 w-5`} />
                     </div>
                     <div>
@@ -527,7 +527,7 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
                 <div className="mt-6 flex items-center justify-between text-[10px] font-bold text-slate-500 uppercase font-display tracking-widest">
                   <span>Austin, TX</span>
                   <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-600 to-transparent flex-grow mx-4 relative">
-                    <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-slate-900 px-3 text-[9px] text-slate-400 font-bold border border-white/5 rounded-full py-0.5 backdrop-blur-md">
+                    <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-[#0e0e14] px-3 text-[9px] text-slate-400 font-bold border border-white/[0.04] rounded-full py-0.5 backdrop-blur-md">
                       {mode === 'ground' ? 'DIRECT DRIVE' : 'NEXT FLIGHT'}
                     </div>
                   </div>

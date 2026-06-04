@@ -2,9 +2,9 @@ import React from 'react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer role="contentinfo" className="bg-obsidian py-16 border-t border-white/5 relative overflow-hidden">
+    <footer role="contentinfo" className="bg-obsidian py-16 border-t border-white/[0.03] relative overflow-hidden">
       {/* Background visual highlight */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[1px] bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[1px] bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
 
       <div className="container mx-auto px-6 text-center relative z-10">
         <div className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter font-display mb-2">
@@ -17,7 +17,7 @@ export const Footer: React.FC = () => {
           Same Day Delivery · Air Hand Carry · Medical Courier · Hot Shot · Legal Courier
         </p>
         
-        <div className="h-[1px] w-12 bg-white/5 mx-auto my-6" />
+        <div className="h-[1px] w-12 bg-white/[0.04] mx-auto my-6" />
 
         <p className="text-slate-600 text-xs mb-6 max-w-xl mx-auto leading-relaxed font-sans font-light">
           Austin's trusted 24/7 courier service for time-critical, same day, and emergency deliveries throughout Central Texas and nationwide. Serving Austin, Round Rock, Cedar Park, Georgetown, Pflugerville, Taylor, and beyond.

@@ -40,10 +40,10 @@ const reviews: ReviewData[] = [
 
 export const Reviews: React.FC = () => {
   return (
-    <section id="reviews" className="py-24 bg-obsidian border-b border-white/5 relative overflow-hidden">
-      {/* Background glow elements */}
+    <section id="reviews" className="py-24 bg-obsidian border-b border-white/[0.03] relative overflow-hidden">
+      {/* Background glow elements — warm tones */}
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-80 h-80 bg-red-600/5 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-80 h-80 bg-royal-indigo/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-80 h-80 bg-ember/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
         <SectionHeading
@@ -83,10 +83,10 @@ export const Reviews: React.FC = () => {
               </div>
 
               {/* Client Info */}
-              <div className="border-t border-white/5 pt-4 mt-auto flex items-center">
+              <div className="border-t border-white/[0.04] pt-4 mt-auto flex items-center">
                 <div>
                   <div className="text-white font-bold text-sm md:text-base font-display">{review.name}</div>
-                  <div className="text-slate-500 text-xs font-accent">{review.role}, <span className="text-slate-400 font-medium">{review.company}</span></div>
+                  <div className="text-slate-500 text-xs">{review.role}, <span className="text-slate-400 font-medium">{review.company}</span></div>
                 </div>
               </div>
             </div>

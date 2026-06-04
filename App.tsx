@@ -4,8 +4,8 @@ import { Hero } from './components/Hero';
 import { Features } from './components/Features';
 import { Calculator } from './components/Calculator';
 import { Reviews } from './components/Reviews';
-import { ServiceArea } from './components/ServiceArea';
 import { ContactForm } from './components/ContactForm';
+import { ServiceArea } from './components/ServiceArea';
 import { Footer } from './components/Footer';
 
 interface BookingDetails {
@@ -27,11 +27,14 @@ const App: React.FC = () => {
 
   return (
     <div className="bg-obsidian min-h-screen text-slate-200 font-sans selection:bg-red-600 selection:text-white relative overflow-x-hidden">
-      {/* Floating Liquid Glass Backdrop Blobs */}
+      {/* Ink Diffusion Backdrop — organic warm shapes */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[10%] left-[-10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] rounded-full bg-gradient-to-tr from-red-600/10 to-royal-indigo/15 blur-[100px] animate-blob1" />
-        <div className="absolute bottom-[10%] right-[-10%] w-[60vw] h-[60vw] max-w-[700px] max-h-[700px] rounded-full bg-gradient-to-br from-blue-600/10 to-royal-violet/15 blur-[120px] animate-blob2" />
-        <div className="absolute top-[50%] left-[20%] w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] rounded-full bg-gradient-to-tr from-red-500/5 to-royal-indigo/5 blur-[90px] animate-blob3" />
+        {/* Deep red-brown ink cloud — top left */}
+        <div className="absolute top-[5%] left-[-15%] w-[55vw] h-[55vw] max-w-[650px] max-h-[650px] rounded-full bg-gradient-to-br from-red-950/20 via-ember/8 to-transparent blur-[120px] animate-ink1 mix-blend-screen" />
+        {/* Warm soot cloud — bottom right */}
+        <div className="absolute bottom-[5%] right-[-12%] w-[60vw] h-[60vw] max-w-[700px] max-h-[700px] rounded-full bg-gradient-to-tl from-soot/40 via-red-900/8 to-transparent blur-[140px] animate-ink2 mix-blend-screen" />
+        {/* Subtle ember wash — center */}
+        <div className="absolute top-[45%] left-[25%] w-[45vw] h-[45vw] max-w-[550px] max-h-[550px] rounded-full bg-gradient-to-tr from-ember/5 via-graphite/10 to-transparent blur-[100px] animate-ink3 mix-blend-screen" />
       </div>
 
       <div className="relative z-10">

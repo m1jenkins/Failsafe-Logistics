@@ -32,7 +32,7 @@ const App: React.FC = () => {
         <Hero />
         <Features />
         <Calculator onBook={handleBook} />
-        <Reviews />
+        {/* <Reviews /> */}
         <ContactForm prefilledDetails={bookingDetails} />
         <ServiceArea />
       </main>

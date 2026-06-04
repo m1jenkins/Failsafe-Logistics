@@ -83,14 +83,10 @@ export const Reviews: React.FC = () => {
               </div>
 
               {/* Client Info */}
-              <div className="border-t border-slate-900 pt-4 mt-auto flex items-center justify-between">
+              <div className="border-t border-slate-900 pt-4 mt-auto flex items-center">
                 <div>
                   <div className="text-white font-bold text-base">{review.name}</div>
                   <div className="text-slate-500 text-xs">{review.role}, <span className="text-slate-400">{review.company}</span></div>
-                </div>
-                <div className="text-green-500 flex items-center space-x-1 text-xs font-bold uppercase tracking-wider">
-                  <ShieldCheck className="h-4 w-4" />
-                  <span>Verified Client</span>
                 </div>
               </div>
             </div>

@@ -389,12 +389,15 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
                 )}
 
                 {/* Total Cost */}
-                <div className={`bg-black/40 p-4 border-l-4 ${mode === 'ground' ? 'border-red-600' : 'border-blue-500'} flex flex-col items-start justify-center rounded-r-xl transition-colors duration-300`}>
-                  <span className={`${mode === 'ground' ? 'text-red-500' : 'text-blue-500'} font-bold uppercase tracking-widest text-xs mb-1`}>Estimated Total</span>
-                  <div className="text-4xl font-bold text-white tracking-tighter">
+                <div className="bg-slate-950/60 backdrop-blur-lg border border-slate-800/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] p-5 flex flex-col items-start justify-center rounded-xl transition-all duration-300 relative overflow-hidden">
+                  {/* Liquid glass light reflection */}
+                  <div className={`absolute -right-6 -top-6 w-24 h-24 rounded-full blur-2xl opacity-40 transition-colors duration-300 pointer-events-none ${mode === 'ground' ? 'bg-red-600' : 'bg-blue-500'}`} />
+                  
+                  <span className={`${mode === 'ground' ? 'text-red-400' : 'text-blue-400'} font-bold uppercase tracking-widest text-[10px] mb-1 z-10`}>Estimated Total</span>
+                  <div className="text-4xl font-bold text-white tracking-tighter z-10">
                     {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(mode === 'ground' ? groundCost : airCost)}
                   </div>
-                  {mode === 'air' && <span className="text-xs text-slate-500 mt-2 font-medium uppercase">*Includes carry-on logistics & last mile</span>}
+                  {mode === 'air' && <span className="text-[10px] text-slate-500 mt-2 font-medium uppercase z-10">*Includes carry-on logistics & last mile</span>}
                 </div>
 
                 {onBook && (

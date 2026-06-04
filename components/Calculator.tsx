@@ -39,7 +39,11 @@ const airDestinations: AirDestinationWithCoords[] = [
   { name: 'Dubai (DXB)', type: 'International', courierFee: 4560, flightEst: 2880, time: '22-26h', coords: [25.2532, 55.3657] },
 ];
 
-export const Calculator: React.FC = () => {
+interface CalculatorProps {
+  onBook?: (details: { pickupAddress?: string; deliveryAddress?: string; itemDescription?: string }) => void;
+}
+
+export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
   const [mode, setMode] = useState<'ground' | 'air'>('ground');
 
   // Ground State
@@ -393,6 +397,38 @@ export const Calculator: React.FC = () => {
                   {mode === 'air' && <span className="text-xs text-slate-500 mt-2 font-medium uppercase">*Includes carry-on logistics & last mile</span>}
                 </div>
 
+                {onBook && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const pickup = "Austin HQ";
+                      let delivery = "";
+                      let desc = "";
+                      if (mode === 'ground') {
+                        delivery = selectedDest.name === 'Custom Route' ? '' : `${selectedDest.name}, TX`;
+                        desc = [
+                          'Ground Dispatch',
+                          isHeavy ? 'Heavy Cargo (100lb+)' : '',
+                          isRefrigerated ? 'Refrigerated Cargo' : '',
+                          isHazmat ? 'Hazmat/Dangerous Goods' : '',
+                          isAfterHours ? 'After-Hours Delivery' : ''
+                        ].filter(Boolean).join(', ');
+                      } else {
+                        delivery = `${selectedAirDest.name} Airport`;
+                        desc = `Air Hand Carry Courier Service (${selectedAirDest.type})`;
+                      }
+                      onBook({ pickupAddress: pickup, deliveryAddress: delivery, itemDescription: desc });
+                    }}
+                    className={`w-full py-3.5 px-4 rounded-lg font-bold uppercase tracking-wider text-sm transition-all flex items-center justify-center space-x-2 border-2 cursor-pointer ${
+                      mode === 'ground'
+                        ? 'bg-red-600 border-red-600 hover:bg-red-700 hover:border-red-700 text-white shadow-lg shadow-red-900/20'
+                        : 'bg-blue-600 border-blue-500 hover:bg-blue-700 hover:border-blue-700 text-white shadow-lg shadow-blue-900/20'
+                    }`}
+                  >
+                    <span>Book This Delivery</span>
+                  </button>
+                )}
+
                 <p className="text-xs text-slate-600 italic">
                   *Quote is an estimate for planning purposes. Flight prices fluctuate hourly. Final fixed price provided upon booking.
                 </p>
@@ -421,6 +457,7 @@ export const Calculator: React.FC = () => {
                   title="Route Map"
                   src={googleMapSrc}
                   className="w-full h-full opacity-100"
+                  loading="lazy"
                 ></iframe>
               ) : (
                 <div ref={mapContainer} className="w-full h-full min-h-[180px] lg:min-h-[240px] z-0 bg-slate-100"></div>

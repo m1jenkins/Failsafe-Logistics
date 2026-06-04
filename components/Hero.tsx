@@ -15,6 +15,10 @@ export const Hero: React.FC = () => {
           src="/austin-bats.png"
           alt="Speedy Bat Couriers - Premier courier service in Austin Texas providing same day delivery and rush logistics"
           className="w-full h-full object-cover object-center lg:object-right opacity-80"
+          width="1200"
+          height="800"
+          fetchPriority="high"
+          loading="eager"
         />
       </div>
 
@@ -45,6 +49,10 @@ export const Hero: React.FC = () => {
               <span>View Transit Times</span>
             </Button>
           </div>
+
+          <p className="mt-4 text-slate-400 text-sm">
+            Urgent dispatch? <a href="sms:5129104938" className="text-red-500 hover:text-red-400 font-bold underline transition-colors">Text us directly at (512) 910-4938</a> for a 2-minute response.
+          </p>
 
           <p className="mt-12 text-slate-500 font-medium text-sm tracking-wider uppercase">
             Dedicated Vehicles. Direct Delivery. Zero Compromise.

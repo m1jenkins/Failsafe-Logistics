@@ -62,7 +62,6 @@ export const ServiceArea: React.FC<ServiceAreaProps> = ({ onNavigate }) => {
             </p>
             <div className="flex flex-wrap gap-2">
               {centralTexasCities.map(city => {
-                // Find if this city exists in our location routes
                 const matchedLoc = Object.values(locations).find(
                   l => l.name.toLowerCase() === city.toLowerCase()
                 );
@@ -76,9 +75,9 @@ export const ServiceArea: React.FC<ServiceAreaProps> = ({ onNavigate }) => {
                         e.preventDefault();
                         if (onNavigate) onNavigate(matchedLoc.id);
                       }}
-                      className="text-[10px] font-bold text-red-400 bg-red-950/15 border border-red-500/30 px-3 py-1.5 uppercase hover:border-red-500/60 hover:text-white transition-all duration-300 rounded-full font-display cursor-pointer"
+                      className="text-[10px] font-bold text-red-400 bg-red-950/15 border border-red-500/25 px-3 py-1.5 uppercase hover:bg-red-950/25 hover:border-red-500/50 hover:text-white transition-all duration-300 rounded-full font-display cursor-pointer"
                     >
-                      {city} *
+                      {city}
                     </a>
                   );
                 }

@@ -16,20 +16,23 @@ const centralTexasCities = [
 
 export const ServiceArea: React.FC = () => {
   return (
-    <section id="service-area" className="py-12 lg:py-16 bg-slate-900">
-      <div className="container mx-auto px-4">
+    <section id="service-area" className="py-20 bg-obsidian relative overflow-hidden">
+      {/* Subtle bottom background glow */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-royal-indigo/5 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="container mx-auto px-6">
         <SectionHeading title="Austin Courier Service Area" subtitle="Last-minute delivery and expedited delivery solutions originating from Austin/Waco Hub to all major Texas metros." />
 
-        {/* Main Hubs */}
-        <div className="mt-8 flex flex-wrap justify-center gap-3 md:gap-6">
-          <div className="flex items-center space-x-2 bg-slate-800 px-4 py-3 border border-red-900/50 shadow-lg shadow-red-900/10 rounded-lg">
-            <Crosshair className="text-red-600 h-4 w-4 animate-[spin_10s_linear_infinite]" />
-            <span className="text-white font-bold uppercase tracking-widest text-sm">Austin (HQ)</span>
+        {/* Main Hubs layout */}
+        <div className="mt-8 flex flex-wrap justify-center gap-3 md:gap-4">
+          <div className="flex items-center space-x-2 bg-gradient-to-r from-red-950/30 to-red-900/10 px-5 py-3 border border-red-500/20 shadow-md shadow-red-950/10 rounded-full">
+            <Crosshair className="text-red-500 h-4 w-4 animate-[spin_8s_linear_infinite]" />
+            <span className="text-white font-bold uppercase tracking-widest text-xs font-display">Austin (HQ)</span>
           </div>
           {hubs.map((hub) => (
-            <div key={hub} className="flex items-center space-x-2 bg-slate-800 px-4 py-3 border border-slate-700 opacity-75 rounded-lg">
-              <div className="w-2 h-2 bg-slate-500 rounded-full"></div>
-              <span className="text-slate-300 font-bold uppercase tracking-widest text-sm">{hub}</span>
+            <div key={hub} className="flex items-center space-x-2 bg-white/[0.02] px-5 py-3 border border-white/5 opacity-80 rounded-full hover:border-white/10 hover:opacity-100 transition-all duration-300">
+              <div className="w-1.5 h-1.5 bg-slate-500 rounded-full"></div>
+              <span className="text-slate-300 font-bold uppercase tracking-widest text-xs font-display">{hub}</span>
             </div>
           ))}
         </div>
@@ -37,52 +40,60 @@ export const ServiceArea: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
 
           {/* Central Texas Rapid Response */}
-          <div className="bg-slate-950 border border-slate-800 p-8 relative overflow-hidden group rounded-lg">
-            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+          <div className="glass-panel p-8 relative overflow-hidden group rounded-2xl">
+            {/* Hover top border glow */}
+            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            
+            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-[0.08] transition-opacity duration-300 text-slate-300 pointer-events-none">
               <Map size={100} />
             </div>
-            <h3 className="text-xl font-bold text-white uppercase mb-4 flex items-center">
-              <span className="w-2 h-8 bg-red-600 mr-3 rounded-full"></span>
+            
+            <h3 className="text-lg font-bold text-white uppercase mb-4 flex items-center font-display tracking-wider">
+              <span className="w-1.5 h-6 bg-red-600 mr-3 rounded-full"></span>
               Austin Last Minute Delivery Zone
             </h3>
-            <p className="text-slate-400 mb-6 font-light leading-relaxed">
+            <p className="text-slate-400 mb-6 font-light leading-relaxed text-sm">
               Immediate dispatch to the following cities within <span className="text-white font-bold">60 minutes</span> of driving from Austin HQ:
             </p>
             <div className="flex flex-wrap gap-2">
               {centralTexasCities.map(city => (
-                <span key={city} className="text-xs font-medium text-slate-500 bg-slate-900 border border-slate-800 px-2 py-1 uppercase hover:border-slate-600 hover:text-slate-300 transition-colors cursor-default rounded">
+                <span key={city} className="text-[10px] font-bold text-slate-400 bg-white/[0.02] border border-white/5 px-3 py-1.5 uppercase hover:border-white/15 hover:text-white transition-all duration-300 cursor-default rounded-full font-display">
                   {city}
                 </span>
               ))}
-              <span className="text-xs font-medium text-red-500 bg-red-950/20 border border-red-900/30 px-2 py-1 uppercase rounded">
+              <span className="text-[10px] font-bold text-red-400 bg-red-950/20 border border-red-500/20 px-3 py-1.5 uppercase rounded-full font-display">
                 + All Points Between
               </span>
             </div>
           </div>
 
           {/* US Domestic Hand Carry */}
-          <div className="bg-slate-950 border border-slate-800 p-8 relative overflow-hidden group rounded-lg">
-            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+          <div className="glass-panel p-8 relative overflow-hidden group rounded-2xl">
+            {/* Hover top border glow */}
+            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            
+            <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-[0.08] transition-opacity duration-300 text-slate-300 pointer-events-none">
               <Plane size={100} />
             </div>
-            <h3 className="text-xl font-bold text-white uppercase mb-4 flex items-center">
-              <span className="w-2 h-8 bg-blue-600 mr-3 rounded-full"></span>
+            
+            <h3 className="text-lg font-bold text-white uppercase mb-4 flex items-center font-display tracking-wider">
+              <span className="w-1.5 h-6 bg-blue-600 mr-3 rounded-full"></span>
               US Domestic & International Hand Carry
             </h3>
-            <p className="text-slate-400 mb-6 font-light leading-relaxed">
-              For ultra-critical assets that cannot leave human custody. Our courier flies with your package as carry-on luggage to any major airport in the United States.
+            <p className="text-slate-400 mb-6 font-light leading-relaxed text-sm">
+              For ultra-critical assets that cannot leave human custody. Our courier flies with your package as carry-on luggage to any major airport in the United States and global hubs.
             </p>
-            <ul className="space-y-2">
-              <li className="flex items-center space-x-2 text-sm text-slate-300 font-medium">
-                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+            <ul className="space-y-3 font-display">
+              <li className="flex items-center space-x-2.5 text-xs text-slate-300 font-bold uppercase tracking-wider">
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
                 <span>Chain of custody never broken</span>
               </li>
-              <li className="flex items-center space-x-2 text-sm text-slate-300 font-medium">
-                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+              <li className="flex items-center space-x-2.5 text-xs text-slate-300 font-bold uppercase tracking-wider">
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
                 <span>Real-time flight tracking updates</span>
               </li>
-              <li className="flex items-center space-x-2 text-sm text-slate-300 font-medium">
-                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+              <li className="flex items-center space-x-2.5 text-xs text-slate-300 font-bold uppercase tracking-wider">
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
                 <span>Direct delivery from airport to recipient</span>
               </li>
             </ul>
@@ -90,8 +101,8 @@ export const ServiceArea: React.FC = () => {
 
         </div>
 
-        {/* SEO-rich content paragraph */}
-        <p className="mt-10 text-slate-500 text-sm leading-relaxed max-w-3xl mx-auto text-center">
+        {/* SEO content paragraph */}
+        <p className="mt-12 text-slate-500 text-xs md:text-sm leading-relaxed max-w-3xl mx-auto text-center font-sans font-light">
           Speedy Bat Couriers is the trusted courier in Austin, Texas for businesses that need reliable, time-critical delivery. From our Austin headquarters, we provide same day courier service to every community in Central Texas — whether you need a package delivered across town to Round Rock, a legal filing rushed to the courthouse, or a critical shipment hand-carried on the next flight out of Austin-Bergstrom International Airport. Our dedicated vehicles and professional couriers are available 24/7/365.
         </p>
       </div>

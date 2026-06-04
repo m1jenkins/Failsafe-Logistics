@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, ShieldCheck, Quote } from 'lucide-react';
+import { Star, Quote } from 'lucide-react';
 import { SectionHeading } from './SectionHeading';
 
 interface ReviewData {
@@ -40,12 +40,12 @@ const reviews: ReviewData[] = [
 
 export const Reviews: React.FC = () => {
   return (
-    <section id="reviews" className="py-24 bg-slate-900 border-b border-slate-800 relative overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-72 h-72 bg-red-600/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-72 h-72 bg-blue-600/5 rounded-full blur-3xl pointer-events-none" />
+    <section id="reviews" className="py-24 bg-obsidian border-b border-white/5 relative overflow-hidden">
+      {/* Background glow elements */}
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-80 h-80 bg-red-600/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-80 h-80 bg-royal-indigo/5 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-6 relative z-10">
         <SectionHeading
           title="What Our Clients Say"
           subtitle="Trusted by leading semiconductor fabs, healthcare networks, and corporate firms throughout Central Texas."
@@ -56,23 +56,23 @@ export const Reviews: React.FC = () => {
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="bg-slate-950 border border-slate-800 p-8 rounded-xl relative flex flex-col justify-between hover:border-slate-700 transition-colors shadow-xl"
+              className="glass-panel p-8 rounded-2xl relative flex flex-col justify-between shadow-xl"
             >
               {/* Quote Mark Icon */}
-              <div className="absolute -top-4 -right-2 text-slate-800/40 pointer-events-none">
-                <Quote size={60} />
+              <div className="absolute -top-3 -right-1 text-white/[0.02] pointer-events-none">
+                <Quote size={80} />
               </div>
 
               <div>
                 {/* Stars */}
                 <div className="flex items-center space-x-1 mb-6">
                   {[...Array(review.rating)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 fill-red-500 text-red-500" />
+                    <Star key={i} className="h-4.5 w-4.5 fill-red-500 text-red-500" />
                   ))}
                 </div>
 
                 {/* Industry Badge */}
-                <div className="inline-block text-[10px] uppercase font-bold tracking-widest text-slate-400 bg-slate-900 border border-slate-800 px-3 py-1 rounded-full mb-4">
+                <div className="inline-block text-[9px] uppercase font-bold tracking-widest text-red-400 bg-red-950/20 border border-red-500/10 px-3 py-1 rounded-full mb-4 font-display">
                   {review.industry}
                 </div>
 
@@ -83,10 +83,10 @@ export const Reviews: React.FC = () => {
               </div>
 
               {/* Client Info */}
-              <div className="border-t border-slate-900 pt-4 mt-auto flex items-center">
+              <div className="border-t border-white/5 pt-4 mt-auto flex items-center">
                 <div>
-                  <div className="text-white font-bold text-base">{review.name}</div>
-                  <div className="text-slate-500 text-xs">{review.role}, <span className="text-slate-400">{review.company}</span></div>
+                  <div className="text-white font-bold text-sm md:text-base font-display">{review.name}</div>
+                  <div className="text-slate-500 text-xs font-accent">{review.role}, <span className="text-slate-400 font-medium">{review.company}</span></div>
                 </div>
               </div>
             </div>

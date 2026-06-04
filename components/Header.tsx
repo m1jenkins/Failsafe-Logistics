@@ -13,15 +13,15 @@ export const Header: React.FC = () => {
   }, []);
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-slate-900/95 backdrop-blur-md border-b border-slate-800 py-3' : 'bg-transparent py-6'}`}>
-      <div className="container mx-auto px-4 flex justify-between items-center">
-        <div className="flex flex-col">
-          <span className="text-2xl md:text-3xl font-black tracking-tighter uppercase leading-none text-white">Speedy Bat</span>
-          <span className="text-xs text-red-500 font-bold tracking-[0.3em] uppercase mt-1">Couriers</span>
+    <header className={`fixed top-0 left-0 right-0 z-50 floating-header transition-all duration-300 ${scrolled ? 'scrolled py-3' : 'py-4'}`}>
+      <div className="container mx-auto px-6 flex justify-between items-center">
+        <div className="flex flex-col cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <span className="text-xl md:text-2xl font-black tracking-tighter uppercase font-display text-white">Speedy Bat</span>
+          <span className="text-[9px] text-red-500 font-bold tracking-[0.4em] uppercase mt-0.5 ml-0.5">Couriers</span>
         </div>
 
-        <a href="sms:5129104938" className="flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-5 py-2 font-bold uppercase tracking-wide transition-colors animate-pulse-heartbeat shadow-lg shadow-red-900/20 rounded">
-          <MessageSquare className="h-4 w-4" />
+        <a href="sms:5129104938" className="flex items-center space-x-2 bg-gradient-to-r from-red-600/90 to-red-700/90 hover:from-red-600 hover:to-red-700 text-white px-5 py-2.5 text-xs md:text-sm font-bold uppercase tracking-wider transition-all duration-300 shadow-md shadow-red-950/20 rounded-full border border-red-500/20 backdrop-blur-sm">
+          <MessageSquare className="h-3.5 w-3.5 animate-pulse" />
           <span>Text or Call (512) 910-4938</span>
         </a>
       </div>

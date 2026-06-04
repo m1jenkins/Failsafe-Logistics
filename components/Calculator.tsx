@@ -3,7 +3,6 @@ import { SectionHeading } from './SectionHeading';
 import { MapPin, Calculator as CalcIcon, Navigation, Clock, Plane, Truck, Globe, Weight, Snowflake, Zap, Moon } from 'lucide-react';
 import L from 'leaflet';
 
-// Extended interface to include map coordinates
 interface DestinationWithCoords {
   name: string;
   miles: number;
@@ -26,7 +25,7 @@ const destinations: DestinationWithCoords[] = [
   { name: 'Dallas/Fort Worth', miles: 195, coords: [32.7767, -96.7970] },
   { name: 'San Antonio', miles: 80, coords: [29.4241, -98.4936] },
   { name: 'El Paso', miles: 575, coords: [31.7619, -106.4850] },
-  { name: 'Custom Route', miles: 100, coords: [31.5493, -97.1467] }, // Approx Waco as placeholder for custom
+  { name: 'Custom Route', miles: 100, coords: [31.5493, -97.1467] }, 
 ];
 
 const airDestinations: AirDestinationWithCoords[] = [
@@ -80,12 +79,12 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
     let cost = (miles * ROUND_TRIP_MULTIPLIER * RATE_PER_MILE) + BASE_FEE;
 
     // Add-on Surcharges
-    if (isHeavy) cost += 75; // Heavy Load Liftgate/Handling
-    if (isRefrigerated) cost += 150; // Temp Control Vehicle
+    if (isHeavy) cost += 75; 
+    if (isRefrigerated) cost += 150; 
 
     // Multipliers
-    if (isHazmat) cost *= 1.35; // 35% Dangerous Goods Handling Surcharge
-    if (isAfterHours) cost *= 1.04; // 4% After Hours / Weekend Surcharge
+    if (isHazmat) cost *= 1.35; 
+    if (isAfterHours) cost *= 1.04; 
 
     setGroundCost(cost);
 
@@ -118,7 +117,6 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
       }).addTo(mapInstance.current);
     }
 
-    // Cleanup when mode changes away from air
     if (mode !== 'air' && mapInstance.current) {
       mapInstance.current.remove();
       mapInstance.current = null;
@@ -126,7 +124,6 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
       routePolyline.current = null;
     }
 
-    // Standard Cleanup
     return () => {
       if (mapInstance.current) {
         mapInstance.current.remove();
@@ -150,7 +147,6 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
 
     const targetCoords = selectedAirDest.coords;
 
-    // Create Custom Icons (Light Map Friendly)
     const originIcon = L.divIcon({
       className: 'bg-transparent',
       html: '<div class="marker-pin marker-origin"></div>',
@@ -165,12 +161,10 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
       iconAnchor: [6, 6]
     });
 
-    // Add Markers
     const originMarker = L.marker(AUSTIN_COORDS, { icon: originIcon }).addTo(map);
     const destMarker = L.marker(targetCoords, { icon: destIcon }).addTo(map);
     markersRef.current.push(originMarker, destMarker);
 
-    // Draw Animated Route
     routePolyline.current = L.polyline([AUSTIN_COORDS, targetCoords], {
       className: 'route-path-air',
       weight: 3,
@@ -178,7 +172,6 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
       smoothFactor: 1
     }).addTo(map);
 
-    // Fit Bounds
     const bounds = L.latLngBounds([AUSTIN_COORDS, targetCoords]);
     map.fitBounds(bounds, {
       padding: [50, 50],
@@ -188,7 +181,6 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
     });
 
   }, [mode, selectedAirDest]);
-
 
   const handleDestChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const dest = destinations.find(d => d.name === e.target.value);
@@ -202,8 +194,6 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
 
   const currentMiles = selectedDest.name === 'Custom Route' ? customMiles : selectedDest.miles;
 
-  // Google Map Source (Ground Mode)
-  // Calculate appropriate zoom level based on distance to show entire route
   const getZoomForDistance = (miles: number) => {
     if (miles <= 100) return 9;
     if (miles <= 200) return 8;
@@ -219,14 +209,14 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
     : `https://maps.google.com/maps?saddr=Austin,+TX&daddr=${encodeURIComponent(destQuery)}&z=${routeZoom}&output=embed`;
 
   return (
-    <section className="py-8 lg:py-10 bg-slate-950 relative overflow-hidden" id="estimator">
-      {/* Background grid */}
-      <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none">
+    <section className="py-20 bg-obsidian border-b border-white/5 relative overflow-hidden" id="estimator">
+      {/* Background grid ornament */}
+      <div className="absolute top-0 right-0 p-10 opacity-[0.02] pointer-events-none">
         <CalcIcon size={250} />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-start">
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
 
           {/* Left Column: Calculator Controls */}
           <div>
@@ -235,96 +225,128 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
               subtitle="Select your service level to estimate logistics costs."
             />
 
-            <div className="bg-slate-900 border border-slate-800 shadow-2xl rounded-xl overflow-hidden">
+            <div className="glass-panel rounded-3xl overflow-hidden shadow-2xl relative">
+              {/* Card top border highlight */}
+              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-              {/* Tabs */}
-              <div className="grid grid-cols-2 border-b border-slate-800">
+              {/* Mode Tabs (Pill Control Style) */}
+              <div className="grid grid-cols-2 p-1.5 bg-white/[0.01] border-b border-white/5">
                 <button
                   onClick={() => setMode('ground')}
-                  className={`py-3 flex items-center justify-center space-x-2 font-bold uppercase tracking-wider text-sm transition-all ${mode === 'ground' ? 'bg-slate-800 text-white border-b-2 border-red-600' : 'bg-slate-900 text-slate-500 hover:text-slate-300'}`}
+                  className={`py-3 flex items-center justify-center space-x-2 font-bold uppercase tracking-wider text-xs md:text-sm transition-all duration-300 rounded-2xl cursor-pointer ${
+                    mode === 'ground' 
+                      ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-md shadow-red-950/20' 
+                      : 'text-slate-500 hover:text-slate-300'
+                  }`}
                 >
                   <Truck className="h-4 w-4" />
                   <span>Expedited Ground</span>
                 </button>
                 <button
                   onClick={() => setMode('air')}
-                  className={`py-3 flex items-center justify-center space-x-2 font-bold uppercase tracking-wider text-sm transition-all ${mode === 'air' ? 'bg-slate-800 text-white border-b-2 border-blue-500' : 'bg-slate-900 text-slate-500 hover:text-slate-300'}`}
+                  className={`py-3 flex items-center justify-center space-x-2 font-bold uppercase tracking-wider text-xs md:text-sm transition-all duration-300 rounded-2xl cursor-pointer ${
+                    mode === 'air' 
+                      ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md shadow-blue-950/20' 
+                      : 'text-slate-500 hover:text-slate-300'
+                  }`}
                 >
                   <Plane className="h-4 w-4" />
                   <span>Air Hand Carry</span>
                 </button>
               </div>
 
-              <div className="p-4 lg:p-5 space-y-3">
+              <div className="p-6 md:p-8 space-y-6">
 
                 {mode === 'ground' ? (
                   <>
                     {/* GROUND INPUTS */}
                     <div>
-                      <label className="block text-xs font-medium text-slate-500 uppercase tracking-widest mb-2">Destination (From Austin HQ)</label>
+                      <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 font-display">Destination (From Austin HQ)</label>
                       <div className="relative">
-                        <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-red-600 h-5 w-5" />
+                        <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-red-600 h-5 w-5 z-10" />
                         <select
                           value={selectedDest.name}
                           onChange={handleDestChange}
-                          className="w-full bg-slate-950 border border-slate-700 text-white pl-12 pr-4 py-4 rounded-lg focus:ring-1 focus:ring-red-600 focus:outline-none appearance-none font-bold uppercase tracking-wide cursor-pointer hover:border-slate-600 transition-colors"
+                          className="w-full glass-input text-white pl-12 pr-10 py-4 rounded-xl focus:outline-none appearance-none font-bold uppercase tracking-wide cursor-pointer text-sm font-accent"
                         >
                           {destinations.map(d => (
-                            <option key={d.name} value={d.name}>{d.name}</option>
+                            <option key={d.name} value={d.name} className="bg-slate-950 text-white">{d.name}</option>
                           ))}
                         </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                          <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                        </div>
                       </div>
                     </div>
 
                     {/* Slider for Custom */}
                     <div className={`transition-all duration-300 overflow-hidden ${selectedDest.name === 'Custom Route' ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
-                      <div className="pt-2 pb-3 px-1">
-                        <label className="block text-xs font-medium text-slate-500 uppercase tracking-widest mb-3">Distance (One Way Miles): <span className="text-white">{customMiles} mi</span></label>
+                      <div className="pt-2 pb-3">
+                        <label className="flex justify-between items-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 font-display">
+                          <span>Distance (One Way Miles)</span>
+                          <span className="text-red-500 font-mono font-bold text-sm">{customMiles} mi</span>
+                        </label>
                         <input
                           type="range"
                           min="10"
                           max="800"
                           value={customMiles}
                           onChange={(e) => setCustomMiles(Number(e.target.value))}
-                          className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-red-600 focus:outline-none"
+                          className="w-full h-1.5 bg-white/5 rounded-lg appearance-none cursor-pointer accent-red-600 focus:outline-none"
                         />
                       </div>
                     </div>
 
                     {/* Additional Options */}
                     <div>
-                      <label className="block text-xs font-medium text-slate-500 uppercase tracking-widest mb-3">Shipment Specifics</label>
-                      <div className="grid grid-cols-2 gap-2">
+                      <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 font-display">Shipment Specifics</label>
+                      <div className="grid grid-cols-2 gap-3">
                         <button
                           onClick={() => setIsHeavy(!isHeavy)}
-                          className={`flex flex-col items-center justify-center p-2 rounded-lg border transition-all duration-200 ${isHeavy ? 'bg-red-900/20 border-red-500 text-white shadow-[0_0_10px_rgba(239,68,68,0.2)]' : 'bg-slate-950 border-slate-800 text-slate-500 hover:border-slate-700'}`}
+                          className={`flex flex-col items-center justify-center p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${
+                            isHeavy 
+                              ? 'bg-red-950/20 border-red-500/50 text-white shadow-[0_0_15px_rgba(239,68,68,0.15)]' 
+                              : 'bg-white/[0.01] border-white/5 text-slate-500 hover:border-white/10 hover:text-slate-300'
+                          }`}
                         >
-                          <Weight className={`mb-1 h-4 w-4 ${isHeavy ? 'text-red-500' : 'text-slate-600'}`} />
-                          <span className="text-[9px] uppercase font-bold tracking-wider">Heavy (100lb+)</span>
+                          <Weight className={`mb-1.5 h-4.5 w-4.5 ${isHeavy ? 'text-red-500' : 'text-slate-500'}`} />
+                          <span className="text-[10px] uppercase font-bold tracking-wider font-display">Heavy (100lb+)</span>
                         </button>
 
                         <button
                           onClick={() => setIsRefrigerated(!isRefrigerated)}
-                          className={`flex flex-col items-center justify-center p-2 rounded-lg border transition-all duration-200 ${isRefrigerated ? 'bg-blue-900/20 border-blue-500 text-white shadow-[0_0_10px_rgba(59,130,246,0.2)]' : 'bg-slate-950 border-slate-800 text-slate-500 hover:border-slate-700'}`}
+                          className={`flex flex-col items-center justify-center p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${
+                            isRefrigerated 
+                              ? 'bg-blue-950/20 border-blue-500/50 text-white shadow-[0_0_15px_rgba(59,130,246,0.15)]' 
+                              : 'bg-white/[0.01] border-white/5 text-slate-500 hover:border-white/10 hover:text-slate-300'
+                          }`}
                         >
-                          <Snowflake className={`mb-1 h-4 w-4 ${isRefrigerated ? 'text-blue-500' : 'text-slate-600'}`} />
-                          <span className="text-[9px] uppercase font-bold tracking-wider">Refrigerated</span>
+                          <Snowflake className={`mb-1.5 h-4.5 w-4.5 ${isRefrigerated ? 'text-blue-500' : 'text-slate-500'}`} />
+                          <span className="text-[10px] uppercase font-bold tracking-wider font-display">Refrigerated</span>
                         </button>
 
                         <button
                           onClick={() => setIsHazmat(!isHazmat)}
-                          className={`flex flex-col items-center justify-center p-2 rounded-lg border transition-all duration-200 ${isHazmat ? 'bg-yellow-900/20 border-yellow-500 text-white shadow-[0_0_10px_rgba(234,179,8,0.2)]' : 'bg-slate-950 border-slate-800 text-slate-500 hover:border-slate-700'}`}
+                          className={`flex flex-col items-center justify-center p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${
+                            isHazmat 
+                              ? 'bg-yellow-950/20 border-yellow-500/50 text-white shadow-[0_0_15px_rgba(234,179,8,0.15)]' 
+                              : 'bg-white/[0.01] border-white/5 text-slate-500 hover:border-white/10 hover:text-slate-300'
+                          }`}
                         >
-                          <Zap className={`mb-1 h-4 w-4 ${isHazmat ? 'text-yellow-500' : 'text-slate-600'}`} />
-                          <span className="text-[9px] uppercase font-bold tracking-wider">Hazmat / DG</span>
+                          <Zap className={`mb-1.5 h-4.5 w-4.5 ${isHazmat ? 'text-yellow-500' : 'text-slate-500'}`} />
+                          <span className="text-[10px] uppercase font-bold tracking-wider font-display">Hazmat / DG</span>
                         </button>
 
                         <button
                           onClick={() => setIsAfterHours(!isAfterHours)}
-                          className={`flex flex-col items-center justify-center p-2 rounded-lg border transition-all duration-200 ${isAfterHours ? 'bg-purple-900/20 border-purple-500 text-white shadow-[0_0_10px_rgba(168,85,247,0.2)]' : 'bg-slate-950 border-slate-800 text-slate-500 hover:border-slate-700'}`}
+                          className={`flex flex-col items-center justify-center p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${
+                            isAfterHours 
+                              ? 'bg-purple-950/20 border-purple-500/50 text-white shadow-[0_0_15px_rgba(168,85,247,0.15)]' 
+                              : 'bg-white/[0.01] border-white/5 text-slate-500 hover:border-white/10 hover:text-slate-300'
+                          }`}
                         >
-                          <Moon className={`mb-1 h-4 w-4 ${isAfterHours ? 'text-purple-500' : 'text-slate-600'}`} />
-                          <span className="text-[9px] uppercase font-bold tracking-wider">After Hours</span>
+                          <Moon className={`mb-1.5 h-4.5 w-4.5 ${isAfterHours ? 'text-purple-500' : 'text-slate-500'}`} />
+                          <span className="text-[10px] uppercase font-bold tracking-wider font-display">After Hours</span>
                         </button>
                       </div>
                     </div>
@@ -333,71 +355,73 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
                   <>
                     {/* AIR INPUTS */}
                     <div>
-                      <label className="block text-xs font-medium text-slate-500 uppercase tracking-widest mb-2">Destination Airport / Hub</label>
+                      <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 font-display">Destination Airport / Hub</label>
                       <div className="relative">
-                        <Globe className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-500 h-5 w-5" />
+                        <Globe className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-500 h-5 w-5 z-10" />
                         <select
                           value={selectedAirDest.name}
                           onChange={handleAirDestChange}
-                          className="w-full bg-slate-950 border border-slate-700 text-white pl-12 pr-4 py-4 rounded-lg focus:ring-1 focus:ring-blue-500 focus:outline-none appearance-none font-bold uppercase tracking-wide cursor-pointer hover:border-slate-600 transition-colors"
+                          className="w-full glass-input text-white pl-12 pr-10 py-4 rounded-xl focus:outline-none appearance-none font-bold uppercase tracking-wide cursor-pointer text-sm font-accent"
                         >
                           {airDestinations.map(d => (
-                            <option key={d.name} value={d.name}>{d.name}</option>
+                            <option key={d.name} value={d.name} className="bg-slate-950 text-white">{d.name}</option>
                           ))}
                         </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-500">
+                          <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                        </div>
                       </div>
                     </div>
 
-                    <div className="flex items-center space-x-3 p-4 bg-slate-950/50 border border-slate-800 rounded-lg">
-                      <div className={`h-2 w-2 rounded-full ${selectedAirDest.type === 'Domestic' ? 'bg-blue-500' : 'bg-orange-500'}`}></div>
-                      <span className="text-slate-300 font-medium text-sm uppercase">{selectedAirDest.type} Operation</span>
+                    <div className="flex items-center space-x-3 p-4 bg-white/[0.01] border border-white/5 rounded-xl">
+                      <div className={`h-2.5 w-2.5 rounded-full ${selectedAirDest.type === 'Domestic' ? 'bg-blue-500' : 'bg-orange-500'} animate-pulse`}></div>
+                      <span className="text-slate-300 font-bold text-xs uppercase font-display tracking-wider">{selectedAirDest.type} Hand Carry Dispatch</span>
                     </div>
                   </>
                 )}
 
-                <div className="h-px bg-slate-800 my-4"></div>
+                <div className="h-[1px] bg-white/5 my-4"></div>
 
-                {/* Logic Display */}
+                {/* Pricing Details Breakdown */}
                 {mode === 'ground' ? (
-                  <div className="flex flex-col space-y-2">
-                    <div className="flex justify-between items-center text-sm font-medium text-slate-500">
-                      <span>Base Fee:</span>
-                      <span>${BASE_FEE}.00</span>
+                  <div className="flex flex-col space-y-2 font-display text-xs md:text-sm">
+                    <div className="flex justify-between items-center font-medium text-slate-500">
+                      <span>Base Dispatch Fee:</span>
+                      <span className="text-white">${BASE_FEE}.00</span>
                     </div>
-                    <div className="flex justify-between items-center text-sm font-medium text-slate-500">
+                    <div className="flex justify-between items-center font-medium text-slate-500">
                       <span>Mileage ({currentMiles} mi × 2):</span>
-                      <span>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(currentMiles * 2 * RATE_PER_MILE)}</span>
+                      <span className="text-white">{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(currentMiles * 2 * RATE_PER_MILE)}</span>
                     </div>
                     {(isHeavy || isRefrigerated || isHazmat || isAfterHours) && (
-                      <div className="flex justify-between items-center text-sm font-medium text-red-400 pt-2 border-t border-slate-800/50 mt-1">
+                      <div className="flex justify-between items-center font-medium text-red-400/80 pt-2 border-t border-white/5 mt-1">
                         <span>Surcharges & Fees:</span>
-                        <span>+ {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(groundCost - ((currentMiles * ROUND_TRIP_MULTIPLIER * RATE_PER_MILE) + BASE_FEE))}</span>
+                        <span className="font-bold">+ {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(groundCost - ((currentMiles * ROUND_TRIP_MULTIPLIER * RATE_PER_MILE) + BASE_FEE))}</span>
                       </div>
                     )}
                   </div>
                 ) : (
-                  <div className="flex flex-col space-y-2">
-                    <div className="flex justify-between items-center text-sm font-medium text-slate-500">
+                  <div className="flex flex-col space-y-2 font-display text-xs md:text-sm">
+                    <div className="flex justify-between items-center font-medium text-slate-500">
                       <span>Courier Day Rate (Est):</span>
-                      <span>${selectedAirDest.courierFee}</span>
+                      <span className="text-white">${selectedAirDest.courierFee}</span>
                     </div>
-                    <div className="flex justify-between items-center text-sm font-medium text-slate-500">
-                      <span>Airfare & Admin (Est):</span>
-                      <span>${selectedAirDest.flightEst}</span>
+                    <div className="flex justify-between items-center font-medium text-slate-500">
+                      <span>Airfare & Admin Booking (Est):</span>
+                      <span className="text-white">${selectedAirDest.flightEst}</span>
                     </div>
                   </div>
                 )}
 
-                {/* Total Cost */}
-                <div className="bg-slate-950/60 backdrop-blur-lg border border-slate-800/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] p-5 flex flex-col items-start justify-center rounded-xl transition-all duration-300 relative overflow-hidden">
-                  {/* Liquid glass light reflection */}
-                  <div className={`absolute -right-6 -top-6 w-24 h-24 rounded-full blur-2xl opacity-40 transition-colors duration-300 pointer-events-none ${mode === 'ground' ? 'bg-red-600' : 'bg-blue-500'}`} />
+                {/* Total Cost Glow Box */}
+                <div className="bg-white/[0.01] border border-white/5 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] p-6 flex flex-col items-start justify-center rounded-2xl relative overflow-hidden">
+                  <div className={`absolute -right-10 -top-10 w-32 h-32 rounded-full blur-3xl opacity-15 transition-all duration-500 pointer-events-none ${mode === 'ground' ? 'bg-red-600' : 'bg-blue-600'}`} />
                   
-                  <span className={`${mode === 'ground' ? 'text-red-400' : 'text-blue-400'} font-bold uppercase tracking-widest text-[10px] mb-1 z-10`}>Estimated Total</span>
-                  <div className="text-4xl font-bold text-white tracking-tighter z-10">
+                  <span className={`${mode === 'ground' ? 'text-red-400' : 'text-blue-400'} font-bold uppercase tracking-widest text-[9px] mb-1 font-display`}>Estimated Total</span>
+                  <div className="text-4xl md:text-5xl font-black text-white tracking-tighter font-display z-10">
                     {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(mode === 'ground' ? groundCost : airCost)}
                   </div>
-                  {mode === 'air' && <span className="text-[10px] text-slate-500 mt-2 font-medium uppercase z-10">*Includes carry-on logistics & last mile</span>}
+                  {mode === 'air' && <span className="text-[9px] text-slate-500 mt-2 font-medium uppercase font-display z-10">*Includes carry-on logistics & last mile delivery</span>}
                 </div>
 
                 {onBook && (
@@ -422,17 +446,17 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
                       }
                       onBook({ pickupAddress: pickup, deliveryAddress: delivery, itemDescription: desc });
                     }}
-                    className={`w-full py-3.5 px-4 rounded-lg font-bold uppercase tracking-wider text-sm transition-all flex items-center justify-center space-x-2 border-2 cursor-pointer ${
+                    className={`w-full py-4 px-4 rounded-full font-bold uppercase tracking-wider text-xs transition-all duration-300 flex items-center justify-center space-x-2 border cursor-pointer ${
                       mode === 'ground'
-                        ? 'bg-red-600 border-red-600 hover:bg-red-700 hover:border-red-700 text-white shadow-lg shadow-red-900/20'
-                        : 'bg-blue-600 border-blue-500 hover:bg-blue-700 hover:border-blue-700 text-white shadow-lg shadow-blue-900/20'
+                        ? 'bg-red-600 border-red-500/20 hover:bg-red-700 text-white shadow-lg shadow-red-950/20'
+                        : 'bg-blue-600 border-blue-500/20 hover:bg-blue-700 text-white shadow-lg shadow-blue-950/20'
                     }`}
                   >
                     <span>Book This Delivery</span>
                   </button>
                 )}
 
-                <p className="text-xs text-slate-600 italic">
+                <p className="text-[10px] text-slate-500 italic leading-relaxed text-center">
                   *Quote is an estimate for planning purposes. Flight prices fluctuate hourly. Final fixed price provided upon booking.
                 </p>
 
@@ -440,15 +464,14 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
             </div>
           </div>
 
-          {/* Right Column: Interactive Map Preview - Hidden on Mobile */}
-          <div className="hidden lg:flex flex-col h-full min-h-[240px]">
+          {/* Right Column: Interactive Map Preview */}
+          <div className="hidden lg:flex flex-col h-full min-h-[300px] lg:min-h-[400px]">
             <div className="flex items-center space-x-2 mb-4">
-              {mode === 'ground' ? <Navigation className="text-red-500 h-5 w-5" /> : <Plane className="text-blue-500 h-5 w-5" />}
-              <h3 className="text-sm font-bold text-slate-300 uppercase tracking-wider">Route Preview</h3>
+              {mode === 'ground' ? <Navigation className="text-red-500 h-4 w-4" /> : <Plane className="text-blue-500 h-4 w-4" />}
+              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest font-display">Route Preview</h3>
             </div>
 
-            <div className="flex-grow bg-slate-900 border border-slate-800 rounded-xl overflow-hidden relative group">
-              {/* Conditionally Render Map Source */}
+            <div className="flex-grow glass-panel rounded-3xl overflow-hidden relative group">
               {mode === 'ground' ? (
                 <iframe
                   width="100%"
@@ -459,26 +482,26 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
                   marginWidth={0}
                   title="Route Map"
                   src={googleMapSrc}
-                  className="w-full h-full opacity-100"
+                  className="w-full h-full opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                   loading="lazy"
                 ></iframe>
               ) : (
-                <div ref={mapContainer} className="w-full h-full min-h-[180px] lg:min-h-[240px] z-0 bg-slate-100"></div>
+                <div ref={mapContainer} className="w-full h-full z-0 bg-slate-100"></div>
               )}
 
               {/* Overlay Data Card */}
-              <div className="absolute bottom-0 left-0 w-full bg-slate-950/90 border-t border-slate-800 p-4 backdrop-blur-md z-[1000]">
-                <div className="grid grid-cols-2 gap-4">
+              <div className="absolute bottom-0 left-0 w-full bg-slate-950/70 border-t border-white/5 p-6 backdrop-blur-md z-[1000]">
+                <div className="grid grid-cols-2 gap-6">
                   <div className="flex items-center space-x-4">
-                    <div className="bg-slate-800 p-2 rounded-full">
-                      {mode === 'ground' ? <Navigation className="text-white h-5 w-5" /> : <Globe className="text-white h-5 w-5" />}
+                    <div className="bg-white/5 border border-white/8 p-3 rounded-2xl text-slate-300">
+                      {mode === 'ground' ? <Navigation className="h-5 w-5" /> : <Globe className="h-5 w-5" />}
                     </div>
                     <div>
-                      <div className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">{mode === 'ground' ? 'Total Distance' : 'Zone'}</div>
-                      <div className="text-lg md:text-xl font-mono text-white font-bold">
+                      <div className="text-[9px] text-slate-500 uppercase tracking-widest font-bold font-display">{mode === 'ground' ? 'Total Distance' : 'Zone'}</div>
+                      <div className="text-lg md:text-xl font-bold font-display text-white">
                         {mode === 'ground' ? (
                           <>
-                            {currentMiles} <span className="text-sm text-slate-500 font-normal">mi</span>
+                            {currentMiles} <span className="text-xs text-slate-500 font-normal font-sans">mi</span>
                           </>
                         ) : (
                           selectedAirDest.type
@@ -488,23 +511,23 @@ export const Calculator: React.FC<CalculatorProps> = ({ onBook }) => {
                   </div>
 
                   <div className="flex items-center space-x-4">
-                    <div className="bg-slate-800 p-2 rounded-full">
+                    <div className="bg-white/5 border border-white/8 p-3 rounded-2xl text-slate-300">
                       <Clock className={`${mode === 'ground' ? 'text-red-500' : 'text-blue-500'} h-5 w-5`} />
                     </div>
                     <div>
-                      <div className="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Est. Transit Time</div>
-                      <div className="text-lg md:text-xl font-mono text-white font-bold">
+                      <div className="text-[9px] text-slate-500 uppercase tracking-widest font-bold font-display">Est. Transit Time</div>
+                      <div className="text-lg md:text-xl font-bold font-display text-white">
                         {mode === 'ground' ? groundEta : selectedAirDest.time}
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Route Visualization Line (Decorative) */}
-                <div className="mt-4 flex items-center justify-between text-xs font-medium text-slate-500 uppercase">
+                {/* Route Fading Line Indicator */}
+                <div className="mt-6 flex items-center justify-between text-[10px] font-bold text-slate-500 uppercase font-display tracking-widest">
                   <span>Austin, TX</span>
-                  <div className="h-px bg-slate-700 flex-grow mx-4 relative">
-                    <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-slate-950 px-2 text-slate-600">
+                  <div className="h-[1px] bg-gradient-to-r from-transparent via-slate-600 to-transparent flex-grow mx-4 relative">
+                    <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-slate-900 px-3 text-[9px] text-slate-400 font-bold border border-white/5 rounded-full py-0.5 backdrop-blur-md">
                       {mode === 'ground' ? 'DIRECT DRIVE' : 'NEXT FLIGHT'}
                     </div>
                   </div>

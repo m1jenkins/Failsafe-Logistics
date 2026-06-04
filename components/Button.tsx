@@ -17,12 +17,12 @@ type ButtonNodeProps = BaseButtonProps & {
 export type ButtonProps = AnchorProps | ButtonNodeProps;
 
 export const Button = ({ variant = 'primary', children, className = '', ...props }: ButtonProps) => {
-  const baseStyles = "px-6 py-3 font-bold uppercase tracking-wider transition-all duration-200 border-2 inline-flex items-center justify-center";
+  const baseStyles = "px-6 py-3.5 font-bold uppercase tracking-wider transition-all duration-300 inline-flex items-center justify-center font-display rounded-full cursor-pointer text-xs md:text-sm";
 
   const variants = {
-    primary: "bg-slate-800 border-slate-700 text-white hover:bg-slate-700 hover:border-slate-500",
-    secondary: "bg-transparent border-slate-600 text-slate-300 hover:border-white hover:text-white",
-    alert: "bg-red-600 border-red-600 text-white hover:bg-red-700 hover:border-red-700 shadow-[0_0_15px_rgba(220,38,38,0.5)]"
+    primary: "bg-white/5 border border-white/10 text-white hover:bg-white/10 hover:border-white/25 shadow-lg shadow-black/30 backdrop-blur-sm",
+    secondary: "bg-transparent border border-white/8 text-slate-300 hover:border-white/20 hover:text-white hover:bg-white/5 shadow-md",
+    alert: "bg-gradient-to-r from-red-600 to-red-700 border border-red-500/20 text-white hover:from-red-500 hover:to-red-600 hover:border-red-400/30 shadow-lg shadow-red-950/30 active:translate-y-[1px]"
   };
 
   const combinedClasses = `${baseStyles} ${variants[variant]} ${className}`;

@@ -103,7 +103,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
                   : 'text-slate-500 hover:text-slate-300'
               }`}
             >
-              ⚡ Quick Request
+              Quick Request
             </button>
             <button
               type="button"
@@ -114,7 +114,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
                   : 'text-slate-500 hover:text-slate-300'
               }`}
             >
-              📋 Full Booking Details
+              Full Booking Details
             </button>
           </div>
 

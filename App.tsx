@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Features } from './components/Features';
@@ -7,6 +7,9 @@ import { Reviews } from './components/Reviews';
 import { ContactForm } from './components/ContactForm';
 import { ServiceArea } from './components/ServiceArea';
 import { Footer } from './components/Footer';
+import { LocationLandingPage } from './components/LocationLandingPage';
+import { locations } from './data/locations';
+import { injectLocationSchema } from './utils/schemaHelper';
 
 interface BookingDetails {
   pickupAddress?: string;
@@ -16,6 +19,13 @@ interface BookingDetails {
 
 const App: React.FC = () => {
   const [bookingDetails, setBookingDetails] = useState<BookingDetails>({});
+  
+  // Custom router state based on window path
+  const [currentLocationId, setCurrentLocationId] = useState<string>(() => {
+    const path = window.location.pathname;
+    const cleanPath = path.replace(/^\//, '');
+    return locations[cleanPath] ? cleanPath : '';
+  });
 
   const handleBook = (details: BookingDetails) => {
     setBookingDetails(details);
@@ -24,6 +34,63 @@ const App: React.FC = () => {
       document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
     }, 50);
   };
+
+  const handleNavigate = (locationId: string) => {
+    setCurrentLocationId(locationId);
+    const newPath = locationId ? `/${locationId}` : '/';
+    window.history.pushState({}, '', newPath);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Sync state with back/forward history events
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname;
+      const cleanPath = path.replace(/^\//, '');
+      setCurrentLocationId(locations[cleanPath] ? cleanPath : '');
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Manage SEO metadata & JSON-LD schema dynamically
+  useEffect(() => {
+    const activeLocation = locations[currentLocationId];
+    
+    // Store original document values (from index.html)
+    const originalTitle = "Last Minute Courier Service Austin | Air Hand Carry & Same Day Delivery TX";
+    const originalDescription = "Speedy Bat Couriers offers last minute courier service in Austin TX. Air hand carry, same day delivery, expedited ground transport & emergency logistics. 24/7 service in Austin, Round Rock & Nationwide.";
+    const originalKeywords = "courier in austin texas, courier austin, courier service austin tx, same day courier austin, same day delivery austin tx, last minute courier service austin, air hand carry austin, on board courier austin, hand carry courier austin, expedited delivery austin, emergency courier texas, urgent delivery austin, medical courier austin, hot shot delivery austin, legal courier austin tx, courier near me austin, austin texas courier company, rush delivery austin, dedicated courier austin texas, overnight courier austin tx";
+
+    const descMeta = document.querySelector('meta[name="description"]');
+    const kwMeta = document.querySelector('meta[name="keywords"]');
+
+    if (activeLocation) {
+      document.title = activeLocation.title;
+      
+      if (descMeta) {
+        descMeta.setAttribute('content', activeLocation.metaDescription);
+      }
+      if (kwMeta) {
+        kwMeta.setAttribute('content', activeLocation.keywords.join(', '));
+      }
+
+      const cleanupSchema = injectLocationSchema(activeLocation);
+      return () => {
+        cleanupSchema();
+      };
+    } else {
+      document.title = originalTitle;
+      if (descMeta) {
+        descMeta.setAttribute('content', originalDescription);
+      }
+      if (kwMeta) {
+        kwMeta.setAttribute('content', originalKeywords);
+      }
+    }
+  }, [currentLocationId]);
+
+  const activeLocation = locations[currentLocationId];
 
   return (
     <div className="bg-obsidian min-h-screen text-slate-200 font-sans selection:bg-red-600 selection:text-white relative overflow-x-hidden">
@@ -38,15 +105,19 @@ const App: React.FC = () => {
       </div>
 
       <div className="relative z-10">
-        <Header />
-        <main>
-          <Hero />
-          <Features />
-          <Calculator onBook={handleBook} />
-          <Reviews />
-          <ContactForm prefilledDetails={bookingDetails} />
-          <ServiceArea />
-        </main>
+        <Header onNavigate={handleNavigate} />
+        {activeLocation ? (
+          <LocationLandingPage location={activeLocation} onNavigate={handleNavigate} />
+        ) : (
+          <main>
+            <Hero />
+            <Features />
+            <Calculator onBook={handleBook} />
+            <Reviews />
+            <ContactForm prefilledDetails={bookingDetails} />
+            <ServiceArea />
+          </main>
+        )}
         <Footer />
       </div>
     </div>

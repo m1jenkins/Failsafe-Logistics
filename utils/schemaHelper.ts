@@ -21,7 +21,7 @@ export const injectLocationSchema = (location: LocationData): () => void => {
     'name': `Speedy Bat Couriers - ${location.name} Delivery Hub`,
     'image': 'https://speedybat.com/speedy-bat-logo.png',
     'telephone': '+1-512-910-4938',
-    'priceRange': location.priceRange,
+    'priceRange': location.priceRange || '$$$',
     'url': `https://speedybat.com/${location.id}`,
     'address': {
       '@type': 'PostalAddress',

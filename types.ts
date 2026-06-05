@@ -29,7 +29,7 @@ export interface LocationData {
   };
   zipCodes: string[];
   areaServed: string;
-  priceRange: string;
+  priceRange?: string;
   transitInfo: string;
   localHighlights: string[];
   localServices: string[];

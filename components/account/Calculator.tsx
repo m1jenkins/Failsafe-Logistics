@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { SectionHeading } from './SectionHeading';
+import { SectionHeading } from '../SectionHeading';
 import { MapPin, Calculator as CalcIcon, Navigation, Clock, Plane, Truck, Globe, Weight, Snowflake, Zap, Moon } from 'lucide-react';
 import L from 'leaflet';
 

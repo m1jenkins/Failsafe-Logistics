@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Features } from './components/Features';
-import { Calculator } from './components/Calculator';
 import { Reviews } from './components/Reviews';
 import { ContactForm } from './components/ContactForm';
 import { ServiceArea } from './components/ServiceArea';
@@ -112,7 +111,6 @@ const App: React.FC = () => {
           <main>
             <Hero />
             <Features />
-            <Calculator onBook={handleBook} />
             <Reviews />
             <ContactForm prefilledDetails={bookingDetails} />
             <ServiceArea onNavigate={handleNavigate} />

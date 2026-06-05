@@ -28,12 +28,6 @@ export const Hero: React.FC = () => {
 
       <div className="container mx-auto px-6 md:px-8 relative z-20">
         <div className="max-w-3xl">
-          {/* Dispatch Badge */}
-          <div className="inline-flex items-center space-x-2 bg-red-950/30 border border-red-500/20 px-3.5 py-1.5 rounded-full mb-6 backdrop-blur-md liquid-shimmer">
-            <Shield className="h-3.5 w-3.5 text-red-500 animate-pulse" />
-            <span className="text-[10px] text-red-400 font-bold uppercase tracking-widest font-display">24/7 Priority Emergency Dispatch</span>
-          </div>
-
           <h1 className="text-4xl sm:text-6xl md:text-7.5xl font-black text-white leading-[1.08] mb-6 tracking-tight font-display">
             Austin's Premier <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-700">Courier Service</span>
@@ -51,10 +45,6 @@ export const Hero: React.FC = () => {
             <Button variant="alert" className="flex items-center justify-center space-x-2 shadow-lg shadow-red-950/20" onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}>
               <span>Get Instant Quote</span>
               <ArrowRight className="h-4 w-4" />
-            </Button>
-            <Button variant="secondary" className="flex items-center justify-center space-x-2" onClick={() => document.getElementById('estimator')?.scrollIntoView({ behavior: 'smooth' })}>
-              <Clock className="h-4 w-4 text-red-500" />
-              <span>View Transit Times</span>
             </Button>
           </div>
 

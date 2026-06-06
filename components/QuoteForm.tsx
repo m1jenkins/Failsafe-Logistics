@@ -269,14 +269,11 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
     <div className="glass-panel-elevated p-4 sm:p-5 lg:p-6 rounded-3xl shadow-2xl relative border border-white/[0.05]">
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
       
-      <div className="mb-3 sm:mb-4">
-        <h2 className="text-lg sm:text-xl font-bold text-white uppercase tracking-wider font-display flex items-center">
+      <div className="mb-4">
+        <h2 className="text-xl sm:text-2xl font-black text-white uppercase tracking-wider font-display flex items-center">
           <span className="w-1.5 h-6 bg-red-600 mr-3 rounded-full"></span>
           Request Quote
         </h2>
-        <p className="text-slate-400 text-xs mt-1 font-light leading-relaxed">
-          Enter route details to dispatch a vehicle or receive a quote in minutes.
-        </p>
       </div>
 
       {isSubmitted ? (

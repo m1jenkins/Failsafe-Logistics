@@ -257,19 +257,19 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
     }
   };
 
-  const inputClasses = (hasError: boolean) => `w-full glass-input text-slate-200 px-5 py-3 sm:py-4 rounded-xl outline-none placeholder:text-slate-600 text-sm border transition-all duration-300 font-sans ${
+  const inputClasses = (hasError: boolean) => `w-full glass-input text-slate-200 px-4 py-2.5 sm:py-3 rounded-xl outline-none placeholder:text-slate-600 text-sm border transition-all duration-300 font-sans ${
     hasError 
       ? 'border-red-500 bg-red-950/10 focus:border-red-400 focus:shadow-[0_0_12px_rgba(239,68,68,0.15)]' 
       : 'border-white/[0.04] focus:border-red-500/50'
   }`;
 
-  const labelClasses = "block text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5 sm:mb-2 font-display";
+  const labelClasses = "block text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1 font-display";
 
   return (
-    <div className="glass-panel-elevated p-5 sm:p-8 rounded-3xl shadow-2xl relative border border-white/[0.05]">
+    <div className="glass-panel-elevated p-4 sm:p-5 lg:p-6 rounded-3xl shadow-2xl relative border border-white/[0.05]">
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
       
-      <div className="mb-4 sm:mb-6">
+      <div className="mb-3 sm:mb-4">
         <h2 className="text-lg sm:text-xl font-bold text-white uppercase tracking-wider font-display flex items-center">
           <span className="w-1.5 h-6 bg-red-600 mr-3 rounded-full"></span>
           Request Quote
@@ -297,7 +297,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
           </Button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4" noValidate>
+        <form onSubmit={handleSubmit} className="space-y-3" noValidate>
           
           {Object.keys(errors).length > 0 && (
             <div 
@@ -335,14 +335,14 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
               Company / Sender Name <span className="text-slate-500 font-light font-sans lowercase italic">(optional)</span>
             </label>
             <div className="relative">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
+              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
                 <Building className="h-4 w-4" />
               </div>
               <input
                 id="senderName"
                 name="senderName"
                 type="text"
-                className={`${inputClasses(!!errors.senderName)} pl-11`}
+                className={`${inputClasses(!!errors.senderName)} pl-10`}
                 placeholder="Company or contact name"
                 value={formState.senderName}
                 onChange={handleChange}
@@ -359,176 +359,185 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
             )}
           </div>
 
-          {/* Contact Phone */}
-          <div>
-            <label htmlFor="phone" className={labelClasses}>
-              Contact Phone Number <span className="text-slate-500 font-light font-sans lowercase italic">(phone or email required)</span>
-            </label>
-            <div className="relative">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
-                <Phone className="h-4 w-4" />
+          {/* Contact & Email Group */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {/* Contact Phone */}
+            <div>
+              <label htmlFor="phone" className={labelClasses}>
+                Phone <span className="text-slate-500 font-light font-sans lowercase italic">(or email)</span>
+              </label>
+              <div className="relative">
+                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
+                  <Phone className="h-4 w-4" />
+                </div>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  className={`${inputClasses(!!errors.phone)} pl-10`}
+                  placeholder="(512) 910-4938"
+                  value={formState.phone}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  autoComplete="tel"
+                  aria-invalid={!!errors.phone}
+                  aria-describedby={errors.phone ? "err-phone" : undefined}
+                />
               </div>
-              <input
-                id="phone"
-                name="phone"
-                type="tel"
-                className={`${inputClasses(!!errors.phone)} pl-11`}
-                placeholder="(512) 910-4938"
-                value={formState.phone}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoComplete="tel"
-                aria-invalid={!!errors.phone}
-                aria-describedby={errors.phone ? "err-phone" : undefined}
-              />
+              {errors.phone && touched.phone && (
+                <span id="err-phone" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
+                  {errors.phone}
+                </span>
+              )}
             </div>
-            {errors.phone && touched.phone && (
-              <span id="err-phone" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
-                {errors.phone}
-              </span>
-            )}
-          </div>
 
-          {/* Email Address */}
-          <div>
-            <label htmlFor="email" className={labelClasses}>
-              Email Address <span className="text-slate-500 font-light font-sans lowercase italic">(phone or email required)</span>
-            </label>
-            <div className="relative">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
-                <Mail className="h-4 w-4" />
+            {/* Email Address */}
+            <div>
+              <label htmlFor="email" className={labelClasses}>
+                Email <span className="text-slate-500 font-light font-sans lowercase italic">(or phone)</span>
+              </label>
+              <div className="relative">
+                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
+                  <Mail className="h-4 w-4" />
+                </div>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  className={`${inputClasses(!!errors.email)} pl-10`}
+                  placeholder="dispatch@company.com"
+                  value={formState.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  autoComplete="email"
+                  aria-invalid={!!errors.email}
+                  aria-describedby={errors.email ? "err-email" : undefined}
+                />
               </div>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                className={`${inputClasses(!!errors.email)} pl-11`}
-                placeholder="dispatch@company.com"
-                value={formState.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoComplete="email"
-                aria-invalid={!!errors.email}
-                aria-describedby={errors.email ? "err-email" : undefined}
-              />
-            </div>
-            {errors.email && touched.email && (
-              <span id="err-email" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
-                {errors.email}
-              </span>
-            )}
-          </div>
-
-          {/* Pickup Address or Zip */}
-          <div>
-            <label htmlFor="pickupLocation" className={labelClasses}>
-              Pickup (Zip or Address) <span className="text-red-500" aria-hidden="true">*</span>
-            </label>
-            <div className="relative">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
-                <MapPin className="h-4 w-4" />
-              </div>
-              <input
-                id="pickupLocation"
-                name="pickupLocation"
-                type="text"
-                required
-                className={`${inputClasses(!!errors.pickupLocation)} pl-11`}
-                placeholder="Street address or zip code"
-                value={formState.pickupLocation}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                aria-invalid={!!errors.pickupLocation}
-                aria-describedby={errors.pickupLocation ? "err-pickupLocation" : undefined}
-              />
-            </div>
-            {errors.pickupLocation && touched.pickupLocation && (
-              <span id="err-pickupLocation" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
-                {errors.pickupLocation}
-              </span>
-            )}
-          </div>
-
-          {/* Delivery Address or Zip */}
-          <div>
-            <label htmlFor="deliveryLocation" className={labelClasses}>
-              Delivery (Zip or Address) <span className="text-red-500" aria-hidden="true">*</span>
-            </label>
-            <div className="relative">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
-                <Navigation className="h-4 w-4" />
-              </div>
-              <input
-                id="deliveryLocation"
-                name="deliveryLocation"
-                type="text"
-                required
-                className={`${inputClasses(!!errors.deliveryLocation)} pl-11`}
-                placeholder="Street address or zip code"
-                value={formState.deliveryLocation}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                aria-invalid={!!errors.deliveryLocation}
-                aria-describedby={errors.deliveryLocation ? "err-deliveryLocation" : undefined}
-              />
-            </div>
-            {errors.deliveryLocation && touched.deliveryLocation && (
-              <span id="err-deliveryLocation" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
-                {errors.deliveryLocation}
-              </span>
-            )}
-          </div>
-
-          {/* Package Type */}
-          <div>
-            <label htmlFor="packageType" className={labelClasses}>Package Type</label>
-            <div className="relative">
-              <select
-                id="packageType"
-                name="packageType"
-                className="w-full glass-input text-slate-200 px-5 py-3 sm:py-4 rounded-xl outline-none border border-white/[0.04] appearance-none text-sm focus:border-red-500/50 cursor-pointer pr-12 font-sans"
-                value={formState.packageType}
-                onChange={handleChange}
-              >
-                <option value="Documents" className="bg-obsidian text-slate-200">Documents / Legal Filings</option>
-                <option value="Small Parcel" className="bg-obsidian text-slate-200">Small Parcel / Package</option>
-                <option value="Large Box" className="bg-obsidian text-slate-200">Large Box / Cargo Case</option>
-                <option value="Pallet" className="bg-obsidian text-slate-200">Pallet / Expedited Freight</option>
-              </select>
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
-                <ChevronDown className="h-4 w-4" />
-              </div>
+              {errors.email && touched.email && (
+                <span id="err-email" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
+                  {errors.email}
+                </span>
+              )}
             </div>
           </div>
 
-          {/* When do you need delivered */}
-          <div>
-            <label htmlFor="deliveryNeeded" className={labelClasses}>
-              When do you need delivered? <span className="text-red-500" aria-hidden="true">*</span>
-            </label>
-            <div className="relative">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
-                <Clock className="h-4 w-4" />
+          {/* Routing Group */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {/* Pickup Address or Zip */}
+            <div>
+              <label htmlFor="pickupLocation" className={labelClasses}>
+                Pickup <span className="text-red-500" aria-hidden="true">*</span>
+              </label>
+              <div className="relative">
+                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
+                  <MapPin className="h-4 w-4" />
+                </div>
+                <input
+                  id="pickupLocation"
+                  name="pickupLocation"
+                  type="text"
+                  required
+                  className={`${inputClasses(!!errors.pickupLocation)} pl-10`}
+                  placeholder="Zip or address"
+                  value={formState.pickupLocation}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={!!errors.pickupLocation}
+                  aria-describedby={errors.pickupLocation ? "err-pickupLocation" : undefined}
+                />
               </div>
-              <input
-                id="deliveryNeeded"
-                name="deliveryNeeded"
-                type="text"
-                required
-                className={`${inputClasses(!!errors.deliveryNeeded)} pl-11`}
-                placeholder="e.g. ASAP, within the next 1-3 hours, June 4th 5am"
-                value={formState.deliveryNeeded}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                aria-invalid={!!errors.deliveryNeeded}
-                aria-describedby={errors.deliveryNeeded ? "err-deliveryNeeded" : undefined}
-              />
+              {errors.pickupLocation && touched.pickupLocation && (
+                <span id="err-pickupLocation" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
+                  {errors.pickupLocation}
+                </span>
+              )}
             </div>
-            {errors.deliveryNeeded && touched.deliveryNeeded && (
-              <span id="err-deliveryNeeded" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
-                {errors.deliveryNeeded}
-              </span>
-            )}
+
+            {/* Delivery Address or Zip */}
+            <div>
+              <label htmlFor="deliveryLocation" className={labelClasses}>
+                Delivery <span className="text-red-500" aria-hidden="true">*</span>
+              </label>
+              <div className="relative">
+                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
+                  <Navigation className="h-4 w-4" />
+                </div>
+                <input
+                  id="deliveryLocation"
+                  name="deliveryLocation"
+                  type="text"
+                  required
+                  className={`${inputClasses(!!errors.deliveryLocation)} pl-10`}
+                  placeholder="Zip or address"
+                  value={formState.deliveryLocation}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={!!errors.deliveryLocation}
+                  aria-describedby={errors.deliveryLocation ? "err-deliveryLocation" : undefined}
+                />
+              </div>
+              {errors.deliveryLocation && touched.deliveryLocation && (
+                <span id="err-deliveryLocation" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
+                  {errors.deliveryLocation}
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Details Group */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {/* Package Type */}
+            <div>
+              <label htmlFor="packageType" className={labelClasses}>Package Type</label>
+              <div className="relative">
+                <select
+                  id="packageType"
+                  name="packageType"
+                  className="w-full glass-input text-slate-200 px-4 py-2.5 sm:py-3 rounded-xl outline-none border border-white/[0.04] appearance-none text-sm focus:border-red-500/50 cursor-pointer pr-10 font-sans"
+                  value={formState.packageType}
+                  onChange={handleChange}
+                >
+                  <option value="Documents" className="bg-obsidian text-slate-200">Documents / Legal Filings</option>
+                  <option value="Small Parcel" className="bg-obsidian text-slate-200">Small Parcel / Package</option>
+                  <option value="Large Box" className="bg-obsidian text-slate-200">Large Box / Cargo Case</option>
+                  <option value="Pallet" className="bg-obsidian text-slate-200">Pallet / Expedited Freight</option>
+                </select>
+                <div className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                  <ChevronDown className="h-4 w-4" />
+                </div>
+              </div>
+            </div>
+
+            {/* When do you need delivered */}
+            <div>
+              <label htmlFor="deliveryNeeded" className={labelClasses}>
+                Timing Required <span className="text-red-500" aria-hidden="true">*</span>
+              </label>
+              <div className="relative">
+                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
+                  <Clock className="h-4 w-4" />
+                </div>
+                <input
+                  id="deliveryNeeded"
+                  name="deliveryNeeded"
+                  type="text"
+                  required
+                  className={`${inputClasses(!!errors.deliveryNeeded)} pl-10`}
+                  placeholder="ASAP or Date/Time"
+                  value={formState.deliveryNeeded}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={!!errors.deliveryNeeded}
+                  aria-describedby={errors.deliveryNeeded ? "err-deliveryNeeded" : undefined}
+                />
+              </div>
+              {errors.deliveryNeeded && touched.deliveryNeeded && (
+                <span id="err-deliveryNeeded" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
+                  {errors.deliveryNeeded}
+                </span>
+              )}
+            </div>
           </div>
 
           {/* Submission Button */}
@@ -543,7 +552,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
                 <span>Processing Quote Request...</span>
               ) : (
                 <>
-                  <span>Request Courier Quote</span>
+                  <span>Submit Form</span>
                   <ArrowRight className="h-4 w-4" />
                 </>
               )}

@@ -3,8 +3,11 @@ import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Features } from './components/Features';
 import { ContactForm } from './components/ContactForm';
+import { HandCarryCallout } from './components/HandCarryCallout';
 import { ServiceArea } from './components/ServiceArea';
 import { Footer } from './components/Footer';
+import { FaqPage } from './components/FaqPage';
+import { AboutPage } from './components/AboutPage';
 import { LocationLandingPage } from './components/LocationLandingPage';
 import { ServiceLandingPage } from './components/ServiceLandingPage';
 import { locations } from './data/locations';
@@ -16,6 +19,8 @@ interface BookingDetails {
   deliveryAddress?: string;
   itemDescription?: string;
 }
+
+const STATIC_PAGES = ['faq', 'about'];
 
 const App: React.FC = () => {
   const [bookingDetails, setBookingDetails] = useState<BookingDetails>({});
@@ -33,6 +38,12 @@ const App: React.FC = () => {
     return services[cleanPath] ? cleanPath : '';
   });
 
+  const [currentPage, setCurrentPage] = useState<string>(() => {
+    const path = window.location.pathname;
+    const cleanPath = path.replace(/^\//, '');
+    return STATIC_PAGES.includes(cleanPath) ? cleanPath : '';
+  });
+
   const handleBook = (details: BookingDetails) => {
     setBookingDetails(details);
     // Give state a brief moment to update and render before scrolling
@@ -42,17 +53,25 @@ const App: React.FC = () => {
   };
 
   const handleNavigate = (routeId: string) => {
-    if (locations[routeId]) {
+    if (STATIC_PAGES.includes(routeId)) {
+      setCurrentPage(routeId);
+      setCurrentLocationId('');
+      setCurrentServiceId('');
+      window.history.pushState({}, '', `/${routeId}`);
+    } else if (locations[routeId]) {
       setCurrentLocationId(routeId);
       setCurrentServiceId('');
+      setCurrentPage('');
       window.history.pushState({}, '', `/${routeId}`);
     } else if (services[routeId]) {
       setCurrentServiceId(routeId);
       setCurrentLocationId('');
+      setCurrentPage('');
       window.history.pushState({}, '', `/${routeId}`);
     } else {
       setCurrentLocationId('');
       setCurrentServiceId('');
+      setCurrentPage('');
       window.history.pushState({}, '', '/');
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -63,15 +82,22 @@ const App: React.FC = () => {
     const handlePopState = () => {
       const path = window.location.pathname;
       const cleanPath = path.replace(/^\//, '');
-      if (locations[cleanPath]) {
+      if (STATIC_PAGES.includes(cleanPath)) {
+        setCurrentPage(cleanPath);
+        setCurrentLocationId('');
+        setCurrentServiceId('');
+      } else if (locations[cleanPath]) {
         setCurrentLocationId(cleanPath);
         setCurrentServiceId('');
+        setCurrentPage('');
       } else if (services[cleanPath]) {
         setCurrentServiceId(cleanPath);
         setCurrentLocationId('');
+        setCurrentPage('');
       } else {
         setCurrentLocationId('');
         setCurrentServiceId('');
+        setCurrentPage('');
       }
     };
     window.addEventListener('popstate', handlePopState);
@@ -91,7 +117,13 @@ const App: React.FC = () => {
     const descMeta = document.querySelector('meta[name="description"]');
     const kwMeta = document.querySelector('meta[name="keywords"]');
 
-    if (activeLocation) {
+    if (currentPage === 'faq') {
+      document.title = "FAQ | Speedy Bat Couriers — Austin TX Courier Service";
+      if (descMeta) descMeta.setAttribute('content', 'Frequently asked questions about Speedy Bat Couriers. Learn about our same-day delivery, air hand carry, pricing, service areas, and 24/7 courier operations in Austin, Texas.');
+    } else if (currentPage === 'about') {
+      document.title = "About | Speedy Bat Couriers — Austin TX Courier Service";
+      if (descMeta) descMeta.setAttribute('content', "Learn about Speedy Bat Couriers — Austin, Texas's trusted 24/7 courier service for time-critical, same-day, and emergency deliveries across Central Texas and nationwide.");
+    } else if (activeLocation) {
       document.title = activeLocation.title;
       
       if (descMeta) {
@@ -128,10 +160,27 @@ const App: React.FC = () => {
         kwMeta.setAttribute('content', originalKeywords);
       }
     }
-  }, [currentLocationId, currentServiceId]);
+  }, [currentLocationId, currentServiceId, currentPage]);
 
   const activeLocation = locations[currentLocationId];
   const activeService = services[currentServiceId];
+
+  const renderContent = () => {
+    if (currentPage === 'faq') return <FaqPage />;
+    if (currentPage === 'about') return <AboutPage />;
+    if (activeLocation) return <LocationLandingPage location={activeLocation} onNavigate={handleNavigate} />;
+    if (activeService) return <ServiceLandingPage service={activeService} onNavigate={handleNavigate} />;
+
+    return (
+      <main>
+        <Hero />
+        <Features onNavigate={handleNavigate} />
+        <ContactForm prefilledDetails={bookingDetails} />
+        <HandCarryCallout />
+        <ServiceArea onNavigate={handleNavigate} />
+      </main>
+    );
+  };
 
   return (
     <div className="bg-obsidian min-h-screen text-slate-200 font-sans selection:bg-red-600 selection:text-white relative overflow-x-hidden">
@@ -147,18 +196,7 @@ const App: React.FC = () => {
 
       <div className="relative z-10">
         <Header onNavigate={handleNavigate} />
-        {activeLocation ? (
-          <LocationLandingPage location={activeLocation} onNavigate={handleNavigate} />
-        ) : activeService ? (
-          <ServiceLandingPage service={activeService} onNavigate={handleNavigate} />
-        ) : (
-          <main>
-            <Hero />
-            <Features onNavigate={handleNavigate} />
-            <ContactForm prefilledDetails={bookingDetails} />
-            <ServiceArea onNavigate={handleNavigate} />
-          </main>
-        )}
+        {renderContent()}
         <Footer onNavigate={handleNavigate} />
       </div>
     </div>

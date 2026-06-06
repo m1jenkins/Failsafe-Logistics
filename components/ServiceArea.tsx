@@ -1,19 +1,14 @@
 import React from 'react';
 import { SectionHeading } from './SectionHeading';
-import { Crosshair, Map, Plane, MapPin, ArrowRight } from 'lucide-react';
-import { locations } from '../data/locations';
+import { Crosshair, MapPin, ArrowRight } from 'lucide-react';
 import { services } from '../data/services';
 
 const hubs = [
   "Houston", "Dallas / Fort Worth", "San Antonio", "El Paso"
 ];
 
-const centralTexasCities = [
-  "Round Rock", "Georgetown", "Cedar Park", "Pflugerville",
-  "Lakeway", "Bee Cave", "West Lake Hills", "Kyle",
-  "Leander", "Liberty Hill", "Lago Vista", "Taylor",
-  "Hutto", "Salado", "Killeen", "Temple",
-  "Buda", "Bastrop", "Elgin", "New Braunfels", "San Marcos"
+const serviceCities = [
+  "Round Rock", "Taylor", "Cedar Park", "Georgetown", "Kyle"
 ];
 
 interface ServiceAreaProps {
@@ -43,45 +38,32 @@ export const ServiceArea: React.FC<ServiceAreaProps> = ({ onNavigate }) => {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12 max-w-4xl mx-auto">
 
-          {/* Austin Neighborhood Dispatch Hubs */}
-          <div className="glass-panel p-8 relative overflow-hidden group rounded-2xl lg:col-span-1">
+          {/* Key Service Cities */}
+          <div className="glass-panel p-8 relative overflow-hidden group rounded-2xl">
             {/* Hover top border glow */}
             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             
-            <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-300 text-slate-300 pointer-events-none">
-              <Map size={100} />
-            </div>
-            
             <h3 className="text-lg font-bold text-white uppercase mb-4 flex items-center font-display tracking-wider">
               <span className="w-1.5 h-6 bg-red-600 mr-3 rounded-full"></span>
-              Austin Neighborhood Dispatch Hubs
+              Central Texas Service Cities
             </h3>
             <p className="text-slate-400 mb-6 font-light leading-relaxed text-sm">
-              Select a neighborhood below to view specialized local dispatch details, transit routes, and pricing:
+              Same-day pickup and delivery coverage across the Austin metro's key commercial corridors:
             </p>
-            <div className="flex flex-wrap gap-2">
-              {Object.values(locations)
-                .sort((a, b) => a.name.localeCompare(b.name))
-                .map(loc => (
-                  <a
-                    key={loc.id}
-                    href={`/${loc.id}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      if (onNavigate) onNavigate(loc.id);
-                    }}
-                    className="text-[10px] font-bold text-red-400 bg-red-950/15 border border-red-500/25 px-3 py-1.5 uppercase hover:bg-red-950/25 hover:border-red-500/50 hover:text-white transition-all duration-300 rounded-full font-display cursor-pointer"
-                  >
-                    {loc.name}
-                  </a>
-                ))}
-            </div>
+            <ul className="space-y-3 font-display">
+              {serviceCities.map(city => (
+                <li key={city} className="flex items-center space-x-3">
+                  <MapPin className="h-4 w-4 text-red-500/70 shrink-0" />
+                  <span className="text-sm text-slate-200 font-bold uppercase tracking-wider">{city}</span>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Specialized Courier Services */}
-          <div className="glass-panel p-8 relative overflow-hidden group rounded-2xl lg:col-span-1">
+          <div className="glass-panel p-8 relative overflow-hidden group rounded-2xl">
             {/* Hover top border glow */}
             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             
@@ -108,38 +90,6 @@ export const ServiceArea: React.FC<ServiceAreaProps> = ({ onNavigate }) => {
                 </a>
               ))}
             </div>
-          </div>
-
-          {/* US Domestic Hand Carry */}
-          <div className="glass-panel p-8 relative overflow-hidden group rounded-2xl lg:col-span-1">
-            {/* Hover top border glow */}
-            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            
-            <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-300 text-slate-300 pointer-events-none">
-              <Plane size={100} />
-            </div>
-            
-            <h3 className="text-lg font-bold text-white uppercase mb-4 flex items-center font-display tracking-wider">
-              <span className="w-1.5 h-6 bg-blue-600 mr-3 rounded-full"></span>
-              US Domestic & International Hand Carry
-            </h3>
-            <p className="text-slate-400 mb-6 font-light leading-relaxed text-sm">
-              For ultra-critical assets that cannot leave human custody. Our courier flies with your package as carry-on luggage to any major airport in the United States and global hubs.
-            </p>
-            <ul className="space-y-3 font-display">
-              <li className="flex items-center space-x-2.5 text-xs text-slate-300 font-bold uppercase tracking-wider">
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                <span>Chain of custody never broken</span>
-              </li>
-              <li className="flex items-center space-x-2.5 text-xs text-slate-300 font-bold uppercase tracking-wider">
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                <span>Real-time flight tracking updates</span>
-              </li>
-              <li className="flex items-center space-x-2.5 text-xs text-slate-300 font-bold uppercase tracking-wider">
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-                <span>Direct delivery from airport to recipient</span>
-              </li>
-            </ul>
           </div>
 
         </div>

@@ -7,14 +7,14 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   return (
-    <footer role="contentinfo" className="bg-obsidian py-16 border-t border-white/[0.03] relative overflow-hidden">
+    <footer role="contentinfo" className="bg-obsidian pt-16 pb-0 border-t border-white/[0.03] relative overflow-hidden">
       {/* Background visual highlight */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[1px] bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-6 relative z-10 pb-32 md:pb-16">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
           {/* Column 1: Main Business Info */}
-          <div className="md:col-span-5 text-center md:text-left order-3 md:order-1">
+          <div className="md:col-span-5 text-center md:text-left order-1">
             <div 
               className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter font-display mb-2 cursor-pointer inline-block"
               onClick={() => onNavigate && onNavigate('')}
@@ -73,22 +73,19 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </ul>
           </div>
 
-          {/* Column 3: Vehicle Crossover Image */}
-          <div className="md:col-span-3 flex justify-center md:justify-end order-1 md:order-3">
-            <div className="relative group max-w-xs w-full">
-              {/* Glassy border decoration */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-red-600/20 to-amber-500/10 rounded-2xl blur-md opacity-75 group-hover:opacity-100 transition duration-700"></div>
-              <div className="relative bg-black/40 border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
-                <img
-                  src="/speedybat-crossover.png"
-                  alt="SpeedyBat Courier Crossover Vehicle"
-                  className="w-full h-auto object-cover opacity-90 group-hover:opacity-100 transition-all duration-500 scale-[1.01] group-hover:scale-100"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
+          {/* Column 3: Spacer for the car on desktop */}
+          <div className="hidden md:block md:col-span-3 order-3" />
         </div>
+      </div>
+
+      {/* The car resting at the bottom of the website */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 md:left-auto md:right-4 md:translate-x-0 lg:right-12 max-w-[240px] sm:max-w-[280px] md:max-w-[360px] lg:max-w-[420px] w-full z-10 transition-transform duration-500 ease-out hover:-translate-y-2">
+        <img
+          src="/speedybat-crossover.png"
+          alt="SpeedyBat Courier Crossover Vehicle"
+          className="w-full h-auto object-contain block opacity-85 hover:opacity-100 transition-opacity duration-500"
+          loading="lazy"
+        />
       </div>
     </footer>
   );

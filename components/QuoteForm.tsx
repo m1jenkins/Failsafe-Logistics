@@ -211,9 +211,9 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
           <div className="w-16 h-16 bg-red-950/20 border border-red-500/30 text-red-500 rounded-full flex items-center justify-center mx-auto shadow-md">
             <Check className="h-8 w-8 animate-[scaleUp_0.3s_ease]" />
           </div>
-          <h3 className="text-lg font-bold text-white uppercase font-display tracking-wider">Request Received!</h3>
+          <h3 className="text-lg font-bold text-white uppercase font-display tracking-wider">Thank you, we'll be in touch.</h3>
           <p className="text-slate-400 text-sm leading-relaxed max-w-xs mx-auto">
-            Thank you. Your request has been dispatched to our central desk. A dispatcher will contact you by phone shortly.
+            If this is extremely urgent, please text <a href="sms:5129104938" className="text-red-500 hover:text-red-400 font-bold underline transition-colors">512-910-4938</a>.
           </p>
           <Button 
             variant="secondary" 

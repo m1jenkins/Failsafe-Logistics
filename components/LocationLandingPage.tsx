@@ -52,7 +52,7 @@ export const LocationLandingPage: React.FC<LocationLandingPageProps> = ({ locati
 
             <div className="flex flex-wrap gap-4 pt-2">
               <a href="#quick-quote-form" className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 border border-red-500/20 text-white font-bold uppercase tracking-wider text-xs md:text-sm px-6 py-4 rounded-full shadow-lg shadow-red-950/30 transition-all inline-flex items-center space-x-2 font-display">
-                <span>Book Instant Courier</span>
+                <span>Get Quote in Minutes</span>
                 <ArrowRight className="h-4 w-4" />
               </a>
               <a href="sms:5129104938" className="bg-white/[0.02] border border-white/[0.04] hover:bg-white/[0.05] text-slate-300 hover:text-white font-bold uppercase tracking-wider text-xs md:text-sm px-6 py-4 rounded-full shadow-md transition-all inline-flex items-center space-x-2 font-display">

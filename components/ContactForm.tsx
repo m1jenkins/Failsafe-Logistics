@@ -85,7 +85,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
       <div className="container mx-auto px-6 max-w-4xl relative z-10">
         <SectionHeading
           title="Secure Booking"
-          subtitle="Ready to dispatch? Fill out the details below for an immediate response."
+          subtitle="Ready to dispatch? Fill out the details below for a response in minutes."
           align="center"
         />
 

@@ -57,21 +57,35 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
   const errorSummaryRef = useRef<HTMLDivElement>(null);
 
   // Validation function
-  const validateField = (name: string, value: string): string => {
+  const validateField = (name: string, value: string, currentFormState: FormState): string => {
     switch (name) {
       case 'senderName':
-        if (!value.trim()) return 'Company or Sender Name is required';
+        // Optional field
         return '';
-      case 'phone':
-        if (!value.trim()) return 'Phone number is required';
-        const digits = value.replace(/\D/g, '');
-        if (digits.length < 10) return 'Please enter a valid 10-digit phone number';
+      case 'phone': {
+        const val = value.trim();
+        const emailVal = currentFormState.email.trim();
+        if (!val && !emailVal) {
+          return 'Either Phone or Email is required';
+        }
+        if (val) {
+          const digits = val.replace(/\D/g, '');
+          if (digits.length < 10) return 'Please enter a valid 10-digit phone number';
+        }
         return '';
-      case 'email':
-        if (!value.trim()) return 'Email address is required';
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) return 'Please enter a valid email address';
+      }
+      case 'email': {
+        const val = value.trim();
+        const phoneVal = currentFormState.phone.trim();
+        if (!val && !phoneVal) {
+          return 'Either Phone or Email is required';
+        }
+        if (val) {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(val)) return 'Please enter a valid email address';
+        }
         return '';
+      }
       case 'pickupLocation':
         if (!value.trim()) return 'Pickup location is required';
         return '';
@@ -97,18 +111,62 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
       }
     }
 
-    setFormState(prev => ({ ...prev, [name]: formattedValue }));
+    const updatedState = { ...formState, [name]: formattedValue };
+    setFormState(updatedState);
     
     if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
+    }
+
+    // Clear cross-field validation errors for phone/email if either is now provided
+    if (name === 'phone' && formattedValue.trim()) {
+      if (errors.email === 'Either Phone or Email is required') {
+        setErrors(prev => ({ ...prev, email: undefined }));
+      }
+    }
+    if (name === 'email' && formattedValue.trim()) {
+      if (errors.phone === 'Either Phone or Email is required') {
+        setErrors(prev => ({ ...prev, phone: undefined }));
+      }
     }
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setTouched(prev => ({ ...prev, [name]: true }));
-    const errorMsg = validateField(name, value);
-    setErrors(prev => ({ ...prev, [name]: errorMsg || undefined }));
+    
+    const errorMsg = validateField(name, value, formState);
+    setErrors(prev => {
+      const newErrors = { ...prev, [name]: errorMsg || undefined };
+
+      // Handle phone/email validation interaction
+      if (name === 'phone') {
+        if (value.trim()) {
+          if (newErrors.email === 'Either Phone or Email is required') {
+            newErrors.email = undefined;
+          }
+        } else {
+          if (!formState.email.trim()) {
+            newErrors.phone = 'Either Phone or Email is required';
+            newErrors.email = 'Either Phone or Email is required';
+          }
+        }
+      }
+      if (name === 'email') {
+        if (value.trim()) {
+          if (newErrors.phone === 'Either Phone or Email is required') {
+            newErrors.phone = undefined;
+          }
+        } else {
+          if (!formState.phone.trim()) {
+            newErrors.phone = 'Either Phone or Email is required';
+            newErrors.email = 'Either Phone or Email is required';
+          }
+        }
+      }
+
+      return newErrors;
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -117,7 +175,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
 
     const newErrors: FormErrors = {};
     Object.keys(formState).forEach(key => {
-      const errorMsg = validateField(key, formState[key as keyof FormState]);
+      const errorMsg = validateField(key, formState[key as keyof FormState], formState);
       if (errorMsg) {
         newErrors[key as keyof FormErrors] = errorMsg;
       }
@@ -161,9 +219,9 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
         },
         body: JSON.stringify({
           access_key: "4d84c98a-eb94-4f22-8a55-a7e4a80855ec",
-          name: formState.senderName,
+          name: formState.senderName || "Web Quote Lead",
           senderName: formState.senderName,
-          email: formState.email,
+          email: formState.email || "no-email-provided@speedybat.com",
           phone: formState.phone,
           pickupLocation: formState.pickupLocation,
           deliveryLocation: formState.deliveryLocation,
@@ -217,7 +275,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
           Request Quote
         </h2>
         <p className="text-slate-400 text-xs mt-1 font-light leading-relaxed">
-          Enter route details to dispatch a vehicle or receive an immediate quote.
+          Enter route details to dispatch a vehicle or receive a quote in minutes.
         </p>
       </div>
 
@@ -256,7 +314,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
               <ul className="list-disc pl-5 font-sans space-y-0.5">
                 {errors.senderName && <li>{errors.senderName}</li>}
                 {errors.phone && <li>{errors.phone}</li>}
-                {errors.email && <li>{errors.email}</li>}
+                {errors.email && errors.email !== errors.phone && <li>{errors.email}</li>}
                 {errors.pickupLocation && <li>{errors.pickupLocation}</li>}
                 {errors.deliveryLocation && <li>{errors.deliveryLocation}</li>}
                 {errors.deliveryNeeded && <li>{errors.deliveryNeeded}</li>}
@@ -274,7 +332,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
           {/* Company / Sender Name */}
           <div>
             <label htmlFor="senderName" className={labelClasses}>
-              Company / Sender Name <span className="text-red-500" aria-hidden="true">*</span>
+              Company / Sender Name <span className="text-slate-500 font-light font-sans lowercase italic">(optional)</span>
             </label>
             <div className="relative">
               <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
@@ -284,7 +342,6 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
                 id="senderName"
                 name="senderName"
                 type="text"
-                required
                 className={`${inputClasses(!!errors.senderName)} pl-11`}
                 placeholder="Company or contact name"
                 value={formState.senderName}
@@ -305,7 +362,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
           {/* Contact Phone */}
           <div>
             <label htmlFor="phone" className={labelClasses}>
-              Contact Phone Number <span className="text-red-500" aria-hidden="true">*</span>
+              Contact Phone Number <span className="text-slate-500 font-light font-sans lowercase italic">(phone or email required)</span>
             </label>
             <div className="relative">
               <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
@@ -315,7 +372,6 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
                 id="phone"
                 name="phone"
                 type="tel"
-                required
                 className={`${inputClasses(!!errors.phone)} pl-11`}
                 placeholder="(512) 910-4938"
                 value={formState.phone}
@@ -336,7 +392,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
           {/* Email Address */}
           <div>
             <label htmlFor="email" className={labelClasses}>
-              Email Address <span className="text-red-500" aria-hidden="true">*</span>
+              Email Address <span className="text-slate-500 font-light font-sans lowercase italic">(phone or email required)</span>
             </label>
             <div className="relative">
               <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
@@ -346,7 +402,6 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
                 id="email"
                 name="email"
                 type="email"
-                required
                 className={`${inputClasses(!!errors.email)} pl-11`}
                 placeholder="dispatch@company.com"
                 value={formState.email}

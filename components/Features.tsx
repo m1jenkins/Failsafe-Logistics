@@ -121,15 +121,9 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
           {/* Right Column: 2x2 Cargo categories grid */}
           <div className="lg:col-span-6 flex flex-col justify-center space-y-6">
             <div>
-              <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest font-display block mb-2">
-                // cargo compatibility
-              </span>
-              <h4 className="text-xl font-bold uppercase text-white font-display tracking-wider">
+              <h4 className="text-2xl md:text-3xl font-extrabold uppercase text-white font-display tracking-wider">
                 What We Transport
               </h4>
-              <p className="text-slate-400 font-light text-sm leading-relaxed mt-2">
-                Whether it's an envelope of documents or a critical manufacturing widget, we treat every single run as a highest-priority hot shot.
-              </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

@@ -15,8 +15,8 @@ const cargoItems: CargoItem[] = [
     icon: Plane
   },
   {
-    title: "Manufacturing & Wafers",
-    description: "Silicon wafers, specialized widgets, prototypes, and fab line logistics.",
+    title: "Manufacturing Samples",
+    description: "Urgent prototypes, pre-production samples, and critical components to keep validation and assembly lines moving.",
     icon: Cpu
   },
   {

@@ -64,17 +64,7 @@ export const Hero: React.FC = () => {
               </a>
             </div>
 
-            <div className="flex items-center gap-6 pt-4 text-[10px] text-slate-500 font-bold tracking-wider uppercase font-display border-t border-white/[0.02] max-w-lg">
-              <span className="flex items-center">30-60 Min Response</span>
-              <span className="flex items-center">HIPAA Compliant</span>
-              <span className="flex items-center">Chain of Custody</span>
-            </div>
 
-            <div className="mt-8 flex items-center space-x-6 text-slate-500 font-bold text-xs tracking-widest uppercase font-display">
-              <span>DEDICATED FLEET</span>
-              <span>DIRECT DRIVE</span>
-              <span>ZERO TRANSIT DELAYS</span>
-            </div>
           </div>
 
           {/* Right Column: Reusable Quote Form */}

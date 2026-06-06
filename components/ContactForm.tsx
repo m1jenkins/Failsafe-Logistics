@@ -73,11 +73,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
     }
   };
 
-  const inputClasses = "w-full glass-input text-slate-200 px-5 py-4 rounded-xl outline-none placeholder:text-slate-600 text-sm md:text-base";
-  const labelClasses = "block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 font-display";
+  const inputClasses = "w-full glass-input text-slate-200 px-4 py-3 rounded-xl outline-none placeholder:text-slate-600 text-sm md:text-base";
+  const labelClasses = "block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5 font-display";
 
   return (
-    <section className="py-24 bg-obsidian border-b border-white/[0.03] relative overflow-hidden" id="booking">
+    <section className="py-12 md:py-16 bg-obsidian border-b border-white/[0.03] relative overflow-hidden" id="booking">
       {/* Background soft glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-600/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -88,13 +88,13 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
           align="center"
         />
 
-        <div className="mt-12 glass-panel-elevated rounded-3xl p-8 md:p-12 shadow-2xl relative">
+        <div className="mt-6 md:mt-8 glass-panel-elevated rounded-3xl p-6 md:p-8 shadow-2xl relative">
           {/* Card highlight lines */}
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {/* Common Fields */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className={labelClasses}>Full Name</label>
                 <input
@@ -129,7 +129,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
               <textarea
                 name="itemDescription"
                 required
-                rows={4}
+                rows={3}
                 className={`${inputClasses} resize-none`}
                 placeholder="e.g. Medical kit from St. David's Main to Round Rock Clinic, or parts to Samsung Taylor fab"
                 value={itemDescription}
@@ -137,12 +137,12 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
               />
             </div>
 
-            <div className="pt-4">
+            <div className="pt-1">
               <Button
                 variant="alert"
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex items-center justify-center space-x-3 py-4 text-base rounded-full shadow-lg hover:shadow-red-900/10 transition-all cursor-pointer"
+                className="w-full flex items-center justify-center space-x-3 py-3 text-base rounded-full shadow-lg hover:shadow-red-900/10 transition-all cursor-pointer"
               >
                 {isSubmitting ? (
                   <span>PROCESSING REQUEST...</span>
@@ -150,38 +150,35 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
                   <span>DISPATCH REQUEST →</span>
                 )}
               </Button>
-              <p className="text-center text-slate-500 text-xs mt-4 leading-relaxed">
+              <p className="text-center text-slate-500 text-xs mt-3 leading-relaxed">
                 By clicking Request, you agree to our service terms. Immediate availability is subject to confirmation.
               </p>
             </div>
 
             {/* Trust Badges */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-8 border-t border-white/[0.04] mt-8 text-left">
-              <div className="flex items-center space-x-3 bg-white/[0.02] p-4 border border-white/[0.04] rounded-2xl hover:bg-white/[0.03] hover:border-white/[0.08] transition-all duration-300">
-                <div className="bg-red-950/20 border border-red-500/20 p-2.5 rounded-xl text-red-500 shrink-0">
-                  <Zap className="h-5 w-5" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-6 border-t border-white/[0.04] mt-6 text-left">
+              <div className="flex items-center space-x-3 bg-white/[0.01] px-4 py-2 border border-white/[0.02] rounded-xl hover:bg-white/[0.02] hover:border-white/[0.04] transition-all duration-300">
+                <div className="bg-red-950/20 border border-red-500/20 p-2 rounded-xl text-red-500 shrink-0">
+                  <Zap className="h-4.5 w-4.5" />
                 </div>
                 <div>
                   <div className="text-xs font-bold text-white uppercase tracking-wider font-display">30-60 Min Response</div>
-                  <div className="text-[10px] text-slate-500">Rapid local dispatch</div>
                 </div>
               </div>
-              <div className="flex items-center space-x-3 bg-white/[0.02] p-4 border border-white/[0.04] rounded-2xl hover:bg-white/[0.03] hover:border-white/[0.08] transition-all duration-300">
-                <div className="bg-red-950/20 border border-red-500/20 p-2.5 rounded-xl text-red-500 shrink-0">
-                  <ShieldCheck className="h-5 w-5" />
+              <div className="flex items-center space-x-3 bg-white/[0.01] px-4 py-2 border border-white/[0.02] rounded-xl hover:bg-white/[0.02] hover:border-white/[0.04] transition-all duration-300">
+                <div className="bg-red-950/20 border border-red-500/20 p-2 rounded-xl text-red-500 shrink-0">
+                  <ShieldCheck className="h-4.5 w-4.5" />
                 </div>
                 <div>
                   <div className="text-xs font-bold text-white uppercase tracking-wider font-display">Secure Logistics</div>
-                  <div className="text-[10px] text-slate-500">HIPAA & Chain of Custody</div>
                 </div>
               </div>
-              <div className="flex items-center space-x-3 bg-white/[0.02] p-4 border border-white/[0.04] rounded-2xl hover:bg-white/[0.03] hover:border-white/[0.08] transition-all duration-300">
-                <div className="bg-red-950/20 border border-red-500/20 p-2.5 rounded-xl text-red-500 shrink-0">
-                  <MessageSquare className="h-5 w-5" />
+              <div className="flex items-center space-x-3 bg-white/[0.01] px-4 py-2 border border-white/[0.02] rounded-xl hover:bg-white/[0.02] hover:border-white/[0.04] transition-all duration-300">
+                <div className="bg-red-950/20 border border-red-500/20 p-2 rounded-xl text-red-500 shrink-0">
+                  <MessageSquare className="h-4.5 w-4.5" />
                 </div>
                 <div>
                   <div className="text-xs font-bold text-white uppercase tracking-wider font-display">SMS Tracking</div>
-                  <div className="text-[10px] text-slate-500">Real-time transit updates</div>
                 </div>
               </div>
             </div>

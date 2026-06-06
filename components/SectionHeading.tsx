@@ -8,14 +8,11 @@ interface SectionHeadingProps {
 
 export const SectionHeading: React.FC<SectionHeadingProps> = ({ title, subtitle, align = 'left' }) => {
   return (
-    <div className={`mb-12 ${align === 'center' ? 'text-center' : 'text-left'}`}>
-      <span className={`text-[10px] text-red-500 font-bold uppercase tracking-[0.3em] font-display block mb-2`}>
-        // dispatch operations
-      </span>
+    <div className={`mb-8 ${align === 'center' ? 'text-center' : 'text-left'}`}>
       <h2 className="text-3xl md:text-4xl font-black tracking-tight text-white mb-4 font-display">
         {title}
       </h2>
-      <div className={`h-[1px] w-32 mb-6 ${
+      <div className={`h-[1px] w-32 mb-4 ${
         align === 'center' 
           ? 'mx-auto bg-gradient-to-r from-transparent via-ember/40 to-transparent' 
           : 'bg-gradient-to-r from-ember/40 to-transparent'

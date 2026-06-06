@@ -46,7 +46,7 @@ export const Footer: React.FC = () => {
               <div className="absolute -inset-1 bg-gradient-to-r from-red-600/20 to-amber-500/10 rounded-2xl blur-md opacity-75 group-hover:opacity-100 transition duration-700"></div>
               <div className="relative bg-black/40 border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
                 <img
-                  src="https://i.imgur.com/WPoEafm.png"
+                  src="/speedybat-crossover.png"
                   alt="SpeedyBat Courier Crossover Vehicle"
                   className="w-full h-auto object-cover opacity-90 group-hover:opacity-100 transition-all duration-500 scale-[1.01] group-hover:scale-100"
                   loading="lazy"

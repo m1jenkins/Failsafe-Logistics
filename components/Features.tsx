@@ -54,14 +54,6 @@ export const Features: React.FC = () => {
             <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-red-500/40 to-transparent" />
             
             <div className="space-y-6">
-              {/* Dispatch Mode Active Badge */}
-              <div className="inline-flex items-center space-x-2 bg-red-950/25 border border-red-500/20 px-3 py-1 rounded-full shadow-[0_0_15px_rgba(220,38,38,0.15)]">
-                <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                <span className="text-[10px] text-red-400 font-bold uppercase tracking-widest font-display">
-                  Emergency Dispatch Mode Active
-                </span>
-              </div>
-
               <h3 className="text-3xl md:text-4xl font-extrabold uppercase text-white font-display tracking-tight leading-tight">
                 For when tomorrow is <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-ember to-molten font-black">

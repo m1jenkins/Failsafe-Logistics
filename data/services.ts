@@ -425,5 +425,59 @@ export const services: Record<string, ServiceData> = {
       }
     ],
     priceRange: '$$'
+  },
+  'air-hand-carry-on-board-courier': {
+    id: 'air-hand-carry-on-board-courier',
+    name: 'Air Hand Carry / On-Board Courier',
+    title: 'Air Hand Carry Austin | On-Board Courier Service TX',
+    metaDescription: 'Premium air hand carry and on-board courier (OBC) services in Austin, TX. A dedicated courier personally accompanies your package on commercial flights for secure, same-day delivery nationwide.',
+    keywords: [
+      'Air hand carry Austin',
+      'on board courier Austin',
+      'OBC courier service',
+      'hand carry shipping Texas',
+      'expedited air courier'
+    ],
+    tagline: 'A dedicated courier personally accompanies your critical shipment on commercial flights.',
+    overview: 'For high-stakes cargo that absolutely cannot leave human custody or risk transit delay, our premium Air Hand Carry (On-Board Courier) service is the gold standard. A dedicated, background-checked Speedy Bat courier receives your package, immediately drives to the airport, boards the next available commercial flight, and hand-delivers the package directly to the recipient at destination. Your shipment never leaves human hands, ensuring a completely unbroken chain of custody.',
+    features: [
+      {
+        title: 'Unbroken Chain of Custody',
+        description: 'Our courier maintains constant physical possession of your package from initial pickup until final hand-delivery, completely eliminating handling errors.',
+        iconName: 'Shield'
+      },
+      {
+        title: 'Immediate Flight Booking',
+        description: 'Our dispatch team actively monitors flight schedules and books the next available commercial routing out of AUS or DFW within minutes.',
+        iconName: 'Plane'
+      },
+      {
+        title: 'Real-Time Courier Updates',
+        description: 'Receive continuous updates at key milestones: flight boarding, landing, terminal exit, and final delivery, complete with photo confirmation.',
+        iconName: 'Globe'
+      }
+    ],
+    capabilities: [
+      'Delicate semiconductor wafers, fab tools, and microelectronics',
+      'Critical legal files, evidence, and time-sensitive signed contracts',
+      'Biological specimens, clinical trial samples, and urgent pharmaceuticals',
+      'High-value jewelry, automotive prototypes, and critical aviation (AOG) components'
+    ],
+    faq: [
+      {
+        question: 'What is the maximum size and weight for hand carry shipments?',
+        answer: 'Since packages must accompany our courier in the aircraft cabin, they must fit standard airline carry-on or personal item dimensions (typically up to 22" x 14" x 9") and weigh under 40 lbs. Larger items may be shipped via next-flight-out air cargo, which we can also coordinate.'
+      },
+      {
+        question: 'Which airports do you operate out of?',
+        answer: 'We primarily dispatch couriers out of Austin-Bergstrom International Airport (AUS) and Dallas-Fort Worth International Airport (DFW) for domestic and international destinations. We can also coordinate departures from Houston (IAH/HOU) or San Antonio (SAT) depending on the fastest flight availability.'
+      },
+      {
+        question: 'Are your couriers fully vetted and secure?',
+        answer: 'Yes. All on-board couriers are thoroughly vetted, background-checked, and highly experienced in high-security logistics. they carry international travel credentials and operate with the highest level of professionalism.'
+      }
+    ],
+    priceRange: '$$$$'
   }
 };
+

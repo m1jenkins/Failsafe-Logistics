@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { 
   ArrowRight, Navigation, MapPin, 
-  AlertCircle, ChevronDown, Check, Building, Phone, Clock
+  AlertCircle, ChevronDown, Check, Building, Phone, Clock, Mail
 } from 'lucide-react';
 import { Button } from './Button';
 
@@ -15,6 +15,7 @@ interface QuoteFormProps {
 interface FormState {
   senderName: string;
   phone: string;
+  email: string;
   pickupLocation: string;
   deliveryLocation: string;
   packageType: string;
@@ -24,6 +25,7 @@ interface FormState {
 interface FormErrors {
   senderName?: string;
   phone?: string;
+  email?: string;
   pickupLocation?: string;
   deliveryLocation?: string;
   deliveryNeeded?: string;
@@ -38,6 +40,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
   const [formState, setFormState] = useState<FormState>({
     senderName: '',
     phone: '',
+    email: '',
     pickupLocation: defaultPickup,
     deliveryLocation: '',
     packageType: 'Documents',
@@ -63,6 +66,11 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
         if (!value.trim()) return 'Phone number is required';
         const digits = value.replace(/\D/g, '');
         if (digits.length < 10) return 'Please enter a valid 10-digit phone number';
+        return '';
+      case 'email':
+        if (!value.trim()) return 'Email address is required';
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) return 'Please enter a valid email address';
         return '';
       case 'pickupLocation':
         if (!value.trim()) return 'Pickup location is required';
@@ -136,6 +144,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
         ------------------------------------
         Sender/Company: ${formState.senderName}
         Phone: ${formState.phone}
+        Email: ${formState.email}
         Pickup: ${formState.pickupLocation}
         Delivery: ${formState.deliveryLocation}
         Package Type: ${formState.packageType}
@@ -153,7 +162,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
         body: JSON.stringify({
           access_key: "9f904ee4-4752-46ac-bfe9-8ef9dab95cae",
           name: formState.senderName,
-          email: "leads@speedybat.com",
+          email: formState.email,
           phone: formState.phone,
           message: messageBody,
           subject: `New Lead - ${sourceName} Quote Request`
@@ -166,6 +175,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
         setFormState({
           senderName: '',
           phone: '',
+          email: '',
           pickupLocation: defaultPickup,
           deliveryLocation: '',
           packageType: 'Documents',
@@ -241,6 +251,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
               <ul className="list-disc pl-5 font-sans space-y-0.5">
                 {errors.senderName && <li>{errors.senderName}</li>}
                 {errors.phone && <li>{errors.phone}</li>}
+                {errors.email && <li>{errors.email}</li>}
                 {errors.pickupLocation && <li>{errors.pickupLocation}</li>}
                 {errors.deliveryLocation && <li>{errors.deliveryLocation}</li>}
                 {errors.deliveryNeeded && <li>{errors.deliveryNeeded}</li>}
@@ -313,6 +324,37 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
             {errors.phone && touched.phone && (
               <span id="err-phone" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
                 {errors.phone}
+              </span>
+            )}
+          </div>
+
+          {/* Email Address */}
+          <div>
+            <label htmlFor="email" className={labelClasses}>
+              Email Address <span className="text-red-500" aria-hidden="true">*</span>
+            </label>
+            <div className="relative">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">
+                <Mail className="h-4 w-4" />
+              </div>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                className={`${inputClasses(!!errors.email)} pl-11`}
+                placeholder="dispatch@company.com"
+                value={formState.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                autoComplete="email"
+                aria-invalid={!!errors.email}
+                aria-describedby={errors.email ? "err-email" : undefined}
+              />
+            </div>
+            {errors.email && touched.email && (
+              <span id="err-email" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
+                {errors.email}
               </span>
             )}
           </div>

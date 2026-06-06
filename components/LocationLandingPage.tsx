@@ -6,7 +6,6 @@ import {
   AlertCircle, ChevronDown, Check, Building, Phone
 } from 'lucide-react';
 import { Button } from './Button';
-import { Fleet } from './Fleet';
 
 interface LocationLandingPageProps {
   location: LocationData;
@@ -593,8 +592,6 @@ export const LocationLandingPage: React.FC<LocationLandingPageProps> = ({ locati
 
           </div>
         </section>
-
-        <Fleet />
 
         {/* =========================================================================
             4. LOCAL SERVICE MATRIX

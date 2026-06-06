@@ -43,6 +43,7 @@ export const Features: React.FC = () => {
       <div className="container mx-auto px-6 relative z-10">
         <SectionHeading
           title="Consolidated Hot Shot Services"
+          subtitle="For when tomorrow is too late. Direct-drive logistics designed for the high-stakes jobs others aren't willing to do."
           align="center"
         />
 
@@ -61,7 +62,7 @@ export const Features: React.FC = () => {
               </h3>
 
               <p className="text-slate-300 font-light text-base leading-relaxed">
-                When next-day air cutoff has passed, hubs are shut down, and cargo absolutely has to be in another city by 8:00 AM next morning, Speedy Bat gets it done.
+                When next-day air cutoff has passed, hubs are shut down, and cargo absolutely has to be in another city by 8:00 AM next morning, overnight courier networks can't help. 
               </p>
               
               <p className="text-slate-400 font-light text-sm leading-relaxed">

@@ -33,11 +33,8 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
           <span className="text-[9px] text-red-500 font-bold tracking-[0.4em] uppercase mt-0.5 ml-0.5">Couriers</span>
         </div>
 
-        <a 
-          href="sms:5129104938" 
-          className="flex items-center space-x-2 bg-white/[0.02] border border-white/[0.08] hover:border-red-500/30 hover:bg-white/[0.04] text-slate-300 hover:text-white px-5 py-2.5 text-xs md:text-sm font-bold uppercase tracking-wider transition-all duration-300 shadow-md shadow-black/20 rounded-full backdrop-blur-md"
-        >
-          <MessageSquare className="h-3.5 w-3.5 text-red-500 animate-pulse" />
+        <a href="sms:5129104938" className="flex items-center space-x-2 bg-gradient-to-r from-red-600/90 to-red-700/90 hover:from-red-600 hover:to-red-700 text-white px-5 py-2.5 text-xs md:text-sm font-bold uppercase tracking-wider transition-all duration-300 shadow-md shadow-red-950/20 rounded-full border border-red-500/20 backdrop-blur-sm">
+          <MessageSquare className="h-3.5 w-3.5 animate-pulse" />
           <span>Text or Call (512) 910-4938</span>
         </a>
       </div>

@@ -160,10 +160,15 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
           Accept: "application/json"
         },
         body: JSON.stringify({
-          access_key: "9f904ee4-4752-46ac-bfe9-8ef9dab95cae",
+          access_key: "4d84c98a-eb94-4f22-8a55-a7e4a80855ec",
           name: formState.senderName,
+          senderName: formState.senderName,
           email: formState.email,
           phone: formState.phone,
+          pickupLocation: formState.pickupLocation,
+          deliveryLocation: formState.deliveryLocation,
+          packageType: formState.packageType,
+          deliveryNeeded: formState.deliveryNeeded,
           message: messageBody,
           subject: `New Lead - ${sourceName} Quote Request`
         })

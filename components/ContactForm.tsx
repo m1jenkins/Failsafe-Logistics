@@ -49,8 +49,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
           Accept: "application/json"
         },
         body: JSON.stringify({
-          access_key: "9f904ee4-4752-46ac-bfe9-8ef9dab95cae",
+          access_key: "4d84c98a-eb94-4f22-8a55-a7e4a80855ec",
           name: fullName,
+          fullName: fullName,
           email: email || "quick-request@speedybat.com",
           phone: phone,
           pickupAddress: formMode === 'quick' ? 'N/A (Quick Dispatch)' : pickupAddress,

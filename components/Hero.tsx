@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Shield, Phone, CheckCircle } from 'lucide-react';
+import { ArrowRight, Phone } from 'lucide-react';
 import { QuoteForm } from './QuoteForm';
 
 export const Hero: React.FC = () => {
@@ -32,14 +32,6 @@ export const Hero: React.FC = () => {
           {/* Left Column: Headline and text */}
           <div className="lg:col-span-7 space-y-3 lg:space-y-6">
             
-            {/* Active Status Badge */}
-            <div className="inline-flex items-center space-x-2 bg-red-950/30 border border-red-500/20 px-3.5 py-1.5 rounded-full backdrop-blur-md liquid-shimmer">
-              <Shield className="h-3.5 w-3.5 text-red-500 animate-pulse" />
-              <span className="text-[10px] text-red-400 font-bold uppercase tracking-widest font-display">
-                Austin Dispatch Grid Active
-              </span>
-            </div>
-
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.08] tracking-tight font-display">
               Austin's Premier <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-700">Courier Service</span>

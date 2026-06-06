@@ -49,14 +49,6 @@ export const ServiceLandingPage: React.FC<ServiceLandingPageProps> = ({ service,
         <section className="py-8 lg:py-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center" aria-labelledby="hero-heading">
           <div className="lg:col-span-7 space-y-6">
             
-            {/* Active Status Badge */}
-            <div className="inline-flex items-center space-x-2 bg-red-950/30 border border-red-500/20 px-3.5 py-1.5 rounded-full backdrop-blur-md liquid-shimmer">
-              <Shield className="h-3.5 w-3.5 text-red-500 animate-pulse" />
-              <span className="text-[10px] text-red-400 font-bold uppercase tracking-widest font-display">
-                {service.flagship ? 'Flagship Service' : 'Specialized Logistics'} Active
-              </span>
-            </div>
-
             {/* Service title */}
             <h1 id="hero-heading" className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.1] tracking-tight font-display">
               {service.name.split(' / ').map((chunk, i) => (

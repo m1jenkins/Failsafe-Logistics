@@ -6,6 +6,7 @@ interface CargoItem {
   description: string;
   icon: React.ComponentType<{ className?: string }>;
   routeId: string;
+  ctaText: string;
 }
 
 const cargoItems: CargoItem[] = [
@@ -13,25 +14,29 @@ const cargoItems: CargoItem[] = [
     title: "Aircraft Parts & AOG",
     description: "Avionics, grounding parts, and critical aviation components to keep aircraft flying.",
     icon: Plane,
-    routeId: "airport-recovery-next-flight-out"
+    routeId: "airport-recovery-next-flight-out",
+    ctaText: "AOG Dispatch"
   },
   {
     title: "Manufacturing Samples",
     description: "Urgent prototypes, pre-production samples, and critical components to keep validation and assembly lines moving.",
     icon: Cpu,
-    routeId: "manufacturing-line-down-delivery"
+    routeId: "manufacturing-line-down-delivery",
+    ctaText: "Line-Down Support"
   },
   {
     title: "Legal & Secure Documents",
     description: "Time-sensitive court filings, original deeds, contracts, and secure chain-of-custody runs.",
     icon: FileText,
-    routeId: "legal-courier-court-filing"
+    routeId: "legal-courier-court-filing",
+    ctaText: "Secure Document Run"
   },
   {
     title: "Critical Tools & Machinery",
     description: "Emergency replacement parts, diagnostic tools, and hardware to resume operations.",
     icon: Wrench,
-    routeId: "hot-shot-expedited-freight"
+    routeId: "hot-shot-expedited-freight",
+    ctaText: "Emergency Parts Delivery"
   }
 ];
 
@@ -95,6 +100,11 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
                   </div>
                 </div>
               </div>
+
+              {/* Trust Line */}
+              <div className="text-slate-500 uppercase font-bold tracking-wider text-[9px] font-display">
+                Fully insured · $100K cargo coverage · Chain of custody on every run
+              </div>
             </div>
 
             <div className="pt-8">
@@ -143,7 +153,7 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
                   </div>
                   <div className="pt-2">
                     <span className="text-[10px] font-bold text-red-500 hover:text-red-400 uppercase tracking-widest font-display flex items-center space-x-1.5 transition-all duration-300 opacity-60 group-hover:opacity-100">
-                      <span>Explore Service</span>
+                      <span>{item.ctaText}</span>
                       <ArrowRight className="h-3 w-3 transform group-hover:translate-x-1 transition-transform" />
                     </span>
                   </div>

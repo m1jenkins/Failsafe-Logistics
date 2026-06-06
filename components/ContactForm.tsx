@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SectionHeading } from './SectionHeading';
 import { Button } from './Button';
-import { ArrowRight, Zap, ShieldCheck, MessageSquare } from 'lucide-react';
+import { Zap, ShieldCheck, MessageSquare } from 'lucide-react';
 
 interface ContactFormProps {
   prefilledDetails?: {
@@ -13,23 +13,24 @@ interface ContactFormProps {
 
 export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formMode, setFormMode] = useState<'quick' | 'full'>('quick');
 
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [pickupAddress, setPickupAddress] = useState('');
-  const [deliveryAddress, setDeliveryAddress] = useState('');
   const [itemDescription, setItemDescription] = useState('');
 
   useEffect(() => {
     if (prefilledDetails) {
-      if (prefilledDetails.pickupAddress !== undefined) setPickupAddress(prefilledDetails.pickupAddress);
-      if (prefilledDetails.deliveryAddress !== undefined) setDeliveryAddress(prefilledDetails.deliveryAddress);
-      if (prefilledDetails.itemDescription !== undefined) setItemDescription(prefilledDetails.itemDescription);
-      if (prefilledDetails.pickupAddress || prefilledDetails.deliveryAddress || prefilledDetails.itemDescription) {
-        setFormMode('full');
+      let combined = '';
+      if (prefilledDetails.itemDescription) {
+        combined += prefilledDetails.itemDescription;
       }
+      if (prefilledDetails.pickupAddress) {
+        combined += (combined ? '\n' : '') + `Pickup: ${prefilledDetails.pickupAddress}`;
+      }
+      if (prefilledDetails.deliveryAddress) {
+        combined += (combined ? '\n' : '') + `Delivery: ${prefilledDetails.deliveryAddress}`;
+      }
+      setItemDescription(combined);
     }
   }, [prefilledDetails]);
 
@@ -38,9 +39,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
     setIsSubmitting(true);
 
     try {
-      const messageBody = formMode === 'quick'
-        ? `QUICK Dispatch Request from ${fullName}\nPhone: ${phone}\nCargo/Details: ${itemDescription}`
-        : `Booking Request from ${fullName}\nPhone: ${phone}\nPickup: ${pickupAddress}\nDelivery: ${deliveryAddress}\nItem Description: ${itemDescription}`;
+      const messageBody = `QUICK Dispatch Request from ${fullName}\nPhone: ${phone}\nCargo/Details: ${itemDescription}`;
 
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -52,10 +51,10 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
           access_key: "4d84c98a-eb94-4f22-8a55-a7e4a80855ec",
           name: fullName,
           fullName: fullName,
-          email: email || "quick-request@speedybat.com",
+          email: "quick-request@speedybat.com",
           phone: phone,
-          pickupAddress: formMode === 'quick' ? 'N/A (Quick Dispatch)' : pickupAddress,
-          deliveryAddress: formMode === 'quick' ? 'N/A (Quick Dispatch)' : deliveryAddress,
+          pickupAddress: 'N/A (Quick Dispatch)',
+          deliveryAddress: 'N/A (Quick Dispatch)',
           itemDescription: itemDescription,
           message: messageBody
         })
@@ -84,40 +83,14 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
 
       <div className="container mx-auto px-6 max-w-4xl relative z-10">
         <SectionHeading
-          title="Secure Booking"
-          subtitle="Ready to dispatch? Fill out the details below for a response in minutes."
+          title="Request Dispatch"
+          subtitle="Tell us what you need moved and we'll respond in minutes; day or night."
           align="center"
         />
 
         <div className="mt-12 glass-panel-elevated rounded-3xl p-8 md:p-12 shadow-2xl relative">
           {/* Card highlight lines */}
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
-
-          {/* Form Mode Tabs (Pill Control Style) */}
-          <div className="flex p-1 bg-white/[0.02] border border-white/[0.04] rounded-full mb-8 max-w-md mx-auto">
-            <button
-              type="button"
-              onClick={() => setFormMode('quick')}
-              className={`flex-1 py-2.5 text-center font-bold uppercase tracking-wider text-xs rounded-full transition-all duration-300 cursor-pointer ${
-                formMode === 'quick'
-                  ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-md shadow-red-950/20'
-                  : 'text-slate-500 hover:text-slate-300'
-              }`}
-            >
-              Quick Request
-            </button>
-            <button
-              type="button"
-              onClick={() => setFormMode('full')}
-              className={`flex-1 py-2.5 text-center font-bold uppercase tracking-wider text-xs rounded-full transition-all duration-300 cursor-pointer ${
-                formMode === 'full'
-                  ? 'bg-gradient-to-r from-red-600 to-red-700 text-white shadow-md shadow-red-950/20'
-                  : 'text-slate-500 hover:text-slate-300'
-              }`}
-            >
-              Full Booking Details
-            </button>
-          </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Common Fields */}
@@ -151,80 +124,18 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
               </div>
             </div>
 
-            {formMode === 'quick' ? (
-              /* Quick Request Mode Extra Fields */
-              <div>
-                <label className={labelClasses}>What are you shipping and where?</label>
-                <textarea
-                  name="itemDescription"
-                  required
-                  rows={4}
-                  className={`${inputClasses} resize-none`}
-                  placeholder="e.g. Medical kit from St. David's Main to Round Rock Clinic, or parts to Samsung Taylor fab"
-                  value={itemDescription}
-                  onChange={(e) => setItemDescription(e.target.value)}
-                />
-              </div>
-            ) : (
-              /* Full Booking Mode Extra Fields */
-              <>
-                <div>
-                  <label className={labelClasses}>Email Address</label>
-                  <input
-                    name="email"
-                    type="email"
-                    required
-                    className={inputClasses}
-                    placeholder="dispatch@company.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    autoComplete="email"
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label className={labelClasses}>Pickup Address</label>
-                    <input
-                      name="pickupAddress"
-                      type="text"
-                      required
-                      className={inputClasses}
-                      placeholder="Street, City, Zip"
-                      value={pickupAddress}
-                      onChange={(e) => setPickupAddress(e.target.value)}
-                      autoComplete="street-address"
-                    />
-                  </div>
-
-                  <div>
-                    <label className={labelClasses}>Delivery Address</label>
-                    <input
-                      name="deliveryAddress"
-                      type="text"
-                      required
-                      className={inputClasses}
-                      placeholder="Street, City, Zip"
-                      value={deliveryAddress}
-                      onChange={(e) => setDeliveryAddress(e.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className={labelClasses}>What are we transporting?</label>
-                  <input
-                    name="itemDescription"
-                    type="text"
-                    required
-                    className={inputClasses}
-                    placeholder="e.g. Box of parts, Documents, Medical Kit"
-                    value={itemDescription}
-                    onChange={(e) => setItemDescription(e.target.value)}
-                  />
-                </div>
-              </>
-            )}
+            <div>
+              <label className={labelClasses}>What are you shipping and where?</label>
+              <textarea
+                name="itemDescription"
+                required
+                rows={4}
+                className={`${inputClasses} resize-none`}
+                placeholder="e.g. Medical kit from St. David's Main to Round Rock Clinic, or parts to Samsung Taylor fab"
+                value={itemDescription}
+                onChange={(e) => setItemDescription(e.target.value)}
+              />
+            </div>
 
             <div className="pt-4">
               <Button
@@ -234,12 +145,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
                 className="w-full flex items-center justify-center space-x-3 py-4 text-base rounded-full shadow-lg hover:shadow-red-900/10 transition-all cursor-pointer"
               >
                 {isSubmitting ? (
-                  <span>Processing Request...</span>
+                  <span>PROCESSING REQUEST...</span>
                 ) : (
-                  <>
-                    <span>Request Courier Dispatch</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </>
+                  <span>DISPATCH REQUEST →</span>
                 )}
               </Button>
               <p className="text-center text-slate-500 text-xs mt-4 leading-relaxed">

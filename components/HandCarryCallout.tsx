@@ -58,6 +58,71 @@ export const HandCarryCallout: React.FC = () => {
                 </li>
               </ul>
 
+              {/* How It Works Flow */}
+              <div className="pt-6 border-t border-white/[0.04] space-y-4">
+                <h4 className="text-xs font-bold text-blue-400 uppercase tracking-widest font-display">
+                  How It Works
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <div className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-950/40 border border-blue-500/30 text-xs font-bold text-blue-400 font-display">
+                        01
+                      </div>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-display">Origin</span>
+                    </div>
+                    <p className="text-xs text-slate-300 font-light leading-relaxed">
+                      We pick up from your door or facility
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <div className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-950/40 border border-blue-500/30 text-xs font-bold text-blue-400 font-display">
+                        02
+                      </div>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-display">In-Flight</span>
+                    </div>
+                    <p className="text-xs text-slate-300 font-light leading-relaxed">
+                      Courier boards next available flight as carry-on
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <div className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-950/40 border border-blue-500/30 text-xs font-bold text-blue-400 font-display">
+                        03
+                      </div>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-display">Destination</span>
+                    </div>
+                    <p className="text-xs text-slate-300 font-light leading-relaxed">
+                      Hand-delivered directly to recipient on arrival
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Common Use Cases */}
+              <div className="pt-6 border-t border-white/[0.04] space-y-3">
+                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest font-display">
+                  Common Use Cases
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "Legal Evidence",
+                    "Biotech Samples",
+                    "Semiconductor Wafers",
+                    "Signed Contracts",
+                    "High-Value Jewelry"
+                  ].map((useCase, idx) => (
+                    <span
+                      key={idx}
+                      className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-blue-400/90 bg-blue-950/10 border border-blue-500/15 rounded-full font-display"
+                    >
+                      {useCase}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
               <div className="pt-4">
                 <a
                   href="#booking"

@@ -1,5 +1,4 @@
 import React from 'react';
-import { SectionHeading } from './SectionHeading';
 import { Clock, Plane, Cpu, FileText, Wrench, ShieldAlert, ArrowRight } from 'lucide-react';
 
 interface CargoItem {
@@ -50,12 +49,7 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[1px] bg-gradient-to-r from-transparent via-ember/15 to-transparent" />
 
       <div className="container mx-auto px-6 relative z-10">
-        <SectionHeading
-          title="Consolidated Hot Shot Services"
-          align="center"
-        />
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mt-16 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
           {/* Left Column: The overnight/emergency focus statement */}
           <div className="lg:col-span-6 flex flex-col justify-between glass-panel-elevated p-8 md:p-10 rounded-3xl border border-white/[0.06] relative group overflow-hidden">
             {/* Liquid shimmer line at top */}

@@ -1,8 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { 
-  ArrowRight, Navigation, MapPin, 
-  AlertCircle, ChevronDown, Check, Building, Phone, Clock, Mail
-} from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ArrowRight, AlertCircle, Check, Clock } from 'lucide-react';
 import { Button } from './Button';
 
 interface QuoteFormProps {
@@ -13,21 +10,16 @@ interface QuoteFormProps {
 }
 
 interface FormState {
-  senderName: string;
+  fullName: string;
   phone: string;
-  email: string;
-  pickupLocation: string;
-  deliveryLocation: string;
-  packageType: string;
+  itemDescription: string;
   deliveryNeeded: string;
 }
 
 interface FormErrors {
-  senderName?: string;
+  fullName?: string;
   phone?: string;
-  email?: string;
-  pickupLocation?: string;
-  deliveryLocation?: string;
+  itemDescription?: string;
   deliveryNeeded?: string;
 }
 
@@ -38,12 +30,9 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
   defaultPickup = ''
 }) => {
   const [formState, setFormState] = useState<FormState>({
-    senderName: '',
+    fullName: '',
     phone: '',
-    email: '',
-    pickupLocation: defaultPickup,
-    deliveryLocation: '',
-    packageType: 'Documents',
+    itemDescription: defaultPickup ? `Pickup: ${defaultPickup}\nDelivery: ` : '',
     deliveryNeeded: ''
   });
 
@@ -56,51 +45,46 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
   // Focus reference for validation accessibility
   const errorSummaryRef = useRef<HTMLDivElement>(null);
 
+  // Sync state if defaultPickup changes
+  useEffect(() => {
+    if (defaultPickup) {
+      setFormState(prev => {
+        if (!prev.itemDescription || prev.itemDescription.startsWith('Pickup:')) {
+          return {
+            ...prev,
+            itemDescription: `Pickup: ${defaultPickup}\nDelivery: `
+          };
+        }
+        return prev;
+      });
+    }
+  }, [defaultPickup]);
+
   // Validation function
-  const validateField = (name: string, value: string, currentFormState: FormState): string => {
+  const validateField = (name: string, value: string): string => {
     switch (name) {
-      case 'senderName':
-        // Optional field
+      case 'fullName':
+        if (!value.trim()) return 'Full Name is required';
         return '';
       case 'phone': {
         const val = value.trim();
-        const emailVal = currentFormState.email.trim();
-        if (!val && !emailVal) {
-          return 'Either Phone or Email is required';
-        }
-        if (val) {
-          const digits = val.replace(/\D/g, '');
-          if (digits.length < 10) return 'Please enter a valid 10-digit phone number';
-        }
+        if (!val) return 'Phone Number is required';
+        const digits = val.replace(/\D/g, '');
+        if (digits.length < 10) return 'Please enter a valid 10-digit phone number';
         return '';
       }
-      case 'email': {
-        const val = value.trim();
-        const phoneVal = currentFormState.phone.trim();
-        if (!val && !phoneVal) {
-          return 'Either Phone or Email is required';
-        }
-        if (val) {
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(val)) return 'Please enter a valid email address';
-        }
-        return '';
-      }
-      case 'pickupLocation':
-        if (!value.trim()) return 'Pickup location is required';
-        return '';
-      case 'deliveryLocation':
-        if (!value.trim()) return 'Delivery location is required';
+      case 'itemDescription':
+        if (!value.trim()) return 'Please describe what you are shipping and where';
         return '';
       case 'deliveryNeeded':
-        if (!value.trim()) return 'Delivery timing / urgency is required';
+        // Optional field
         return '';
       default:
         return '';
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     let formattedValue = value;
     
@@ -111,62 +95,19 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
       }
     }
 
-    const updatedState = { ...formState, [name]: formattedValue };
-    setFormState(updatedState);
+    setFormState(prev => ({ ...prev, [name]: formattedValue }));
     
     if (errors[name as keyof FormErrors]) {
       setErrors(prev => ({ ...prev, [name]: undefined }));
     }
-
-    // Clear cross-field validation errors for phone/email if either is now provided
-    if (name === 'phone' && formattedValue.trim()) {
-      if (errors.email === 'Either Phone or Email is required') {
-        setErrors(prev => ({ ...prev, email: undefined }));
-      }
-    }
-    if (name === 'email' && formattedValue.trim()) {
-      if (errors.phone === 'Either Phone or Email is required') {
-        setErrors(prev => ({ ...prev, phone: undefined }));
-      }
-    }
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setTouched(prev => ({ ...prev, [name]: true }));
     
-    const errorMsg = validateField(name, value, formState);
-    setErrors(prev => {
-      const newErrors = { ...prev, [name]: errorMsg || undefined };
-
-      // Handle phone/email validation interaction
-      if (name === 'phone') {
-        if (value.trim()) {
-          if (newErrors.email === 'Either Phone or Email is required') {
-            newErrors.email = undefined;
-          }
-        } else {
-          if (!formState.email.trim()) {
-            newErrors.phone = 'Either Phone or Email is required';
-            newErrors.email = 'Either Phone or Email is required';
-          }
-        }
-      }
-      if (name === 'email') {
-        if (value.trim()) {
-          if (newErrors.phone === 'Either Phone or Email is required') {
-            newErrors.phone = undefined;
-          }
-        } else {
-          if (!formState.phone.trim()) {
-            newErrors.phone = 'Either Phone or Email is required';
-            newErrors.email = 'Either Phone or Email is required';
-          }
-        }
-      }
-
-      return newErrors;
-    });
+    const errorMsg = validateField(name, value);
+    setErrors(prev => ({ ...prev, [name]: errorMsg || undefined }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -175,7 +116,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
 
     const newErrors: FormErrors = {};
     Object.keys(formState).forEach(key => {
-      const errorMsg = validateField(key, formState[key as keyof FormState], formState);
+      const errorMsg = validateField(key, formState[key as keyof FormState]);
       if (errorMsg) {
         newErrors[key as keyof FormErrors] = errorMsg;
       }
@@ -197,19 +138,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
     setIsSubmitting(true);
 
     try {
-      const messageBody = `
-        QUOTE REQUEST (${sourceName})
-        ------------------------------------
-        Sender/Company: ${formState.senderName}
-        Phone: ${formState.phone}
-        Email: ${formState.email}
-        Pickup: ${formState.pickupLocation}
-        Delivery: ${formState.deliveryLocation}
-        Package Type: ${formState.packageType}
-        Delivery Needed: ${formState.deliveryNeeded}
-        ------------------------------------
-        Originating Route: /${routeId}
-      `;
+      const messageBody = `DISPATCH Request from ${formState.fullName}\nPhone: ${formState.phone}\nCargo/Details: ${formState.itemDescription}${formState.deliveryNeeded ? `\nTiming: ${formState.deliveryNeeded}` : ''}`;
 
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -219,13 +148,13 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
         },
         body: JSON.stringify({
           access_key: "4d84c98a-eb94-4f22-8a55-a7e4a80855ec",
-          name: formState.senderName || "Web Quote Lead",
-          senderName: formState.senderName,
-          email: formState.email || "no-email-provided@speedybat.com",
+          name: formState.fullName,
+          fullName: formState.fullName,
+          email: "quick-request@speedybat.com",
           phone: formState.phone,
-          pickupLocation: formState.pickupLocation,
-          deliveryLocation: formState.deliveryLocation,
-          packageType: formState.packageType,
+          pickupAddress: 'N/A (Quick Dispatch)',
+          deliveryAddress: 'N/A (Quick Dispatch)',
+          itemDescription: formState.itemDescription,
           deliveryNeeded: formState.deliveryNeeded,
           message: messageBody,
           subject: `New Lead - ${sourceName} Quote Request`
@@ -236,12 +165,9 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
       if (result.success) {
         setIsSubmitted(true);
         setFormState({
-          senderName: '',
+          fullName: '',
           phone: '',
-          email: '',
-          pickupLocation: defaultPickup,
-          deliveryLocation: '',
-          packageType: 'Documents',
+          itemDescription: defaultPickup ? `Pickup: ${defaultPickup}\nDelivery: ` : '',
           deliveryNeeded: ''
         });
         setErrors({});
@@ -257,25 +183,18 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
     }
   };
 
-  const inputClasses = (hasError: boolean) => `w-full glass-input text-slate-200 px-4 py-2.5 sm:py-3 rounded-xl outline-none placeholder:text-slate-600 text-sm border transition-all duration-300 font-sans ${
+  const inputClasses = (hasError: boolean) => `w-full glass-input text-slate-200 px-4 py-3 rounded-xl outline-none placeholder:text-slate-600 text-sm md:text-base border transition-all duration-300 font-sans ${
     hasError 
       ? 'border-red-500 bg-red-950/10 focus:border-red-400 focus:shadow-[0_0_12px_rgba(239,68,68,0.15)]' 
       : 'border-white/[0.04] focus:border-red-500/50'
   }`;
 
-  const labelClasses = "block text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1 font-display";
+  const labelClasses = "block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5 font-display";
 
   return (
     <div className="glass-panel-elevated p-4 sm:p-5 lg:p-6 rounded-3xl shadow-2xl relative border border-white/[0.05]">
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
       
-      <div className="mb-4">
-        <h2 className="text-xl sm:text-2xl font-black text-white uppercase tracking-wider font-display flex items-center">
-          <span className="w-1.5 h-6 bg-red-600 mr-3 rounded-full"></span>
-          Request Quote
-        </h2>
-      </div>
-
       {isSubmitted ? (
         <div className="text-center py-10 space-y-4 font-sans" role="alert" aria-live="polite">
           <div className="w-16 h-16 bg-red-950/20 border border-red-500/30 text-red-500 rounded-full flex items-center justify-center mx-auto shadow-md">
@@ -294,7 +213,9 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
           </Button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-3" noValidate>
+        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+          {/* Web3Forms Access Key HTML Input */}
+          <input type="hidden" name="access_key" value="4d84c98a-eb94-4f22-8a55-a7e4a80855ec" />
           
           {Object.keys(errors).length > 0 && (
             <div 
@@ -309,12 +230,9 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
                 Please correct the following errors:
               </h3>
               <ul className="list-disc pl-5 font-sans space-y-0.5">
-                {errors.senderName && <li>{errors.senderName}</li>}
+                {errors.fullName && <li>{errors.fullName}</li>}
                 {errors.phone && <li>{errors.phone}</li>}
-                {errors.email && errors.email !== errors.phone && <li>{errors.email}</li>}
-                {errors.pickupLocation && <li>{errors.pickupLocation}</li>}
-                {errors.deliveryLocation && <li>{errors.deliveryLocation}</li>}
-                {errors.deliveryNeeded && <li>{errors.deliveryNeeded}</li>}
+                {errors.itemDescription && <li>{errors.itemDescription}</li>}
               </ul>
             </div>
           )}
@@ -326,236 +244,117 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
             </div>
           )}
 
-          {/* Company / Sender Name */}
+          {/* Full Name */}
           <div>
-            <label htmlFor="senderName" className={labelClasses}>
-              Company / Sender Name <span className="text-slate-500 font-light font-sans lowercase italic">(optional)</span>
-            </label>
-            <div className="relative">
-              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
-                <Building className="h-4 w-4" />
-              </div>
-              <input
-                id="senderName"
-                name="senderName"
-                type="text"
-                className={`${inputClasses(!!errors.senderName)} pl-10`}
-                placeholder="Company or contact name"
-                value={formState.senderName}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoComplete="organization"
-                aria-invalid={!!errors.senderName}
-                aria-describedby={errors.senderName ? "err-senderName" : undefined}
-              />
-            </div>
-            {errors.senderName && touched.senderName && (
-              <span id="err-senderName" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
-                {errors.senderName}
+            <label htmlFor="fullName" className={labelClasses}>Full Name</label>
+            <input
+              id="fullName"
+              name="fullName"
+              type="text"
+              required
+              className={inputClasses(!!errors.fullName)}
+              placeholder="John Doe"
+              value={formState.fullName}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              autoComplete="name"
+              aria-invalid={!!errors.fullName}
+              aria-describedby={errors.fullName ? "err-fullName" : undefined}
+            />
+            {errors.fullName && touched.fullName && (
+              <span id="err-fullName" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
+                {errors.fullName}
               </span>
             )}
           </div>
 
-          {/* Contact & Email Group */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {/* Contact Phone */}
-            <div>
-              <label htmlFor="phone" className={labelClasses}>
-                Phone <span className="text-slate-500 font-light font-sans lowercase italic">(or email)</span>
-              </label>
-              <div className="relative">
-                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
-                  <Phone className="h-4 w-4" />
-                </div>
-                <input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  className={`${inputClasses(!!errors.phone)} pl-10`}
-                  placeholder="(512) 910-4938"
-                  value={formState.phone}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  autoComplete="tel"
-                  aria-invalid={!!errors.phone}
-                  aria-describedby={errors.phone ? "err-phone" : undefined}
-                />
-              </div>
-              {errors.phone && touched.phone && (
-                <span id="err-phone" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
-                  {errors.phone}
-                </span>
-              )}
-            </div>
-
-            {/* Email Address */}
-            <div>
-              <label htmlFor="email" className={labelClasses}>
-                Email <span className="text-slate-500 font-light font-sans lowercase italic">(or phone)</span>
-              </label>
-              <div className="relative">
-                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
-                  <Mail className="h-4 w-4" />
-                </div>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  className={`${inputClasses(!!errors.email)} pl-10`}
-                  placeholder="dispatch@company.com"
-                  value={formState.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  autoComplete="email"
-                  aria-invalid={!!errors.email}
-                  aria-describedby={errors.email ? "err-email" : undefined}
-                />
-              </div>
-              {errors.email && touched.email && (
-                <span id="err-email" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
-                  {errors.email}
-                </span>
-              )}
-            </div>
+          {/* Phone Number */}
+          <div>
+            <label htmlFor="phone" className={labelClasses}>Phone Number</label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              required
+              className={inputClasses(!!errors.phone)}
+              placeholder="(512) 910-4938"
+              value={formState.phone}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              autoComplete="tel"
+              aria-invalid={!!errors.phone}
+              aria-describedby={errors.phone ? "err-phone" : undefined}
+            />
+            {errors.phone && touched.phone && (
+              <span id="err-phone" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
+                {errors.phone}
+              </span>
+            )}
           </div>
 
-          {/* Routing Group */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {/* Pickup Address or Zip */}
-            <div>
-              <label htmlFor="pickupLocation" className={labelClasses}>
-                Pickup <span className="text-red-500" aria-hidden="true">*</span>
-              </label>
-              <div className="relative">
-                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
-                  <MapPin className="h-4 w-4" />
-                </div>
-                <input
-                  id="pickupLocation"
-                  name="pickupLocation"
-                  type="text"
-                  required
-                  className={`${inputClasses(!!errors.pickupLocation)} pl-10`}
-                  placeholder="Zip or address"
-                  value={formState.pickupLocation}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  aria-invalid={!!errors.pickupLocation}
-                  aria-describedby={errors.pickupLocation ? "err-pickupLocation" : undefined}
-                />
-              </div>
-              {errors.pickupLocation && touched.pickupLocation && (
-                <span id="err-pickupLocation" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
-                  {errors.pickupLocation}
-                </span>
-              )}
-            </div>
-
-            {/* Delivery Address or Zip */}
-            <div>
-              <label htmlFor="deliveryLocation" className={labelClasses}>
-                Delivery <span className="text-red-500" aria-hidden="true">*</span>
-              </label>
-              <div className="relative">
-                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
-                  <Navigation className="h-4 w-4" />
-                </div>
-                <input
-                  id="deliveryLocation"
-                  name="deliveryLocation"
-                  type="text"
-                  required
-                  className={`${inputClasses(!!errors.deliveryLocation)} pl-10`}
-                  placeholder="Zip or address"
-                  value={formState.deliveryLocation}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  aria-invalid={!!errors.deliveryLocation}
-                  aria-describedby={errors.deliveryLocation ? "err-deliveryLocation" : undefined}
-                />
-              </div>
-              {errors.deliveryLocation && touched.deliveryLocation && (
-                <span id="err-deliveryLocation" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
-                  {errors.deliveryLocation}
-                </span>
-              )}
-            </div>
+          {/* What are you shipping and where? */}
+          <div>
+            <label htmlFor="itemDescription" className={labelClasses}>What are you shipping and where?</label>
+            <textarea
+              id="itemDescription"
+              name="itemDescription"
+              required
+              rows={3}
+              className={`${inputClasses(!!errors.itemDescription)} resize-none`}
+              placeholder="e.g. Medical kit from St. David's Main to Round Rock Clinic, or parts to Samsung Taylor fab"
+              value={formState.itemDescription}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              aria-invalid={!!errors.itemDescription}
+              aria-describedby={errors.itemDescription ? "err-itemDescription" : undefined}
+            />
+            {errors.itemDescription && touched.itemDescription && (
+              <span id="err-itemDescription" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
+                {errors.itemDescription}
+              </span>
+            )}
           </div>
 
-          {/* Details Group */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {/* Package Type */}
-            <div>
-              <label htmlFor="packageType" className={labelClasses}>Package Type</label>
-              <div className="relative">
-                <select
-                  id="packageType"
-                  name="packageType"
-                  className="w-full glass-input text-slate-200 px-4 py-2.5 sm:py-3 rounded-xl outline-none border border-white/[0.04] appearance-none text-sm focus:border-red-500/50 cursor-pointer pr-10 font-sans"
-                  value={formState.packageType}
-                  onChange={handleChange}
-                >
-                  <option value="Documents" className="bg-obsidian text-slate-200">Documents / Legal Filings</option>
-                  <option value="Small Parcel" className="bg-obsidian text-slate-200">Small Parcel / Package</option>
-                  <option value="Large Box" className="bg-obsidian text-slate-200">Large Box / Cargo Case</option>
-                  <option value="Pallet" className="bg-obsidian text-slate-200">Pallet / Expedited Freight</option>
-                </select>
-                <div className="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
-                  <ChevronDown className="h-4 w-4" />
-                </div>
+          {/* Timing */}
+          <div>
+            <label htmlFor="deliveryNeeded" className={labelClasses}>
+              Timing <span className="text-slate-500 font-light font-sans lowercase italic">(optional)</span>
+            </label>
+            <div className="relative">
+              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
+                <Clock className="h-4.5 w-4.5" />
               </div>
-            </div>
-
-            {/* When do you need delivered */}
-            <div>
-              <label htmlFor="deliveryNeeded" className={labelClasses}>
-                Timing Required <span className="text-red-500" aria-hidden="true">*</span>
-              </label>
-              <div className="relative">
-                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
-                  <Clock className="h-4 w-4" />
-                </div>
-                <input
-                  id="deliveryNeeded"
-                  name="deliveryNeeded"
-                  type="text"
-                  required
-                  className={`${inputClasses(!!errors.deliveryNeeded)} pl-10`}
-                  placeholder="ASAP or Date/Time"
-                  value={formState.deliveryNeeded}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  aria-invalid={!!errors.deliveryNeeded}
-                  aria-describedby={errors.deliveryNeeded ? "err-deliveryNeeded" : undefined}
-                />
-              </div>
-              {errors.deliveryNeeded && touched.deliveryNeeded && (
-                <span id="err-deliveryNeeded" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
-                  {errors.deliveryNeeded}
-                </span>
-              )}
+              <input
+                id="deliveryNeeded"
+                name="deliveryNeeded"
+                type="text"
+                className={`${inputClasses(!!errors.deliveryNeeded)} pl-11`}
+                placeholder="ASAP or Date/Time"
+                value={formState.deliveryNeeded}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                aria-invalid={!!errors.deliveryNeeded}
+                aria-describedby={errors.deliveryNeeded ? "err-deliveryNeeded" : undefined}
+              />
             </div>
           </div>
 
           {/* Submission Button */}
-          <div className="pt-2 sm:pt-4">
+          <div className="pt-1">
             <Button
               variant="alert"
               type="submit"
               disabled={isSubmitting}
-              className="w-full flex items-center justify-center space-x-3 py-3 sm:py-4 text-sm rounded-full shadow-lg hover:shadow-red-900/10 transition-all duration-300 font-display cursor-pointer"
+              className="w-full flex items-center justify-center space-x-3 py-3 text-base rounded-full shadow-lg hover:shadow-red-900/10 transition-all cursor-pointer font-display font-bold uppercase tracking-wider"
             >
               {isSubmitting ? (
-                <span>Processing Quote Request...</span>
+                <span>PROCESSING REQUEST...</span>
               ) : (
-                <>
-                  <span>Submit Form</span>
-                  <ArrowRight className="h-4 w-4" />
-                </>
+                <span>DISPATCH REQUEST →</span>
               )}
             </Button>
-            <p className="text-center text-slate-600 text-[10px] mt-3 leading-relaxed font-sans font-light">
-              By submitting, you agree to priority routing terms. Drivers route instantly upon dispatch telephone confirmation.
+            <p className="text-center text-slate-500 text-xs mt-3 leading-relaxed">
+              By clicking Request, you agree to our service terms. Immediate availability is subject to confirmation.
             </p>
           </div>
         </form>

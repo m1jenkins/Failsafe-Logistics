@@ -93,6 +93,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Web3Forms Access Key HTML Input */}
+            <input type="hidden" name="access_key" value="4d84c98a-eb94-4f22-8a55-a7e4a80855ec" />
             {/* Common Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>

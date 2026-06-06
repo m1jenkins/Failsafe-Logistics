@@ -71,10 +71,7 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
               <p className="text-slate-300 font-light text-base leading-relaxed">
                 When next-day air cutoff has passed, hubs are shut down, and cargo absolutely has to be in another city by 8:00 AM next morning, overnight courier networks can't help. 
               </p>
-              
-              <p className="text-slate-400 font-light text-sm leading-relaxed">
-                We specialize in last-minute, overnight direct-drive runs up to 1,000+ miles. One dedicated vehicle, one courier driver, zero transfers, non-stop to destination. We do the jobs other carriers aren't willing to take.
-              </p>
+
 
               {/* Status details grid */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-white/[0.04] text-xs font-display">

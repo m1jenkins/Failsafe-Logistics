@@ -6,32 +6,41 @@ interface CargoItem {
   title: string;
   description: string;
   icon: React.ComponentType<{ className?: string }>;
+  routeId: string;
 }
 
 const cargoItems: CargoItem[] = [
   {
     title: "Aircraft Parts & AOG",
     description: "Avionics, grounding parts, and critical aviation components to keep aircraft flying.",
-    icon: Plane
+    icon: Plane,
+    routeId: "airport-recovery-next-flight-out"
   },
   {
     title: "Manufacturing Samples",
     description: "Urgent prototypes, pre-production samples, and critical components to keep validation and assembly lines moving.",
-    icon: Cpu
+    icon: Cpu,
+    routeId: "manufacturing-line-down-delivery"
   },
   {
     title: "Legal & Secure Documents",
     description: "Time-sensitive court filings, original deeds, contracts, and secure chain-of-custody runs.",
-    icon: FileText
+    icon: FileText,
+    routeId: "legal-courier-court-filing"
   },
   {
     title: "Critical Tools & Machinery",
     description: "Emergency replacement parts, diagnostic tools, and hardware to resume operations.",
-    icon: Wrench
+    icon: Wrench,
+    routeId: "hot-shot-expedited-freight"
   }
 ];
 
-export const Features: React.FC = () => {
+interface FeaturesProps {
+  onNavigate?: (routeId: string) => void;
+}
+
+export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
   return (
     <section
       id="services"
@@ -124,7 +133,8 @@ export const Features: React.FC = () => {
               {cargoItems.map((item, index) => (
                 <div
                   key={index}
-                  className="group relative glass-panel p-6 rounded-2xl flex flex-col justify-between border border-white/[0.04] hover:border-red-500/20"
+                  onClick={() => onNavigate && onNavigate(item.routeId)}
+                  className="group relative glass-panel p-6 rounded-2xl flex flex-col justify-between border border-white/[0.04] hover:border-red-500/20 cursor-pointer transition-all duration-300"
                 >
                   <div>
                     <div className="bg-white/[0.02] border border-white/[0.06] w-10 h-10 flex items-center justify-center mb-4 group-hover:border-ember/30 group-hover:bg-red-950/20 transition-all duration-300 rounded-xl">
@@ -134,9 +144,15 @@ export const Features: React.FC = () => {
                     <h5 className="text-sm font-bold uppercase text-white mb-2 tracking-wider font-display">
                       {item.title}
                     </h5>
-                    <p className="text-slate-400 leading-relaxed text-xs font-light">
+                    <p className="text-slate-400 leading-relaxed text-xs font-light mb-4">
                       {item.description}
                     </p>
+                  </div>
+                  <div className="pt-2">
+                    <span className="text-[10px] font-bold text-red-500 hover:text-red-400 uppercase tracking-widest font-display flex items-center space-x-1.5 transition-all duration-300 opacity-60 group-hover:opacity-100">
+                      <span>Explore Service</span>
+                      <ArrowRight className="h-3 w-3 transform group-hover:translate-x-1 transition-transform" />
+                    </span>
                   </div>
                 </div>
               ))}

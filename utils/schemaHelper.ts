@@ -1,4 +1,4 @@
-import { LocationData } from '../types';
+import { LocationData, ServiceData } from '../types';
 
 /**
  * Dynamically injects a JSON-LD LocalBusiness (CourierService) and Service schema
@@ -78,6 +78,100 @@ export const injectLocationSchema = (location: LocationData): () => void => {
   // 4. Return cleanup function
   return () => {
     const scriptToRemove = document.getElementById('jsonld-location-schema');
+    if (scriptToRemove) {
+      scriptToRemove.remove();
+    }
+  };
+};
+
+/**
+ * Dynamically injects a JSON-LD Service and FAQPage schema
+ * tailored to the current service page into the head of the document.
+ * 
+ * @param service The ServiceData profile for the active service.
+ */
+export const injectServiceSchema = (service: ServiceData): () => void => {
+  // 1. Remove any existing service schema tags to avoid duplicate metadata
+  const existingScript = document.getElementById('jsonld-service-schema');
+  if (existingScript) {
+    existingScript.remove();
+  }
+
+  // 2. Build the Service schema
+  const serviceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': `https://speedybat.com/${service.id}#service`,
+    'name': service.title,
+    'description': service.metaDescription,
+    'provider': {
+      '@type': 'CourierService',
+      'name': 'Speedy Bat Couriers',
+      'telephone': '+1-512-910-4938',
+      'url': 'https://speedybat.com',
+      'image': 'https://speedybat.com/speedy-bat-logo.png',
+      'priceRange': service.priceRange || '$$'
+    },
+    'areaServed': [
+      {
+        '@type': 'AdministrativeArea',
+        'name': 'Austin',
+        'sameAs': 'https://en.wikipedia.org/wiki/Austin,_Texas'
+      },
+      {
+        '@type': 'AdministrativeArea',
+        'name': 'Round Rock'
+      },
+      {
+        '@type': 'AdministrativeArea',
+        'name': 'Cedar Park'
+      },
+      {
+        '@type': 'AdministrativeArea',
+        'name': 'Georgetown'
+      }
+    ],
+    'hasOfferCatalog': {
+      '@type': 'OfferCatalog',
+      'name': `${service.name} Capabilities`,
+      'itemListElement': service.capabilities.map((cap, idx) => ({
+        '@type': 'Offer',
+        'position': idx + 1,
+        'itemOffered': {
+          '@type': 'Service',
+          'name': cap
+        }
+      }))
+    }
+  };
+
+  // 3. Build the FAQPage schema if FAQs exist
+  const faqSchema = service.faq && service.faq.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    'mainEntity': service.faq.map(faqItem => ({
+      '@type': 'Question',
+      'name': faqItem.question,
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': faqItem.answer
+      }
+    }))
+  } : null;
+
+  // 4. Combine into an array if FAQ exists
+  const combinedSchema = faqSchema ? [serviceSchema, faqSchema] : serviceSchema;
+
+  // 5. Create the script element and append to head
+  const script = document.createElement('script');
+  script.id = 'jsonld-service-schema';
+  script.type = 'application/ld+json';
+  script.innerHTML = JSON.stringify(combinedSchema);
+  document.head.appendChild(script);
+
+  // 6. Return cleanup function
+  return () => {
+    const scriptToRemove = document.getElementById('jsonld-service-schema');
     if (scriptToRemove) {
       scriptToRemove.remove();
     }

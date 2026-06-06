@@ -6,8 +6,10 @@ import { ContactForm } from './components/ContactForm';
 import { ServiceArea } from './components/ServiceArea';
 import { Footer } from './components/Footer';
 import { LocationLandingPage } from './components/LocationLandingPage';
+import { ServiceLandingPage } from './components/ServiceLandingPage';
 import { locations } from './data/locations';
-import { injectLocationSchema } from './utils/schemaHelper';
+import { services } from './data/services';
+import { injectLocationSchema, injectServiceSchema } from './utils/schemaHelper';
 
 interface BookingDetails {
   pickupAddress?: string;
@@ -25,6 +27,12 @@ const App: React.FC = () => {
     return locations[cleanPath] ? cleanPath : '';
   });
 
+  const [currentServiceId, setCurrentServiceId] = useState<string>(() => {
+    const path = window.location.pathname;
+    const cleanPath = path.replace(/^\//, '');
+    return services[cleanPath] ? cleanPath : '';
+  });
+
   const handleBook = (details: BookingDetails) => {
     setBookingDetails(details);
     // Give state a brief moment to update and render before scrolling
@@ -33,10 +41,20 @@ const App: React.FC = () => {
     }, 50);
   };
 
-  const handleNavigate = (locationId: string) => {
-    setCurrentLocationId(locationId);
-    const newPath = locationId ? `/${locationId}` : '/';
-    window.history.pushState({}, '', newPath);
+  const handleNavigate = (routeId: string) => {
+    if (locations[routeId]) {
+      setCurrentLocationId(routeId);
+      setCurrentServiceId('');
+      window.history.pushState({}, '', `/${routeId}`);
+    } else if (services[routeId]) {
+      setCurrentServiceId(routeId);
+      setCurrentLocationId('');
+      window.history.pushState({}, '', `/${routeId}`);
+    } else {
+      setCurrentLocationId('');
+      setCurrentServiceId('');
+      window.history.pushState({}, '', '/');
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -45,7 +63,16 @@ const App: React.FC = () => {
     const handlePopState = () => {
       const path = window.location.pathname;
       const cleanPath = path.replace(/^\//, '');
-      setCurrentLocationId(locations[cleanPath] ? cleanPath : '');
+      if (locations[cleanPath]) {
+        setCurrentLocationId(cleanPath);
+        setCurrentServiceId('');
+      } else if (services[cleanPath]) {
+        setCurrentServiceId(cleanPath);
+        setCurrentLocationId('');
+      } else {
+        setCurrentLocationId('');
+        setCurrentServiceId('');
+      }
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
@@ -54,6 +81,7 @@ const App: React.FC = () => {
   // Manage SEO metadata & JSON-LD schema dynamically
   useEffect(() => {
     const activeLocation = locations[currentLocationId];
+    const activeService = services[currentServiceId];
     
     // Store original document values (from index.html)
     const originalTitle = "Last Minute Courier Service Austin | Air Hand Carry & Same Day Delivery TX";
@@ -77,6 +105,20 @@ const App: React.FC = () => {
       return () => {
         cleanupSchema();
       };
+    } else if (activeService) {
+      document.title = activeService.title;
+      
+      if (descMeta) {
+        descMeta.setAttribute('content', activeService.metaDescription);
+      }
+      if (kwMeta) {
+        kwMeta.setAttribute('content', activeService.keywords.join(', '));
+      }
+
+      const cleanupSchema = injectServiceSchema(activeService);
+      return () => {
+        cleanupSchema();
+      };
     } else {
       document.title = originalTitle;
       if (descMeta) {
@@ -86,9 +128,10 @@ const App: React.FC = () => {
         kwMeta.setAttribute('content', originalKeywords);
       }
     }
-  }, [currentLocationId]);
+  }, [currentLocationId, currentServiceId]);
 
   const activeLocation = locations[currentLocationId];
+  const activeService = services[currentServiceId];
 
   return (
     <div className="bg-obsidian min-h-screen text-slate-200 font-sans selection:bg-red-600 selection:text-white relative overflow-x-hidden">
@@ -106,15 +149,17 @@ const App: React.FC = () => {
         <Header onNavigate={handleNavigate} />
         {activeLocation ? (
           <LocationLandingPage location={activeLocation} onNavigate={handleNavigate} />
+        ) : activeService ? (
+          <ServiceLandingPage service={activeService} onNavigate={handleNavigate} />
         ) : (
           <main>
             <Hero />
-            <Features />
+            <Features onNavigate={handleNavigate} />
             <ContactForm prefilledDetails={bookingDetails} />
             <ServiceArea onNavigate={handleNavigate} />
           </main>
         )}
-        <Footer />
+        <Footer onNavigate={handleNavigate} />
       </div>
     </div>
   );

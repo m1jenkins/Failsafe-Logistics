@@ -1,7 +1,8 @@
 import React from 'react';
 import { SectionHeading } from './SectionHeading';
-import { Crosshair, Map, Plane, MapPin } from 'lucide-react';
+import { Crosshair, Map, Plane, MapPin, ArrowRight } from 'lucide-react';
 import { locations } from '../data/locations';
+import { services } from '../data/services';
 
 const hubs = [
   "Houston", "Dallas / Fort Worth", "San Antonio", "El Paso"
@@ -42,10 +43,10 @@ export const ServiceArea: React.FC<ServiceAreaProps> = ({ onNavigate }) => {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-12">
 
           {/* Austin Neighborhood Dispatch Hubs */}
-          <div className="glass-panel p-8 relative overflow-hidden group rounded-2xl">
+          <div className="glass-panel p-8 relative overflow-hidden group rounded-2xl lg:col-span-1">
             {/* Hover top border glow */}
             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             
@@ -79,8 +80,38 @@ export const ServiceArea: React.FC<ServiceAreaProps> = ({ onNavigate }) => {
             </div>
           </div>
 
+          {/* Specialized Courier Services */}
+          <div className="glass-panel p-8 relative overflow-hidden group rounded-2xl lg:col-span-1">
+            {/* Hover top border glow */}
+            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            
+            <h3 className="text-lg font-bold text-white uppercase mb-4 flex items-center font-display tracking-wider">
+              <span className="w-1.5 h-6 bg-red-600 mr-3 rounded-full"></span>
+              Specialized Courier Services
+            </h3>
+            <p className="text-slate-400 mb-6 font-light leading-relaxed text-sm">
+              Select one of our dedicated delivery divisions for detailed service capabilities, pricing, and active routes:
+            </p>
+            <div className="flex flex-col space-y-2.5 font-display text-xs">
+              {Object.values(services).map(service => (
+                <a
+                  key={service.id}
+                  href={`/${service.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (onNavigate) onNavigate(service.id);
+                  }}
+                  className="flex items-center justify-between p-2.5 bg-white/[0.01] hover:bg-red-950/10 border border-white/[0.03] hover:border-red-500/20 text-slate-300 hover:text-white transition-all duration-300 rounded-xl cursor-pointer"
+                >
+                  <span className="font-semibold uppercase tracking-wider">{service.name}</span>
+                  <ArrowRight className="h-3.5 w-3.5 text-red-500/60 group-hover:text-red-500 transition-colors" />
+                </a>
+              ))}
+            </div>
+          </div>
+
           {/* US Domestic Hand Carry */}
-          <div className="glass-panel p-8 relative overflow-hidden group rounded-2xl">
+          <div className="glass-panel p-8 relative overflow-hidden group rounded-2xl lg:col-span-1">
             {/* Hover top border glow */}
             <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             

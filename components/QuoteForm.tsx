@@ -199,20 +199,20 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
     }
   };
 
-  const inputClasses = (hasError: boolean) => `w-full glass-input text-slate-200 px-5 py-4 rounded-xl outline-none placeholder:text-slate-600 text-sm md:text-base border transition-all duration-300 font-sans ${
+  const inputClasses = (hasError: boolean) => `w-full glass-input text-slate-200 px-5 py-3 sm:py-4 rounded-xl outline-none placeholder:text-slate-600 text-sm border transition-all duration-300 font-sans ${
     hasError 
       ? 'border-red-500 bg-red-950/10 focus:border-red-400 focus:shadow-[0_0_12px_rgba(239,68,68,0.15)]' 
       : 'border-white/[0.04] focus:border-red-500/50'
   }`;
 
-  const labelClasses = "block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 font-display";
+  const labelClasses = "block text-[10px] sm:text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5 sm:mb-2 font-display";
 
   return (
-    <div className="glass-panel-elevated p-8 rounded-3xl shadow-2xl relative border border-white/[0.05]">
+    <div className="glass-panel-elevated p-5 sm:p-8 rounded-3xl shadow-2xl relative border border-white/[0.05]">
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
       
-      <div className="mb-6">
-        <h2 className="text-xl font-bold text-white uppercase tracking-wider font-display flex items-center">
+      <div className="mb-4 sm:mb-6">
+        <h2 className="text-lg sm:text-xl font-bold text-white uppercase tracking-wider font-display flex items-center">
           <span className="w-1.5 h-6 bg-red-600 mr-3 rounded-full"></span>
           Request Quote
         </h2>
@@ -239,7 +239,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
           </Button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+        <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4" noValidate>
           
           {Object.keys(errors).length > 0 && (
             <div 
@@ -431,7 +431,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
               <select
                 id="packageType"
                 name="packageType"
-                className="w-full glass-input text-slate-200 px-5 py-4 rounded-xl outline-none border border-white/[0.04] appearance-none text-sm md:text-base focus:border-red-500/50 cursor-pointer pr-12 font-sans"
+                className="w-full glass-input text-slate-200 px-5 py-3 sm:py-4 rounded-xl outline-none border border-white/[0.04] appearance-none text-sm focus:border-red-500/50 cursor-pointer pr-12 font-sans"
                 value={formState.packageType}
                 onChange={handleChange}
               >
@@ -477,12 +477,12 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
           </div>
 
           {/* Submission Button */}
-          <div className="pt-4">
+          <div className="pt-2 sm:pt-4">
             <Button
               variant="alert"
               type="submit"
               disabled={isSubmitting}
-              className="w-full flex items-center justify-center space-x-3 py-4 text-sm md:text-base rounded-full shadow-lg hover:shadow-red-900/10 transition-all duration-300 font-display cursor-pointer"
+              className="w-full flex items-center justify-center space-x-3 py-3 sm:py-4 text-sm rounded-full shadow-lg hover:shadow-red-900/10 transition-all duration-300 font-display cursor-pointer"
             >
               {isSubmitting ? (
                 <span>Processing Quote Request...</span>

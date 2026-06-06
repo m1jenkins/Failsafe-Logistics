@@ -4,7 +4,7 @@ import { QuoteForm } from './QuoteForm';
 
 export const Hero: React.FC = () => {
   return (
-    <section id="hero" className="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden bg-obsidian">
+    <section id="hero" className="relative min-h-[auto] lg:min-h-screen flex items-center pt-20 pb-6 lg:pt-28 lg:pb-16 overflow-hidden bg-obsidian">
       {/* Background Grid Pattern */}
       <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:32px_32px]"></div>
 
@@ -27,10 +27,10 @@ export const Hero: React.FC = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-obsidian via-obsidian/80 to-transparent z-10"></div>
 
       <div className="container mx-auto px-6 md:px-8 relative z-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-12 items-center">
           
           {/* Left Column: Headline and text */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-3 lg:space-y-6">
             
             {/* Active Status Badge */}
             <div className="inline-flex items-center space-x-2 bg-red-950/30 border border-red-500/20 px-3.5 py-1.5 rounded-full backdrop-blur-md liquid-shimmer">
@@ -40,26 +40,26 @@ export const Hero: React.FC = () => {
               </span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl md:text-7.5xl font-black text-white leading-[1.08] tracking-tight font-display">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.08] tracking-tight font-display">
               Austin's Premier <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-700">Courier Service</span>
               <br />
               <span className="text-slate-200">Rush Logistics.</span>
             </h1>
 
-            <div className="backdrop-blur-md bg-white/[0.02] border border-white/[0.04] rounded-2xl p-6 shadow-xl shadow-black/30 max-w-2xl">
-              <p className="text-base md:text-lg text-slate-300 font-light leading-relaxed">
+            <div className="hidden sm:block backdrop-blur-md bg-white/[0.02] border border-white/[0.04] rounded-2xl p-4 lg:p-6 shadow-xl shadow-black/30 max-w-2xl">
+              <p className="text-sm md:text-base lg:text-lg text-slate-300 font-light leading-relaxed">
                 The time-critical infrastructure partner for <strong className="text-white font-medium">Austin</strong>, <strong className="text-white font-medium">Round Rock</strong>, and the <strong className="text-white font-medium">Taylor Semiconductor Corridor</strong>. Delivering hot shot parts, medical STAT, and secure chain of custody documents with dedicated direct-drive vehicles.
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-4 pt-2">
-              <a href="#quick-quote-form" className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 border border-red-500/20 text-white font-bold uppercase tracking-wider text-xs md:text-sm px-6 py-4 rounded-full shadow-lg shadow-red-950/30 transition-all inline-flex items-center space-x-2 font-display">
+            <div className="flex flex-wrap gap-3 lg:gap-4 pt-1 lg:pt-2">
+              <a href="#quick-quote-form" className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 border border-red-500/20 text-white font-bold uppercase tracking-wider text-[10px] sm:text-xs md:text-sm px-4 sm:px-6 py-3 sm:py-4 rounded-full shadow-lg shadow-red-950/30 transition-all inline-flex items-center space-x-2 font-display">
                 <span>Request Instant Quote</span>
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               </a>
-              <a href="sms:5129104938" className="bg-white/[0.02] border border-white/[0.04] hover:bg-white/[0.05] text-slate-300 hover:text-white font-bold uppercase tracking-wider text-xs md:text-sm px-6 py-4 rounded-full shadow-md transition-all inline-flex items-center space-x-2 font-display">
-                <Phone className="h-4 w-4 text-red-500" />
+              <a href="sms:5129104938" className="bg-white/[0.02] border border-white/[0.04] hover:bg-white/[0.05] text-slate-300 hover:text-white font-bold uppercase tracking-wider text-[10px] sm:text-xs md:text-sm px-4 sm:px-6 py-3 sm:py-4 rounded-full shadow-md transition-all inline-flex items-center space-x-2 font-display">
+                <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-red-500" />
                 <span>Text Dispatch (512) 910-4938</span>
               </a>
             </div>

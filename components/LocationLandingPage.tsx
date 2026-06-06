@@ -226,14 +226,13 @@ export const LocationLandingPage: React.FC<LocationLandingPageProps> = ({ locati
             </div>
 
             {/* Keyword-optimized H1 */}
-            <h1 id="hero-heading" className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.1] tracking-tight font-display">
-              Reliable <br />
+            <h1 id="hero-heading" className="text-4xl sm:text-5xl lg:text-6.5xl font-black text-white leading-[1.08] tracking-tight font-display">
+              On-Time Same-Day Delivery <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-700">
-                {location.name} Courier Service
+                in {location.name}
               </span>
-              <span className="text-slate-300 block text-2xl sm:text-3xl font-light mt-4 tracking-normal">
-                On-Demand Logistics & Same-Day Courier Fleet
-              </span>
+              <br />
+              <span className="text-slate-200">Guaranteed.</span>
             </h1>
 
             {/* Geographical Transit E-E-A-T introduction */}
@@ -244,15 +243,23 @@ export const LocationLandingPage: React.FC<LocationLandingPageProps> = ({ locati
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-4 pt-2">
-              <a href="#quick-quote-form" className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 border border-red-500/20 text-white font-bold uppercase tracking-wider text-xs md:text-sm px-6 py-4 rounded-full shadow-lg shadow-red-950/30 transition-all inline-flex items-center space-x-2 font-display">
-                <span>Book Instant Courier</span>
+            <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center pt-2">
+              <Button
+                variant="alert"
+                href="#quick-quote-form"
+                className="flex items-center justify-center space-x-2 shadow-lg shadow-red-950/20 px-8 py-4 text-sm md:text-base transition-transform hover:scale-[1.02]"
+              >
+                <span>Calculate Delivery Cost</span>
                 <ArrowRight className="h-4 w-4" />
-              </a>
-              <a href="sms:5129104938" className="bg-white/[0.02] border border-white/[0.04] hover:bg-white/[0.05] text-slate-300 hover:text-white font-bold uppercase tracking-wider text-xs md:text-sm px-6 py-4 rounded-full shadow-md transition-all inline-flex items-center space-x-2 font-display">
+              </Button>
+              <Button
+                variant="secondary"
+                href="sms:5129104938"
+                className="flex items-center justify-center space-x-2 px-8 py-4 text-sm md:text-base hover:bg-white/[0.06] transition-all"
+              >
                 <Phone className="h-4 w-4 text-red-500" />
                 <span>Text Dispatch (512) 910-4938</span>
-              </a>
+              </Button>
             </div>
 
             {/* Micro badges */}

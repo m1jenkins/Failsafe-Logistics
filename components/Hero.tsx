@@ -41,7 +41,7 @@ export const Hero: React.FC = () => {
 
             <div className="hidden sm:block backdrop-blur-md bg-white/[0.02] border border-white/[0.04] rounded-2xl p-4 lg:p-5 shadow-xl shadow-black/30 max-w-2xl">
               <p className="text-sm md:text-base lg:text-[17px] text-slate-300 font-light leading-relaxed">
-                The time-critical infrastructure partner for <strong className="text-white font-medium">Austin</strong>, <strong className="text-white font-medium">Round Rock</strong>, and the <strong className="text-white font-medium">Taylor Semiconductor Corridor</strong>. Delivering hot shot parts, medical STAT, and secure chain of custody documents with dedicated direct-drive vehicles.
+                We specialize in last-minute same-day and overnight courier runs out of <strong className="text-white font-medium">Austin</strong> — <strong className="text-white font-medium">direct-drive</strong> up to 1,000+ miles across Texas and beyond. One dedicated vehicle, one driver, <strong className="text-white font-medium">zero transfers</strong>, non-stop to destination. We take the jobs other carriers aren't willing to take.
               </p>
             </div>
 

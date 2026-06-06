@@ -52,7 +52,6 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
       <div className="container mx-auto px-6 relative z-10">
         <SectionHeading
           title="Consolidated Hot Shot Services"
-          subtitle="For when tomorrow is too late. Direct-drive logistics designed for the high-stakes jobs others aren't willing to do."
           align="center"
         />
 

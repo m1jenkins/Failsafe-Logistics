@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant light (&:where(.light, .light *));
+
 /* ──────────────────────────────────────────────
    DARK LIQUID GLASS — Theme Configuration
    Warm-dark palette, organic motion, tactile glass
@@ -357,4 +359,247 @@ body {
   * {
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ──────────────────────────────────────────────
+   LIGHT LIQUID GLASS — Theme Overrides
+   ────────────────────────────────────────────── */
+
+.light {
+  color-scheme: light;
+  
+  /* Core Theme Colors override */
+  --color-obsidian: #f8fafc;
+  --color-deep-space: #f1f5f9;
+  --color-soot: #e2e8f0;
+  --color-graphite: #cbd5e1;
+  --color-smoke: #94a3b8;
+  
+  --color-slate-850: #f1f5f9;
+  --color-slate-900: #e2e8f0;
+  --color-slate-950: #cbd5e1;
+}
+
+.light body {
+  background-color: #f8fafc;
+  color: #334155;
+}
+
+/* Scrollbar overrides */
+.light ::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+.light ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+
+.light ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Glass panel overrides */
+.light .glass-panel {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 0 20px rgba(0, 0, 0, 0.02),
+    0 8px 32px -8px rgba(15, 23, 42, 0.08),
+    0 2px 8px rgba(15, 23, 42, 0.04) !important;
+}
+
+.light .glass-panel:hover {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(15, 23, 42, 0.15) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 0 30px rgba(0, 0, 0, 0.01),
+    0 16px 48px -12px rgba(15, 23, 42, 0.12),
+    0 4px 16px rgba(15, 23, 42, 0.06) !important;
+}
+
+.light .glass-panel-elevated {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-color: rgba(15, 23, 42, 0.1) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 0 40px rgba(0, 0, 0, 0.02),
+    0 20px 60px -15px rgba(15, 23, 42, 0.12),
+    0 8px 24px rgba(15, 23, 42, 0.06) !important;
+}
+
+/* Glass inputs */
+.light .glass-input {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(15, 23, 42, 0.1) !important;
+  color: #0f172a !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.light .glass-input::placeholder {
+  color: #64748b !important;
+}
+
+.light .glass-input:focus {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(196, 66, 26, 0.6) !important;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.05),
+    0 0 12px rgba(196, 66, 26, 0.15) !important;
+}
+
+/* Floating header */
+.light .floating-header {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border-bottom-color: rgba(15, 23, 42, 0.06) !important;
+}
+
+.light .floating-header.scrolled {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-bottom-color: rgba(15, 23, 42, 0.1) !important;
+  box-shadow: 0 8px 32px -8px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Global text overrides for light mode */
+.light h1,
+.light h2,
+.light h3,
+.light h4,
+.light h5,
+.light h6 {
+  color: #0f172a !important;
+}
+
+/* Text color helper overrides */
+.light .text-white:not(button *, .bg-gradient-to-r *, .bg-red-600 *, a *) {
+  color: #0f172a !important;
+}
+
+.light .text-slate-200 {
+  color: #1e293b !important;
+}
+
+.light .text-slate-300 {
+  color: #334155 !important;
+}
+
+.light .text-slate-400 {
+  color: #475569 !important;
+}
+
+.light .text-slate-500 {
+  color: #64748b !important;
+}
+
+.light .text-slate-600 {
+  color: #475569 !important;
+}
+
+/* Specific component tweaks */
+/* Hero section image overlay */
+.light .from-obsidian {
+  --tw-gradient-from: #f8fafc var(--tw-gradient-from-position) !important;
+}
+
+.light .via-obsidian\/40 {
+  --tw-gradient-via: rgba(248, 250, 252, 0.4) var(--tw-gradient-via-position) !important;
+}
+
+.light .to-obsidian {
+  --tw-gradient-to: #f8fafc var(--tw-gradient-to-position) !important;
+}
+
+/* Hero bg grid opacity */
+.light #hero .opacity-\[0\.03\] {
+  opacity: 0.12 !important;
+  background-image: linear-gradient(to right, rgba(15, 23, 42, 0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(15, 23, 42, 0.08) 1px, transparent 1px) !important;
+}
+
+/* Ink drift animation tweak */
+.light [class*="animate-ink"] {
+  mix-blend-mode: multiply !important;
+  opacity: 0.15 !important;
+}
+
+.light [class*="animate-ink1"] {
+  background: radial-gradient(circle, rgba(196, 66, 26, 0.2) 0%, transparent 70%) !important;
+}
+
+.light [class*="animate-ink2"] {
+  background: radial-gradient(circle, rgba(220, 38, 38, 0.15) 0%, transparent 70%) !important;
+}
+
+.light [class*="animate-ink3"] {
+  background: radial-gradient(circle, rgba(196, 66, 26, 0.1) 0%, transparent 70%) !important;
+}
+
+/* Buttons in light mode */
+.light .bg-white\/\[0\.02\] {
+  background-color: rgba(15, 23, 42, 0.03) !important;
+  border-color: rgba(15, 23, 42, 0.06) !important;
+  color: #475569 !important;
+}
+
+.light .bg-white\/\[0\.02\]:hover {
+  background-color: rgba(15, 23, 42, 0.06) !important;
+  color: #0f172a !important;
+}
+
+.light .bg-white\/\[0\.03\] {
+  background-color: rgba(15, 23, 42, 0.04) !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+  color: #475569 !important;
+}
+
+.light .bg-white\/\[0\.03\]:hover {
+  background-color: rgba(15, 23, 42, 0.07) !important;
+  color: #0f172a !important;
+}
+
+.light .bg-white\/\[0\.04\]:not(.bg-gradient-to-r) {
+  background-color: rgba(15, 23, 42, 0.05) !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+  color: #0f172a !important;
+}
+
+.light .bg-white\/\[0\.04\]:hover:not(.bg-gradient-to-r) {
+  background-color: rgba(15, 23, 42, 0.08) !important;
+  border-color: rgba(15, 23, 42, 0.15) !important;
+}
+
+.light .border-white\/\[0\.04\] {
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+.light .border-white\/\[0\.05\] {
+  border-color: rgba(15, 23, 42, 0.1) !important;
+}
+
+.light .border-white\/\[0\.06\] {
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+.light .border-white\/\[0\.06\]:hover {
+  border-color: rgba(15, 23, 42, 0.15) !important;
+}
+
+/* Dropdown select options */
+.light select option {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* Map specific tweaks (Leaflet controls, etc.) */
+.light .leaflet-bar a {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  border-bottom-color: rgba(15, 23, 42, 0.1) !important;
+}
+.light .leaflet-bar a:hover {
+  background-color: #f1f5f9 !important;
+}
+.light .marker-origin {
+  background-color: #cbd5e1 !important;
+  box-shadow: 0 0 0 4px rgba(203, 213, 225, 0.3) !important;
 }

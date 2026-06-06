@@ -71,9 +71,9 @@ export const LocationLandingPage: React.FC<LocationLandingPageProps> = ({ locati
 
             {/* Micro badges */}
             <div className="flex items-center gap-6 pt-4 text-[10px] text-slate-500 font-bold tracking-wider uppercase font-display border-t border-white/[0.02] max-w-lg">
-              <span className="flex items-center"><CheckCircle className="h-3 w-3 text-red-500 mr-1.5" /> 30-60 Min Pickup</span>
-              <span className="flex items-center"><CheckCircle className="h-3 w-3 text-red-500 mr-1.5" /> HIPAA Compliant</span>
-              <span className="flex items-center"><CheckCircle className="h-3 w-3 text-red-500 mr-1.5" /> Chain of Custody</span>
+              <span className="flex items-center">30-60 Min Pickup</span>
+              <span className="flex items-center">HIPAA Compliant</span>
+              <span className="flex items-center">Chain of Custody</span>
             </div>
 
           </div>

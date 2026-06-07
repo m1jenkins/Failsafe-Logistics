@@ -64,14 +64,21 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
   const validateField = (name: string, value: string): string => {
     switch (name) {
       case 'fullName':
-        if (!value.trim()) return 'Full Name is required';
+        if (!value.trim()) return 'Full Name (or company) is required';
         return '';
       case 'phone': {
         const val = value.trim();
-        if (!val) return 'Phone Number is required';
-        const digits = val.replace(/\D/g, '');
-        if (digits.length < 10) return 'Please enter a valid 10-digit phone number';
-        return '';
+        if (!val) return 'Phone Number (or email) is required';
+        const isEmail = val.includes('@');
+        if (isEmail) {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(val)) return 'Please enter a valid email address';
+          return '';
+        } else {
+          const digits = val.replace(/\D/g, '');
+          if (digits.length < 10) return 'Please enter a valid 10-digit phone number or email';
+          return '';
+        }
       }
       case 'itemDescription':
         if (!value.trim()) return 'Please describe what you are shipping and where';
@@ -89,9 +96,12 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
     let formattedValue = value;
     
     if (name === 'phone') {
-      const x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-      if (x) {
-        formattedValue = !x[2] ? x[1] : `(${x[1]}) ${x[2]}${x[3] ? `-${x[3]}` : ''}`;
+      const isEmailLike = value.includes('@') || /[a-zA-Z]/.test(value);
+      if (!isEmailLike) {
+        const x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+        if (x) {
+          formattedValue = !x[2] ? x[1] : `(${x[1]}) ${x[2]}${x[3] ? `-${x[3]}` : ''}`;
+        }
       }
     }
 
@@ -138,7 +148,9 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
     setIsSubmitting(true);
 
     try {
-      const messageBody = `DISPATCH Request from ${formState.fullName}\nPhone: ${formState.phone}\nCargo/Details: ${formState.itemDescription}${formState.deliveryNeeded ? `\nTiming: ${formState.deliveryNeeded}` : ''}`;
+      const isEmail = formState.phone.includes('@');
+      const contactLabel = isEmail ? 'Email' : 'Phone';
+      const messageBody = `DISPATCH Request from ${formState.fullName}\n${contactLabel}: ${formState.phone}\nCargo/Details: ${formState.itemDescription}${formState.deliveryNeeded ? `\nTiming: ${formState.deliveryNeeded}` : ''}`;
 
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -150,8 +162,8 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
           access_key: "4d84c98a-eb94-4f22-8a55-a7e4a80855ec",
           name: formState.fullName,
           fullName: formState.fullName,
-          email: "quick-request@speedybat.com",
-          phone: formState.phone,
+          email: isEmail ? formState.phone : "quick-request@speedybat.com",
+          phone: isEmail ? 'N/A' : formState.phone,
           pickupAddress: 'N/A (Quick Dispatch)',
           deliveryAddress: 'N/A (Quick Dispatch)',
           itemDescription: formState.itemDescription,
@@ -246,14 +258,14 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
 
           {/* Full Name */}
           <div>
-            <label htmlFor="fullName" className={labelClasses}>Full Name</label>
+            <label htmlFor="fullName" className={labelClasses}>Full Name (or company)</label>
             <input
               id="fullName"
               name="fullName"
               type="text"
               required
               className={inputClasses(!!errors.fullName)}
-              placeholder="John Doe"
+              placeholder="John Doe or Company Name"
               value={formState.fullName}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -270,14 +282,14 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
 
           {/* Phone Number */}
           <div>
-            <label htmlFor="phone" className={labelClasses}>Phone Number</label>
+            <label htmlFor="phone" className={labelClasses}>Phone Number (or email)</label>
             <input
               id="phone"
               name="phone"
-              type="tel"
+              type="text"
               required
               className={inputClasses(!!errors.phone)}
-              placeholder="(512) 910-4938"
+              placeholder="(512) 910-4938 or email@example.com"
               value={formState.phone}
               onChange={handleChange}
               onBlur={handleBlur}

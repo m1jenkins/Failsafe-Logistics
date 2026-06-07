@@ -100,30 +100,7 @@ export const HandCarryCallout: React.FC = () => {
                 </div>
               </div>
 
-              {/* Common Use Cases */}
-              <div className="pt-6 border-t border-white/[0.04] space-y-3">
-                <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest font-display">
-                  Common Use Cases
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "Legal Evidence",
-                    "Biotech Samples",
-                    "Semiconductor Wafers",
-                    "Signed Contracts",
-                    "High-Value Jewelry"
-                  ].map((useCase, idx) => (
-                    <span
-                      key={idx}
-                      className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-blue-400/90 bg-blue-950/10 border border-blue-500/15 rounded-full font-display"
-                    >
-                      {useCase}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="pt-4">
+              <div className="pt-6 border-t border-white/[0.04]">
                 <a
                   href="#booking"
                   className="inline-flex items-center space-x-2 text-xs font-bold text-blue-400 hover:text-blue-300 uppercase tracking-widest font-display transition-colors group/link"

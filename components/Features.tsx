@@ -1,5 +1,6 @@
 import React from 'react';
 import { Clock, Plane, Cpu, FileText, Wrench, ShieldAlert, ArrowRight } from 'lucide-react';
+import { Button } from './Button';
 
 interface CargoItem {
   title: string;
@@ -56,62 +57,68 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
           {/* Left Column: The overnight/emergency focus statement */}
-          <div className="lg:col-span-6 flex flex-col justify-between glass-panel-elevated p-8 md:p-10 rounded-3xl border border-white/[0.06] relative group overflow-hidden">
+          <div className="lg:col-span-6 flex flex-col justify-between glass-panel-elevated p-8 md:p-12 rounded-3xl border border-white/[0.06] relative group overflow-hidden">
             {/* Liquid shimmer line at top */}
             <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-red-500/40 to-transparent" />
             
-            <div className="space-y-6">
-              <h3 className="text-3xl md:text-4xl font-extrabold uppercase text-white font-display tracking-tight leading-tight">
-                For when tomorrow is <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-ember to-molten font-black">
-                  Too Late
-                </span>
-              </h3>
+            <div className="space-y-8 lg:space-y-10">
+              <div className="space-y-4">
+                <h3 className="text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase text-white font-display tracking-tight leading-tight">
+                  For when tomorrow is <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-ember to-molten font-black">
+                    Too Late
+                  </span>
+                </h3>
 
-              <p className="text-slate-300 font-light text-base leading-relaxed">
-                When next-day air cutoff has passed, hubs are shut down, and cargo absolutely has to be in another city by 8:00 AM next morning, overnight courier networks can't help. 
-              </p>
+                <p className="text-slate-300 font-light text-base lg:text-lg leading-relaxed">
+                  When next-day air cutoff has passed, hubs are shut down, and cargo absolutely has to be in another city by 8:00 AM next morning, overnight courier networks can't help. 
+                </p>
 
+                <p className="text-slate-400 font-normal text-sm lg:text-base leading-relaxed border-l-2 border-red-500/30 pl-4">
+                  Every run is direct-drive: one vehicle, one courier, zero transfers. Your shipment gets a dedicated driver who doesn't stop until the job is done.
+                </p>
+              </div>
 
               {/* Status details grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-white/[0.04] text-xs font-display">
-                <div className="space-y-1">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t border-white/[0.04] text-xs font-display">
+                <div className="space-y-2">
                   <div className="text-slate-500 uppercase font-bold tracking-wider text-[9px]">Route status</div>
-                  <div className="text-white font-bold uppercase flex items-center">
-                    <Clock className="w-3.5 h-3.5 text-red-500 mr-1.5" />
+                  <div className="text-white font-bold uppercase flex items-center text-xs sm:text-sm md:text-base">
+                    <Clock className="w-5 h-5 text-red-500 mr-2 shrink-0" />
                     24/7/365 Run
                   </div>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-2">
                   <div className="text-slate-500 uppercase font-bold tracking-wider text-[9px]">Transit type</div>
-                  <div className="text-white font-bold uppercase flex items-center">
-                    <ShieldAlert className="w-3.5 h-3.5 text-red-500 mr-1.5" />
+                  <div className="text-white font-bold uppercase flex items-center text-xs sm:text-sm md:text-base">
+                    <ShieldAlert className="w-5 h-5 text-red-500 mr-2 shrink-0" />
                     Dedicated Drive
                   </div>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-2">
                   <div className="text-slate-500 uppercase font-bold tracking-wider text-[9px]">Range capability</div>
-                  <div className="text-white font-bold uppercase flex items-center font-bold">
-                    <ArrowRight className="w-3.5 h-3.5 text-red-500 mr-1.5 animate-pulse" />
+                  <div className="text-white font-bold uppercase flex items-center text-xs sm:text-sm md:text-base font-bold">
+                    <ArrowRight className="w-5 h-5 text-red-500 mr-2 shrink-0 animate-pulse" />
                     1000+ Miles
                   </div>
                 </div>
               </div>
 
               {/* Trust Line */}
-              <div className="text-slate-500 uppercase font-bold tracking-wider text-[9px] font-display">
+              <div className="text-slate-400 uppercase font-bold tracking-wider text-[9px] font-display">
                 Fully insured · $100K cargo coverage · Chain of custody on every run
               </div>
             </div>
 
             <div className="pt-8">
-              <a
+              <Button
                 href="#booking"
-                className="inline-flex items-center space-x-2 text-xs font-bold text-red-500 hover:text-red-400 uppercase tracking-widest font-display transition-colors group/link"
+                variant="alert"
+                className="w-full group/link"
               >
                 <span>Initiate Urgent Dispatch</span>
-                <ArrowRight className="w-3.5 h-3.5 transform group-hover/link:translate-x-1 transition-transform" />
-              </a>
+                <ArrowRight className="w-4 h-4 ml-2 transform group-hover/link:translate-x-1.5 transition-transform" />
+              </Button>
             </div>
           </div>
 

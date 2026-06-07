@@ -36,7 +36,7 @@ export const Hero: React.FC = () => {
               The Courier <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-700">Austin Calls</span>
               <br />
-              <span className="text-slate-200">at 2am</span>
+              <span className="hero-emphasis">at 2am</span>
             </h1>
 
             <div className="hidden sm:block backdrop-blur-md bg-white/[0.02] border border-white/[0.04] rounded-2xl p-4 lg:p-5 shadow-xl shadow-black/30 max-w-2xl">

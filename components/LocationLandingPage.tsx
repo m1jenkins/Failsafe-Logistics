@@ -51,7 +51,18 @@ export const LocationLandingPage: React.FC<LocationLandingPageProps> = ({ locati
             </div>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <a href="#quick-quote-form" className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 border border-red-500/20 text-white font-bold uppercase tracking-wider text-xs md:text-sm px-6 py-4 rounded-full shadow-lg shadow-red-950/30 transition-all inline-flex items-center space-x-2 font-display">
+              <a 
+                href="#quick-quote-form" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('quick-quote-form')?.scrollIntoView({ behavior: 'smooth' });
+                  const input = document.getElementById('fullName');
+                  if (input) {
+                    (input as HTMLInputElement).focus({ preventScroll: true });
+                  }
+                }}
+                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 border border-red-500/20 text-white font-bold uppercase tracking-wider text-xs md:text-sm px-6 py-4 rounded-full shadow-lg shadow-red-950/30 transition-all inline-flex items-center space-x-2 font-display"
+              >
                 <span>Get Quote in Minutes</span>
                 <ArrowRight className="h-4 w-4" />
               </a>
@@ -174,7 +185,18 @@ export const LocationLandingPage: React.FC<LocationLandingPageProps> = ({ locati
                     </p>
                   </div>
                   <div className="pt-6 mt-auto">
-                    <a href="#quick-quote-form" className="text-[10px] font-bold text-red-500 hover:text-red-400 uppercase tracking-widest font-display flex items-center space-x-1.5 transition-colors">
+                    <a 
+                      href="#quick-quote-form" 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        document.getElementById('quick-quote-form')?.scrollIntoView({ behavior: 'smooth' });
+                        const input = document.getElementById('fullName');
+                        if (input) {
+                          (input as HTMLInputElement).focus({ preventScroll: true });
+                        }
+                      }}
+                      className="text-[10px] font-bold text-red-500 hover:text-red-400 uppercase tracking-widest font-display flex items-center space-x-1.5 transition-colors"
+                    >
                       <span>Dispatch Now</span>
                       <ArrowRight className="h-3 w-3" />
                     </a>

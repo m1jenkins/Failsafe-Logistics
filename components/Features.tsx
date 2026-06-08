@@ -109,6 +109,14 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
             <div className="pt-8">
               <Button
                 href="#booking"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
+                  const input = document.getElementById('contactFullName');
+                  if (input) {
+                    (input as HTMLInputElement).focus({ preventScroll: true });
+                  }
+                }}
                 variant="alert"
                 className="w-full group/link"
               >

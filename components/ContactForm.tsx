@@ -100,12 +100,13 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
             {/* Common Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className={labelClasses}>Full Name</label>
+                <label htmlFor="contactFullName" className={labelClasses}>Full Name</label>
                 <div className="relative group/input">
                   <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
                     <User className="h-4.5 w-4.5" />
                   </div>
                   <input
+                    id="contactFullName"
                     name="fullName"
                     type="text"
                     required
@@ -119,12 +120,13 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
               </div>
 
               <div>
-                <label className={labelClasses}>Phone Number</label>
+                <label htmlFor="contactPhone" className={labelClasses}>Phone Number</label>
                 <div className="relative group/input">
                   <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
                     <Phone className="h-4.5 w-4.5" />
                   </div>
                   <input
+                    id="contactPhone"
                     name="phone"
                     type="tel"
                     required
@@ -139,12 +141,13 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
             </div>
 
             <div>
-              <label className={labelClasses}>What are you shipping and where?</label>
+              <label htmlFor="contactItemDescription" className={labelClasses}>What are you shipping and where?</label>
               <div className="relative group/input">
                 <div className="absolute left-3.5 top-3.5 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
                   <MapPin className="h-4.5 w-4.5" />
                 </div>
                 <textarea
+                  id="contactItemDescription"
                   name="itemDescription"
                   required
                   rows={3}

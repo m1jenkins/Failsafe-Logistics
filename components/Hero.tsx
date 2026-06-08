@@ -49,7 +49,18 @@ export const Hero: React.FC = () => {
             </div>
 
             <div className="flex flex-wrap gap-3 lg:gap-4 pt-1 lg:pt-2">
-              <a href="#quick-quote-form" className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 border border-red-500/20 text-white font-bold uppercase tracking-wider text-[10px] sm:text-xs md:text-sm px-4 sm:px-6 py-3 sm:py-4 rounded-full shadow-lg shadow-red-950/30 transition-all inline-flex items-center space-x-2 font-display">
+              <a 
+                href="#quick-quote-form" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('quick-quote-form')?.scrollIntoView({ behavior: 'smooth' });
+                  const input = document.getElementById('fullName');
+                  if (input) {
+                    (input as HTMLInputElement).focus({ preventScroll: true });
+                  }
+                }}
+                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 border border-red-500/20 text-white font-bold uppercase tracking-wider text-[10px] sm:text-xs md:text-sm px-4 sm:px-6 py-3 sm:py-4 rounded-full shadow-lg shadow-red-950/30 transition-all inline-flex items-center space-x-2 font-display"
+              >
                 <span>Get Quote in Minutes</span>
                 <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               </a>

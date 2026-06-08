@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SectionHeading } from './SectionHeading';
 import { Button } from './Button';
-import { Zap, ShieldCheck, MessageSquare } from 'lucide-react';
+import { Zap, ShieldCheck, MessageSquare, User, Phone, MapPin } from 'lucide-react';
 
 interface ContactFormProps {
   prefilledDetails?: {
@@ -88,8 +88,10 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
           align="center"
         />
 
-        <div className="mt-6 md:mt-8 glass-panel-elevated rounded-3xl p-6 md:p-8 shadow-2xl relative">
-          {/* Card highlight lines */}
+        <div className="mt-6 md:mt-8 form-premium-glow relative rounded-3xl group/form">
+          <div className="form-glow-backdrop" />
+          <div className="glass-panel-elevated rounded-3xl p-6 md:p-8 shadow-2xl relative border border-white/[0.05] z-10">
+            {/* Card highlight lines */}
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -99,44 +101,59 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className={labelClasses}>Full Name</label>
-                <input
-                  name="fullName"
-                  type="text"
-                  required
-                  className={inputClasses}
-                  placeholder="John Doe"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  autoComplete="name"
-                />
+                <div className="relative group/input">
+                  <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
+                    <User className="h-4.5 w-4.5" />
+                  </div>
+                  <input
+                    name="fullName"
+                    type="text"
+                    required
+                    className={`${inputClasses} pl-11`}
+                    placeholder="John Doe"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    autoComplete="name"
+                  />
+                </div>
               </div>
 
               <div>
                 <label className={labelClasses}>Phone Number</label>
-                <input
-                  name="phone"
-                  type="tel"
-                  required
-                  className={inputClasses}
-                  placeholder="(512) 910-4938"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  autoComplete="tel"
-                />
+                <div className="relative group/input">
+                  <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
+                    <Phone className="h-4.5 w-4.5" />
+                  </div>
+                  <input
+                    name="phone"
+                    type="tel"
+                    required
+                    className={`${inputClasses} pl-11`}
+                    placeholder="(512) 910-4938"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    autoComplete="tel"
+                  />
+                </div>
               </div>
             </div>
 
             <div>
               <label className={labelClasses}>What are you shipping and where?</label>
-              <textarea
-                name="itemDescription"
-                required
-                rows={3}
-                className={`${inputClasses} resize-none`}
-                placeholder="e.g. Medical kit from St. David's Main to Round Rock Clinic, or parts to Samsung Taylor fab"
-                value={itemDescription}
-                onChange={(e) => setItemDescription(e.target.value)}
-              />
+              <div className="relative group/input">
+                <div className="absolute left-3.5 top-3.5 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
+                  <MapPin className="h-4.5 w-4.5" />
+                </div>
+                <textarea
+                  name="itemDescription"
+                  required
+                  rows={3}
+                  className={`${inputClasses} pl-11 resize-none`}
+                  placeholder="e.g. Medical kit from St. David's Main to Round Rock Clinic, or parts to Samsung Taylor fab"
+                  value={itemDescription}
+                  onChange={(e) => setItemDescription(e.target.value)}
+                />
+              </div>
             </div>
 
             <div className="pt-1">
@@ -144,7 +161,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
                 variant="alert"
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex items-center justify-center space-x-3 py-3 text-base rounded-full shadow-lg hover:shadow-red-900/10 transition-all cursor-pointer"
+                className="w-full flex items-center justify-center space-x-3 py-3 text-base rounded-full shadow-lg hover:shadow-red-900/10 transition-all cursor-pointer btn-shimmer"
               >
                 {isSubmitting ? (
                   <span>PROCESSING REQUEST...</span>
@@ -185,6 +202,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
               </div>
             </div>
           </form>
+        </div>
         </div>
       </div>
     </section>

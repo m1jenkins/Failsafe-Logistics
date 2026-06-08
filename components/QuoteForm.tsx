@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, AlertCircle, Check, Clock } from 'lucide-react';
+import { ArrowRight, AlertCircle, Check, Clock, User, Phone, MapPin } from 'lucide-react';
 import { Button } from './Button';
 
 interface QuoteFormProps {
@@ -204,8 +204,10 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
   const labelClasses = "block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5 font-display";
 
   return (
-    <div className="glass-panel-elevated p-4 sm:p-5 lg:p-6 rounded-3xl shadow-2xl relative border border-white/[0.05]">
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
+    <div className="form-premium-glow relative rounded-3xl group/form">
+      <div className="form-glow-backdrop" />
+      <div className="glass-panel-elevated p-4 sm:p-5 lg:p-6 rounded-3xl shadow-2xl relative border border-white/[0.05] z-10">
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
       
       {isSubmitted ? (
         <div className="text-center py-10 space-y-4 font-sans" role="alert" aria-live="polite">
@@ -259,20 +261,25 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
           {/* Full Name */}
           <div>
             <label htmlFor="fullName" className={labelClasses}>Full Name (or company)</label>
-            <input
-              id="fullName"
-              name="fullName"
-              type="text"
-              required
-              className={inputClasses(!!errors.fullName)}
-              placeholder="John Doe or Company Name"
-              value={formState.fullName}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              autoComplete="name"
-              aria-invalid={!!errors.fullName}
-              aria-describedby={errors.fullName ? "err-fullName" : undefined}
-            />
+            <div className="relative group/input">
+              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
+                <User className="h-4.5 w-4.5" />
+              </div>
+              <input
+                id="fullName"
+                name="fullName"
+                type="text"
+                required
+                className={`${inputClasses(!!errors.fullName)} pl-11`}
+                placeholder="John Doe or Company Name"
+                value={formState.fullName}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                autoComplete="name"
+                aria-invalid={!!errors.fullName}
+                aria-describedby={errors.fullName ? "err-fullName" : undefined}
+              />
+            </div>
             {errors.fullName && touched.fullName && (
               <span id="err-fullName" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
                 {errors.fullName}
@@ -283,20 +290,25 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
           {/* Phone Number */}
           <div>
             <label htmlFor="phone" className={labelClasses}>Phone Number (or email)</label>
-            <input
-              id="phone"
-              name="phone"
-              type="text"
-              required
-              className={inputClasses(!!errors.phone)}
-              placeholder="(512) 910-4938 or email@example.com"
-              value={formState.phone}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              autoComplete="tel"
-              aria-invalid={!!errors.phone}
-              aria-describedby={errors.phone ? "err-phone" : undefined}
-            />
+            <div className="relative group/input">
+              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
+                <Phone className="h-4.5 w-4.5" />
+              </div>
+              <input
+                id="phone"
+                name="phone"
+                type="text"
+                required
+                className={`${inputClasses(!!errors.phone)} pl-11`}
+                placeholder="(512) 910-4938 or email@example.com"
+                value={formState.phone}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                autoComplete="tel"
+                aria-invalid={!!errors.phone}
+                aria-describedby={errors.phone ? "err-phone" : undefined}
+              />
+            </div>
             {errors.phone && touched.phone && (
               <span id="err-phone" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
                 {errors.phone}
@@ -307,19 +319,24 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
           {/* What are you shipping and where? */}
           <div>
             <label htmlFor="itemDescription" className={labelClasses}>What are you shipping and where?</label>
-            <textarea
-              id="itemDescription"
-              name="itemDescription"
-              required
-              rows={3}
-              className={`${inputClasses(!!errors.itemDescription)} resize-none`}
-              placeholder="e.g. Medical kit from St. David's Main to Round Rock Clinic, or parts to Samsung Taylor fab"
-              value={formState.itemDescription}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              aria-invalid={!!errors.itemDescription}
-              aria-describedby={errors.itemDescription ? "err-itemDescription" : undefined}
-            />
+            <div className="relative group/input">
+              <div className="absolute left-3.5 top-3.5 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
+                <MapPin className="h-4.5 w-4.5" />
+              </div>
+              <textarea
+                id="itemDescription"
+                name="itemDescription"
+                required
+                rows={3}
+                className={`${inputClasses(!!errors.itemDescription)} pl-11 resize-none`}
+                placeholder="e.g. Medical kit from St. David's Main to Round Rock Clinic, or parts to Samsung Taylor fab"
+                value={formState.itemDescription}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                aria-invalid={!!errors.itemDescription}
+                aria-describedby={errors.itemDescription ? "err-itemDescription" : undefined}
+              />
+            </div>
             {errors.itemDescription && touched.itemDescription && (
               <span id="err-itemDescription" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
                 {errors.itemDescription}
@@ -332,8 +349,8 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
             <label htmlFor="deliveryNeeded" className={labelClasses}>
               Timing <span className="text-slate-500 font-light font-sans lowercase italic">(optional)</span>
             </label>
-            <div className="relative">
-              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500">
+            <div className="relative group/input">
+              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
                 <Clock className="h-4.5 w-4.5" />
               </div>
               <input
@@ -357,7 +374,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
               variant="alert"
               type="submit"
               disabled={isSubmitting}
-              className="w-full flex items-center justify-center space-x-3 py-3 text-base rounded-full shadow-lg hover:shadow-red-900/10 transition-all cursor-pointer font-display font-bold uppercase tracking-wider"
+              className="w-full flex items-center justify-center space-x-3 py-3 text-base rounded-full shadow-lg hover:shadow-red-900/10 transition-all cursor-pointer font-display font-bold uppercase tracking-wider btn-shimmer"
             >
               {isSubmitting ? (
                 <span>PROCESSING REQUEST...</span>
@@ -371,6 +388,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
           </div>
         </form>
       )}
+      </div>
     </div>
   );
 };

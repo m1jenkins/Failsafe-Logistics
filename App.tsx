@@ -110,25 +110,29 @@ const App: React.FC = () => {
     const activeService = services[currentServiceId];
     
     // Store original document values (from index.html)
-    const originalTitle = "Last Minute Courier Service Austin | Air Hand Carry & Same Day Delivery TX";
-    const originalDescription = "Speedy Bat Couriers offers last minute courier service in Austin TX. Air hand carry, same day delivery, expedited ground transport & emergency logistics. 24/7 service in Austin, Round Rock & Nationwide.";
+    const originalTitle = "Courier Austin TX | Same Day Delivery & Rush Courier Service | Speedy Bat";
+    const originalDescription = "Speedy Bat Couriers — Austin's 24/7 courier service for same day delivery, air hand carry, hot shot & emergency logistics. Courier Austin trusts for rush pickup in 30-60 min. Text (512) 910-4938.";
     const originalKeywords = "courier in austin texas, courier austin, courier service austin tx, same day courier austin, same day delivery austin tx, last minute courier service austin, air hand carry austin, on board courier austin, hand carry courier austin, expedited delivery austin, emergency courier texas, urgent delivery austin, medical courier austin, hot shot delivery austin, legal courier austin tx, courier near me austin, austin texas courier company, rush delivery austin, dedicated courier austin texas, overnight courier austin tx";
 
     const descMeta = document.querySelector('meta[name="description"]');
     const kwMeta = document.querySelector('meta[name="keywords"]');
+    const canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
 
     if (currentPage === 'faq') {
       document.title = "FAQ | Speedy Bat Couriers — Austin TX Courier Service";
       if (descMeta) descMeta.setAttribute('content', 'Frequently asked questions about Speedy Bat Couriers. Learn about our same-day delivery, air hand carry, pricing, service areas, and 24/7 courier operations in Austin, Texas.');
+      if (canonicalLink) canonicalLink.setAttribute('href', 'https://speedybat.com/faq');
     } else if (currentPage === 'about') {
       document.title = "About | Speedy Bat Couriers — Austin TX Courier Service";
       if (descMeta) descMeta.setAttribute('content', "Learn about Speedy Bat Couriers — Austin, Texas's trusted 24/7 courier service for time-critical, same-day, and emergency deliveries across Central Texas and nationwide.");
+      if (canonicalLink) canonicalLink.setAttribute('href', 'https://speedybat.com/about');
     } else if (activeLocation) {
       document.title = activeLocation.title;
       
       if (descMeta) {
         descMeta.setAttribute('content', activeLocation.metaDescription);
       }
+      if (canonicalLink) canonicalLink.setAttribute('href', `https://speedybat.com/${activeLocation.id}`);
       if (kwMeta) {
         kwMeta.setAttribute('content', activeLocation.keywords.join(', '));
       }
@@ -146,6 +150,7 @@ const App: React.FC = () => {
       if (kwMeta) {
         kwMeta.setAttribute('content', activeService.keywords.join(', '));
       }
+      if (canonicalLink) canonicalLink.setAttribute('href', `https://speedybat.com/${activeService.id}`);
 
       const cleanupSchema = injectServiceSchema(activeService);
       return () => {
@@ -159,6 +164,7 @@ const App: React.FC = () => {
       if (kwMeta) {
         kwMeta.setAttribute('content', originalKeywords);
       }
+      if (canonicalLink) canonicalLink.setAttribute('href', 'https://speedybat.com');
     }
   }, [currentLocationId, currentServiceId, currentPage]);
 

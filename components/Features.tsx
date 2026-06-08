@@ -1,6 +1,8 @@
 import React from 'react';
 import { Clock, Plane, Cpu, FileText, Wrench, ShieldAlert, ArrowRight } from 'lucide-react';
 import { Button } from './Button';
+import { scrollToElement } from '../utils/scrollHelper';
+
 
 interface CargoItem {
   title: string;
@@ -111,7 +113,7 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
                 href="#booking"
                 onClick={(e) => {
                   e.preventDefault();
-                  document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
+                  scrollToElement('booking');
                   const input = document.getElementById('contactFullName');
                   if (input) {
                     (input as HTMLInputElement).focus({ preventScroll: true });

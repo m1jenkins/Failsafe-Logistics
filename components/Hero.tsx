@@ -1,6 +1,8 @@
 import React from 'react';
 import { ArrowRight, Phone } from 'lucide-react';
 import { QuoteForm } from './QuoteForm';
+import { scrollToElement } from '../utils/scrollHelper';
+
 
 export const Hero: React.FC = () => {
   return (
@@ -53,7 +55,7 @@ export const Hero: React.FC = () => {
                 href="#quick-quote-form" 
                 onClick={(e) => {
                   e.preventDefault();
-                  document.getElementById('quick-quote-form')?.scrollIntoView({ behavior: 'smooth' });
+                  scrollToElement('quick-quote-form');
                   const input = document.getElementById('fullName');
                   if (input) {
                     (input as HTMLInputElement).focus({ preventScroll: true });

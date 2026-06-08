@@ -8,6 +8,8 @@ import {
   Activity, FileText, Briefcase
 } from 'lucide-react';
 import { QuoteForm } from './QuoteForm';
+import { scrollToElement } from '../utils/scrollHelper';
+
 
 interface ServiceLandingPageProps {
   service: ServiceData;
@@ -77,7 +79,7 @@ export const ServiceLandingPage: React.FC<ServiceLandingPageProps> = ({ service,
                 href="#quick-quote-form" 
                 onClick={(e) => {
                   e.preventDefault();
-                  document.getElementById('quick-quote-form')?.scrollIntoView({ behavior: 'smooth' });
+                  scrollToElement('quick-quote-form');
                   const input = document.getElementById('fullName');
                   if (input) {
                     (input as HTMLInputElement).focus({ preventScroll: true });

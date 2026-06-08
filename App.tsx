@@ -13,6 +13,7 @@ import { ServiceLandingPage } from './components/ServiceLandingPage';
 import { locations } from './data/locations';
 import { services } from './data/services';
 import { injectLocationSchema, injectServiceSchema } from './utils/schemaHelper';
+import { scrollToElement } from './utils/scrollHelper';
 
 interface BookingDetails {
   pickupAddress?: string;
@@ -48,7 +49,7 @@ const App: React.FC = () => {
     setBookingDetails(details);
     // Give state a brief moment to update and render before scrolling
     setTimeout(() => {
-      document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
+      scrollToElement('booking');
     }, 50);
   };
 

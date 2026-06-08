@@ -3,6 +3,8 @@ import { LocationData } from '../types';
 import { locations } from '../data/locations';
 import { ArrowRight, MapPin, Phone } from 'lucide-react';
 import { QuoteForm } from './QuoteForm';
+import { scrollToElement } from '../utils/scrollHelper';
+
 
 interface LocationLandingPageProps {
   location: LocationData;
@@ -55,7 +57,7 @@ export const LocationLandingPage: React.FC<LocationLandingPageProps> = ({ locati
                 href="#quick-quote-form" 
                 onClick={(e) => {
                   e.preventDefault();
-                  document.getElementById('quick-quote-form')?.scrollIntoView({ behavior: 'smooth' });
+                  scrollToElement('quick-quote-form');
                   const input = document.getElementById('fullName');
                   if (input) {
                     (input as HTMLInputElement).focus({ preventScroll: true });
@@ -189,7 +191,7 @@ export const LocationLandingPage: React.FC<LocationLandingPageProps> = ({ locati
                       href="#quick-quote-form" 
                       onClick={(e) => {
                         e.preventDefault();
-                        document.getElementById('quick-quote-form')?.scrollIntoView({ behavior: 'smooth' });
+                        scrollToElement('quick-quote-form');
                         const input = document.getElementById('fullName');
                         if (input) {
                           (input as HTMLInputElement).focus({ preventScroll: true });

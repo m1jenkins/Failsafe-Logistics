@@ -374,7 +374,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
               variant="alert"
               type="submit"
               disabled={isSubmitting}
-              className="w-full flex items-center justify-center space-x-3 py-3 text-base rounded-full shadow-lg hover:shadow-red-900/10 transition-all cursor-pointer font-display font-bold uppercase tracking-wider btn-shimmer"
+              className="w-full flex items-center justify-center space-x-3 py-3 text-base rounded-full shadow-lg hover:shadow-red-900/10 transition-all cursor-pointer font-display font-bold uppercase tracking-wider"
             >
               {isSubmitting ? (
                 <span>PROCESSING REQUEST...</span>

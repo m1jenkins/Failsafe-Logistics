@@ -61,12 +61,12 @@ export const Hero: React.FC = () => {
                     (input as HTMLInputElement).focus({ preventScroll: true });
                   }
                 }}
-                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 border border-red-500/20 text-white font-bold uppercase tracking-wider text-[10px] sm:text-xs md:text-sm px-4 sm:px-6 py-3 sm:py-4 rounded-full shadow-lg shadow-red-950/30 transition-all inline-flex items-center space-x-2 font-display"
+                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 border border-red-500/20 text-white font-bold uppercase tracking-wider text-xs md:text-sm px-4 sm:px-6 py-3 sm:py-4 rounded-full shadow-lg shadow-red-950/30 transition-all inline-flex items-center space-x-2 font-display"
               >
                 <span>Get Quote in Minutes</span>
                 <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               </a>
-              <a href="sms:5129104938" className="bg-white/[0.02] border border-white/[0.04] hover:bg-white/[0.05] text-slate-300 hover:text-white font-bold uppercase tracking-wider text-[10px] sm:text-xs md:text-sm px-4 sm:px-6 py-3 sm:py-4 rounded-full shadow-md transition-all inline-flex items-center space-x-2 font-display">
+              <a href="sms:5129104938" className="bg-white/[0.02] border border-white/[0.04] hover:bg-white/[0.05] text-slate-300 hover:text-white font-bold uppercase tracking-wider text-xs md:text-sm px-4 sm:px-6 py-3 sm:py-4 rounded-full shadow-md transition-all inline-flex items-center space-x-2 font-display">
                 <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-red-500" />
                 <span>Text Dispatch (512) 910-4938</span>
               </a>
@@ -86,8 +86,8 @@ export const Hero: React.FC = () => {
       {/* Decorative location indicators */}
       <div className="absolute bottom-10 right-10 z-10 hidden lg:block">
         <div className="text-right space-y-1 font-display">
-          <div className="text-[10px] text-slate-500 font-bold tracking-widest">AUSTIN HQ & CENTRAL TX</div>
-          <div className="text-[10px] text-slate-600 font-bold tracking-widest">NATIONWIDE LOGISTICS DEPLOYMENT</div>
+          <div className="text-[11px] text-slate-500 font-bold tracking-widest">AUSTIN HQ & CENTRAL TX</div>
+          <div className="text-[11px] text-slate-500 font-bold tracking-widest">NATIONWIDE LOGISTICS DEPLOYMENT</div>
         </div>
       </div>
     </section>

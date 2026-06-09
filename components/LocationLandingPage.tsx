@@ -75,7 +75,7 @@ export const LocationLandingPage: React.FC<LocationLandingPageProps> = ({ locati
             </div>
 
             {/* Micro badges */}
-            <div className="flex items-center gap-6 pt-4 text-[10px] text-slate-500 font-bold tracking-wider uppercase font-display border-t border-white/[0.02] max-w-lg">
+            <div className="flex items-center gap-6 pt-4 text-[11px] text-slate-400 font-bold tracking-wider uppercase font-display border-t border-white/[0.02] max-w-lg">
               <span className="flex items-center">30-60 Min Pickup</span>
               <span className="flex items-center">HIPAA Compliant</span>
               <span className="flex items-center">Chain of Custody</span>
@@ -144,7 +144,7 @@ export const LocationLandingPage: React.FC<LocationLandingPageProps> = ({ locati
                   <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">Frequently Serviced Landmark Nodes:</div>
                   <div className="flex flex-wrap gap-2">
                     {location.localHighlights.map((landmark) => (
-                      <span key={landmark} className="text-[10px] font-bold text-slate-300 bg-white/[0.02] border border-white/[0.05] px-3 py-1.5 uppercase rounded-full">
+                      <span key={landmark} className="text-[11px] font-bold text-slate-300 bg-white/[0.02] border border-white/[0.05] px-3 py-1.5 uppercase rounded-full">
                         {landmark}
                       </span>
                     ))}
@@ -197,7 +197,7 @@ export const LocationLandingPage: React.FC<LocationLandingPageProps> = ({ locati
                           (input as HTMLInputElement).focus({ preventScroll: true });
                         }
                       }}
-                      className="text-[10px] font-bold text-red-500 hover:text-red-400 uppercase tracking-widest font-display flex items-center space-x-1.5 transition-colors"
+                      className="text-xs font-bold text-red-500 hover:text-red-400 uppercase tracking-wider font-display flex items-center space-x-1.5 transition-colors"
                     >
                       <span>Dispatch Now</span>
                       <ArrowRight className="h-3 w-3" />

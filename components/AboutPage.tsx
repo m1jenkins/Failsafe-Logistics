@@ -7,7 +7,7 @@ export const AboutPage: React.FC = () => {
       <div className="container mx-auto px-6 max-w-4xl">
         {/* Hero heading */}
         <div className="text-center mb-16 space-y-4">
-          <span className="text-[10px] text-red-500/70 font-bold uppercase tracking-[0.3em] font-display block">
+          <span className="text-[11px] text-red-500/80 font-bold uppercase tracking-[0.3em] font-display block">
             About Speedy Bat
           </span>
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase text-white font-display tracking-tight">

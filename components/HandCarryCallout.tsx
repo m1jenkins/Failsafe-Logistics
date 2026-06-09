@@ -1,5 +1,6 @@
 import React from 'react';
 import { Plane, ArrowRight } from 'lucide-react';
+import { scrollToElement } from '../utils/scrollHelper';
 
 export const HandCarryCallout: React.FC = () => {
   return (
@@ -24,7 +25,7 @@ export const HandCarryCallout: React.FC = () => {
             {/* Left: Text content */}
             <div className="flex-1 space-y-6">
               <div className="space-y-3">
-                <span className="text-[10px] text-blue-400/70 font-bold uppercase tracking-[0.3em] font-display block">
+                <span className="text-[11px] text-blue-400/80 font-bold uppercase tracking-[0.3em] font-display block">
                   Air Hand Carry Service
                 </span>
                 <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold uppercase text-white font-display tracking-tight leading-tight">
@@ -45,15 +46,15 @@ export const HandCarryCallout: React.FC = () => {
               {/* 3 Bullet points */}
               <ul className="space-y-4 font-display pt-2">
                 <li className="flex items-center space-x-3 text-sm text-slate-200 font-bold uppercase tracking-wider">
-                  <div className="w-2.5 h-2.5 bg-blue-500 rounded-full animate-pulse shrink-0" />
+                  <div className="w-2.5 h-2.5 bg-blue-500 rounded-full shrink-0" />
                   <span>Chain of custody never broken</span>
                 </li>
                 <li className="flex items-center space-x-3 text-sm text-slate-200 font-bold uppercase tracking-wider">
-                  <div className="w-2.5 h-2.5 bg-blue-500 rounded-full animate-pulse shrink-0" />
+                  <div className="w-2.5 h-2.5 bg-blue-500 rounded-full shrink-0" />
                   <span>Real-time flight tracking updates</span>
                 </li>
                 <li className="flex items-center space-x-3 text-sm text-slate-200 font-bold uppercase tracking-wider">
-                  <div className="w-2.5 h-2.5 bg-blue-500 rounded-full animate-pulse shrink-0" />
+                  <div className="w-2.5 h-2.5 bg-blue-500 rounded-full shrink-0" />
                   <span>Direct delivery from airport to recipient</span>
                 </li>
               </ul>
@@ -69,7 +70,7 @@ export const HandCarryCallout: React.FC = () => {
                       <div className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-950/40 border border-blue-500/30 text-xs font-bold text-blue-400 font-display">
                         01
                       </div>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-display">Origin</span>
+                      <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider font-display">Origin</span>
                     </div>
                     <p className="text-xs text-slate-300 font-light leading-relaxed">
                       We pick up from your door or facility
@@ -80,7 +81,7 @@ export const HandCarryCallout: React.FC = () => {
                       <div className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-950/40 border border-blue-500/30 text-xs font-bold text-blue-400 font-display">
                         02
                       </div>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-display">In-Flight</span>
+                      <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider font-display">In-Flight</span>
                     </div>
                     <p className="text-xs text-slate-300 font-light leading-relaxed">
                       Courier boards next available flight as carry-on
@@ -91,7 +92,7 @@ export const HandCarryCallout: React.FC = () => {
                       <div className="flex items-center justify-center w-6 h-6 rounded-full bg-blue-950/40 border border-blue-500/30 text-xs font-bold text-blue-400 font-display">
                         03
                       </div>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-display">Destination</span>
+                      <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider font-display">Destination</span>
                     </div>
                     <p className="text-xs text-slate-300 font-light leading-relaxed">
                       Hand-delivered directly to recipient on arrival
@@ -102,7 +103,15 @@ export const HandCarryCallout: React.FC = () => {
 
               <div className="pt-6 border-t border-white/[0.04]">
                 <a
-                  href="#booking"
+                  href="#quick-quote-form"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToElement('quick-quote-form');
+                    const input = document.getElementById('fullName');
+                    if (input) {
+                      (input as HTMLInputElement).focus({ preventScroll: true });
+                    }
+                  }}
                   className="inline-flex items-center space-x-2 text-xs font-bold text-blue-400 hover:text-blue-300 uppercase tracking-widest font-display transition-colors group/link"
                 >
                   <span>Request Hand Carry Quote</span>

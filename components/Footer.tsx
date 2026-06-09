@@ -42,7 +42,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <span>Text or Call: (512) 910-4938</span>
               </a>
             </div>
-            <div className="text-slate-700 text-[10px] font-mono tracking-widest uppercase">
+            <div className="text-slate-500 text-[11px] font-mono tracking-widest uppercase">
               &copy; {new Date().getFullYear()} SPEEDY BAT COURIERS · AUSTIN, TX · ALL RIGHTS RESERVED.
             </div>
           </div>

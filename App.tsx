@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Features } from './components/Features';
-import { ContactForm } from './components/ContactForm';
+import { TrustSection } from './components/TrustSection';
 import { HandCarryCallout } from './components/HandCarryCallout';
 import { ServiceArea } from './components/ServiceArea';
 import { Footer } from './components/Footer';
@@ -13,19 +13,10 @@ import { ServiceLandingPage } from './components/ServiceLandingPage';
 import { locations } from './data/locations';
 import { services } from './data/services';
 import { injectLocationSchema, injectServiceSchema } from './utils/schemaHelper';
-import { scrollToElement } from './utils/scrollHelper';
-
-interface BookingDetails {
-  pickupAddress?: string;
-  deliveryAddress?: string;
-  itemDescription?: string;
-}
 
 const STATIC_PAGES = ['faq', 'about'];
 
 const App: React.FC = () => {
-  const [bookingDetails, setBookingDetails] = useState<BookingDetails>({});
-  
   // Custom router state based on window path
   const [currentLocationId, setCurrentLocationId] = useState<string>(() => {
     const path = window.location.pathname;
@@ -44,14 +35,6 @@ const App: React.FC = () => {
     const cleanPath = path.replace(/^\//, '');
     return STATIC_PAGES.includes(cleanPath) ? cleanPath : '';
   });
-
-  const handleBook = (details: BookingDetails) => {
-    setBookingDetails(details);
-    // Give state a brief moment to update and render before scrolling
-    setTimeout(() => {
-      scrollToElement('booking');
-    }, 50);
-  };
 
   const handleNavigate = (routeId: string) => {
     if (STATIC_PAGES.includes(routeId)) {
@@ -182,7 +165,7 @@ const App: React.FC = () => {
       <main>
         <Hero />
         <Features onNavigate={handleNavigate} />
-        <ContactForm prefilledDetails={bookingDetails} />
+        <TrustSection />
         <HandCarryCallout />
         <ServiceArea onNavigate={handleNavigate} />
       </main>
@@ -191,16 +174,6 @@ const App: React.FC = () => {
 
   return (
     <div className="bg-obsidian min-h-screen text-slate-200 font-sans selection:bg-red-600 selection:text-white relative overflow-x-hidden">
-      {/* Ink Diffusion Backdrop — organic warm shapes */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        {/* Deep red-brown ink cloud — top left */}
-        <div className="absolute top-[5%] left-[-15%] w-[55vw] h-[55vw] max-w-[650px] max-h-[650px] rounded-full bg-gradient-to-br from-red-950/20 via-ember/8 to-transparent blur-[120px] animate-ink1 mix-blend-screen" />
-        {/* Warm soot cloud — bottom right */}
-        <div className="absolute bottom-[5%] right-[-12%] w-[60vw] h-[60vw] max-w-[700px] max-h-[700px] rounded-full bg-gradient-to-tl from-soot/40 via-red-900/8 to-transparent blur-[140px] animate-ink2 mix-blend-screen" />
-        {/* Subtle ember wash — center */}
-        <div className="absolute top-[45%] left-[25%] w-[45vw] h-[45vw] max-w-[550px] max-h-[550px] rounded-full bg-gradient-to-tr from-ember/5 via-graphite/10 to-transparent blur-[100px] animate-ink3 mix-blend-screen" />
-      </div>
-
       <div className="relative z-10">
         <Header onNavigate={handleNavigate} />
         {renderContent()}

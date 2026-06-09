@@ -80,41 +80,41 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
               {/* Status details grid */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t border-white/[0.04] text-xs font-display">
                 <div className="space-y-2">
-                  <div className="text-slate-500 uppercase font-bold tracking-wider text-[9px]">Route status</div>
+                  <div className="text-slate-400 uppercase font-bold tracking-wider text-[11px]">Route status</div>
                   <div className="text-white font-bold uppercase flex items-center text-xs sm:text-sm md:text-base">
                     <Clock className="w-5 h-5 text-red-500 mr-2 shrink-0" />
                     24/7/365 Run
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <div className="text-slate-500 uppercase font-bold tracking-wider text-[9px]">Transit type</div>
+                  <div className="text-slate-400 uppercase font-bold tracking-wider text-[11px]">Transit type</div>
                   <div className="text-white font-bold uppercase flex items-center text-xs sm:text-sm md:text-base">
                     <ShieldAlert className="w-5 h-5 text-red-500 mr-2 shrink-0" />
                     Dedicated Drive
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <div className="text-slate-500 uppercase font-bold tracking-wider text-[9px]">Range capability</div>
-                  <div className="text-white font-bold uppercase flex items-center text-xs sm:text-sm md:text-base font-bold">
-                    <ArrowRight className="w-5 h-5 text-red-500 mr-2 shrink-0 animate-pulse" />
+                  <div className="text-slate-400 uppercase font-bold tracking-wider text-[11px]">Range capability</div>
+                  <div className="text-white font-bold uppercase flex items-center text-xs sm:text-sm md:text-base">
+                    <ArrowRight className="w-5 h-5 text-red-500 mr-2 shrink-0" />
                     1000+ Miles
                   </div>
                 </div>
               </div>
 
               {/* Trust Line */}
-              <div className="text-slate-400 uppercase font-bold tracking-wider text-[9px] font-display">
+              <div className="text-slate-400 uppercase font-bold tracking-wider text-[11px] font-display">
                 Fully insured · $100K cargo coverage · Chain of custody on every run
               </div>
             </div>
 
             <div className="pt-8">
               <Button
-                href="#booking"
+                href="#quick-quote-form"
                 onClick={(e) => {
                   e.preventDefault();
-                  scrollToElement('booking');
-                  const input = document.getElementById('contactFullName');
+                  scrollToElement('quick-quote-form');
+                  const input = document.getElementById('fullName');
                   if (input) {
                     (input as HTMLInputElement).focus({ preventScroll: true });
                   }
@@ -138,10 +138,14 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {cargoItems.map((item, index) => (
-                <div
+                <a
                   key={index}
-                  onClick={() => onNavigate && onNavigate(item.routeId)}
-                  className="group relative glass-panel p-6 rounded-2xl flex flex-col justify-between border border-white/[0.04] hover:border-red-500/20 cursor-pointer transition-all duration-300"
+                  href={`/${item.routeId}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (onNavigate) onNavigate(item.routeId);
+                  }}
+                  className="group relative glass-panel p-6 rounded-2xl flex flex-col justify-between border border-white/[0.04] hover:border-red-500/20 cursor-pointer transition-all duration-300 no-underline"
                 >
                   <div>
                     <div className="bg-white/[0.02] border border-white/[0.06] w-10 h-10 flex items-center justify-center mb-4 group-hover:border-ember/30 group-hover:bg-red-950/20 transition-all duration-300 rounded-xl">
@@ -156,12 +160,12 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
                     </p>
                   </div>
                   <div className="pt-2">
-                    <span className="text-[10px] font-bold text-red-500 hover:text-red-400 uppercase tracking-widest font-display flex items-center space-x-1.5 transition-all duration-300 opacity-60 group-hover:opacity-100">
+                    <span className="text-xs font-bold text-red-500 hover:text-red-400 uppercase tracking-wider font-display flex items-center space-x-1.5 transition-all duration-300 opacity-80 group-hover:opacity-100">
                       <span>{item.ctaText}</span>
                       <ArrowRight className="h-3 w-3 transform group-hover:translate-x-1 transition-transform" />
                     </span>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
           </div>

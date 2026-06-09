@@ -97,7 +97,7 @@ export const ServiceLandingPage: React.FC<ServiceLandingPageProps> = ({ service,
             </div>
 
             {/* Micro badges */}
-            <div className="flex items-center gap-6 pt-4 text-[10px] text-slate-500 font-bold tracking-wider uppercase font-display border-t border-white/[0.02] max-w-lg">
+            <div className="flex items-center gap-6 pt-4 text-[11px] text-slate-400 font-bold tracking-wider uppercase font-display border-t border-white/[0.02] max-w-lg">
               <span className="flex items-center">30-60 Min Pickup</span>
               <span className="flex items-center">HIPAA Compliant</span>
               <span className="flex items-center">Chain of Custody</span>
@@ -306,7 +306,7 @@ export const ServiceLandingPage: React.FC<ServiceLandingPageProps> = ({ service,
                         e.preventDefault();
                         onNavigate(loc.id);
                       }}
-                      className="glass-panel p-3 text-center rounded-lg border border-white/[0.02] hover:border-red-500/20 hover:bg-white/[0.01] transition-all duration-300 font-display font-medium text-[10px] text-slate-500 hover:text-slate-200 uppercase tracking-wider cursor-pointer"
+                      className="glass-panel p-3 text-center rounded-lg border border-white/[0.02] hover:border-red-500/20 hover:bg-white/[0.01] transition-all duration-300 font-display font-medium text-[11px] text-slate-400 hover:text-slate-200 uppercase tracking-wider cursor-pointer"
                     >
                       <span>{loc.name}</span>
                     </a>

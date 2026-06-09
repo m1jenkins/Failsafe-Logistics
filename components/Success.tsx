@@ -7,10 +7,9 @@ import { Footer } from './Footer';
 export const Success: React.FC = () => {
   return (
     <div className="bg-obsidian min-h-screen flex flex-col text-slate-200 font-sans relative overflow-x-hidden">
-      {/* Ink Diffusion Backdrop — warm organic shapes */}
+      {/* Soft static backdrop glow */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[10%] left-[-10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] rounded-full bg-gradient-to-tr from-red-950/20 via-ember/8 to-transparent blur-[100px] animate-ink1 mix-blend-screen" />
-        <div className="absolute bottom-[10%] right-[-10%] w-[60vw] h-[60vw] max-w-[700px] max-h-[700px] rounded-full bg-gradient-to-br from-soot/40 via-red-900/8 to-transparent blur-[120px] animate-ink2 mix-blend-screen" />
+        <div className="absolute top-[10%] left-[-10%] w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] rounded-full bg-gradient-to-tr from-red-950/20 via-ember/8 to-transparent blur-[100px] mix-blend-screen" />
       </div>
 
       <div className="relative z-10 flex-grow flex flex-col">

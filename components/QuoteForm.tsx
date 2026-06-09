@@ -64,7 +64,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
   const validateField = (name: string, value: string): string => {
     switch (name) {
       case 'fullName':
-        if (!value.trim()) return 'Full Name (or company) is required';
+        if (!value.trim()) return 'Full Name (Or company) is required';
         return '';
       case 'phone': {
         const val = value.trim();
@@ -81,7 +81,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
         }
       }
       case 'itemDescription':
-        if (!value.trim()) return 'Please describe what you are shipping and where';
+        if (!value.trim()) return 'Please describe what you are shipping';
         return '';
       case 'deliveryNeeded':
         // Optional field
@@ -260,7 +260,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
 
           {/* Full Name */}
           <div>
-            <label htmlFor="fullName" className={labelClasses}>Full Name (or company)</label>
+            <label htmlFor="fullName" className={labelClasses}>Full Name (Or company)</label>
             <div className="relative group/input">
               <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
                 <User className="h-4.5 w-4.5" />
@@ -316,9 +316,9 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
             )}
           </div>
 
-          {/* What are you shipping and where? */}
+          {/* What are you shipping */}
           <div>
-            <label htmlFor="itemDescription" className={labelClasses}>What are you shipping and where?</label>
+            <label htmlFor="itemDescription" className={labelClasses}>What are you shipping</label>
             <div className="relative group/input">
               <div className="absolute left-3.5 top-3.5 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
                 <MapPin className="h-4.5 w-4.5" />

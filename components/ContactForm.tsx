@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SectionHeading } from './SectionHeading';
 import { Button } from './Button';
-import { Zap, ShieldCheck, MessageSquare, User, Phone, MapPin } from 'lucide-react';
+import { Zap, ShieldCheck, MessageSquare, User, Phone, MapPin, Clock } from 'lucide-react';
 
 interface ContactFormProps {
   prefilledDetails?: {
@@ -17,6 +17,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [itemDescription, setItemDescription] = useState('');
+  const [deliveryNeeded, setDeliveryNeeded] = useState('');
 
   useEffect(() => {
     if (prefilledDetails) {
@@ -39,7 +40,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
     setIsSubmitting(true);
 
     try {
-      const messageBody = `QUICK Dispatch Request from ${fullName}\nPhone: ${phone}\nCargo/Details: ${itemDescription}`;
+      const isEmail = phone.includes('@');
+      const contactLabel = isEmail ? 'Email' : 'Phone';
+      const messageBody = `QUICK Dispatch Request from ${fullName}\n${contactLabel}: ${phone}\nCargo/Details: ${itemDescription}${deliveryNeeded ? `\nTiming: ${deliveryNeeded}` : ''}`;
 
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -51,11 +54,12 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
           access_key: "4d84c98a-eb94-4f22-8a55-a7e4a80855ec",
           name: fullName,
           fullName: fullName,
-          email: "quick-request@speedybat.com",
-          phone: phone,
+          email: isEmail ? phone : "quick-request@speedybat.com",
+          phone: isEmail ? 'N/A' : phone,
           pickupAddress: 'N/A (Quick Dispatch)',
           deliveryAddress: 'N/A (Quick Dispatch)',
           itemDescription: itemDescription,
+          deliveryNeeded: deliveryNeeded,
           message: messageBody
         })
       });
@@ -100,7 +104,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
             {/* Common Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="contactFullName" className={labelClasses}>Full Name</label>
+                <label htmlFor="contactFullName" className={labelClasses}>Full Name (Or company)</label>
                 <div className="relative group/input">
                   <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
                     <User className="h-4.5 w-4.5" />
@@ -111,7 +115,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
                     type="text"
                     required
                     className={`${inputClasses} pl-11`}
-                    placeholder="John Doe"
+                    placeholder="John Doe or Company Name"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     autoComplete="name"
@@ -120,7 +124,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
               </div>
 
               <div>
-                <label htmlFor="contactPhone" className={labelClasses}>Phone Number</label>
+                <label htmlFor="contactPhone" className={labelClasses}>Phone Number (or email)</label>
                 <div className="relative group/input">
                   <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
                     <Phone className="h-4.5 w-4.5" />
@@ -128,10 +132,10 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
                   <input
                     id="contactPhone"
                     name="phone"
-                    type="tel"
+                    type="text"
                     required
                     className={`${inputClasses} pl-11`}
-                    placeholder="(512) 910-4938"
+                    placeholder="(512) 910-4938 or email@example.com"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     autoComplete="tel"
@@ -141,7 +145,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
             </div>
 
             <div>
-              <label htmlFor="contactItemDescription" className={labelClasses}>What are you shipping and where?</label>
+              <label htmlFor="contactItemDescription" className={labelClasses}>What are you shipping</label>
               <div className="relative group/input">
                 <div className="absolute left-3.5 top-3.5 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
                   <MapPin className="h-4.5 w-4.5" />
@@ -155,6 +159,27 @@ export const ContactForm: React.FC<ContactFormProps> = ({ prefilledDetails }) =>
                   placeholder="e.g. Medical kit from St. David's Main to Round Rock Clinic, or parts to Samsung Taylor fab"
                   value={itemDescription}
                   onChange={(e) => setItemDescription(e.target.value)}
+                />
+              </div>
+            </div>
+
+            {/* Timing */}
+            <div>
+              <label htmlFor="contactDeliveryNeeded" className={labelClasses}>
+                Timing <span className="text-slate-500 font-light font-sans lowercase italic">(optional)</span>
+              </label>
+              <div className="relative group/input">
+                <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
+                  <Clock className="h-4.5 w-4.5" />
+                </div>
+                <input
+                  id="contactDeliveryNeeded"
+                  name="deliveryNeeded"
+                  type="text"
+                  className={`${inputClasses} pl-11`}
+                  placeholder="ASAP or Date/Time"
+                  value={deliveryNeeded}
+                  onChange={(e) => setDeliveryNeeded(e.target.value)}
                 />
               </div>
             </div>

@@ -8,6 +8,7 @@ import { ServiceArea } from './components/ServiceArea';
 import { Footer } from './components/Footer';
 import { FaqPage } from './components/FaqPage';
 import { AboutPage } from './components/AboutPage';
+import { NotFound } from './components/NotFound';
 import { LocationLandingPage } from './components/LocationLandingPage';
 import { ServiceLandingPage } from './components/ServiceLandingPage';
 import { locations } from './data/locations';
@@ -16,47 +17,33 @@ import { injectLocationSchema, injectServiceSchema } from './utils/schemaHelper'
 
 const STATIC_PAGES = ['faq', 'about'];
 
+type Route =
+  | { type: 'home' }
+  | { type: 'page'; id: string }
+  | { type: 'location'; id: string }
+  | { type: 'service'; id: string }
+  | { type: 'notFound' };
+
+const resolveRoute = (pathname: string): Route => {
+  const cleanPath = pathname.replace(/^\//, '').replace(/\/$/, '');
+  if (cleanPath === '') return { type: 'home' };
+  if (STATIC_PAGES.includes(cleanPath)) return { type: 'page', id: cleanPath };
+  if (locations[cleanPath]) return { type: 'location', id: cleanPath };
+  if (services[cleanPath]) return { type: 'service', id: cleanPath };
+  return { type: 'notFound' };
+};
+
 const App: React.FC = () => {
-  // Custom router state based on window path
-  const [currentLocationId, setCurrentLocationId] = useState<string>(() => {
-    const path = window.location.pathname;
-    const cleanPath = path.replace(/^\//, '');
-    return locations[cleanPath] ? cleanPath : '';
-  });
-
-  const [currentServiceId, setCurrentServiceId] = useState<string>(() => {
-    const path = window.location.pathname;
-    const cleanPath = path.replace(/^\//, '');
-    return services[cleanPath] ? cleanPath : '';
-  });
-
-  const [currentPage, setCurrentPage] = useState<string>(() => {
-    const path = window.location.pathname;
-    const cleanPath = path.replace(/^\//, '');
-    return STATIC_PAGES.includes(cleanPath) ? cleanPath : '';
-  });
+  const [route, setRoute] = useState<Route>(() => resolveRoute(window.location.pathname));
 
   const handleNavigate = (routeId: string) => {
-    if (STATIC_PAGES.includes(routeId)) {
-      setCurrentPage(routeId);
-      setCurrentLocationId('');
-      setCurrentServiceId('');
-      window.history.pushState({}, '', `/${routeId}`);
-    } else if (locations[routeId]) {
-      setCurrentLocationId(routeId);
-      setCurrentServiceId('');
-      setCurrentPage('');
-      window.history.pushState({}, '', `/${routeId}`);
-    } else if (services[routeId]) {
-      setCurrentServiceId(routeId);
-      setCurrentLocationId('');
-      setCurrentPage('');
-      window.history.pushState({}, '', `/${routeId}`);
-    } else {
-      setCurrentLocationId('');
-      setCurrentServiceId('');
-      setCurrentPage('');
+    const next = resolveRoute(`/${routeId}`);
+    if (next.type === 'notFound') {
+      setRoute({ type: 'home' });
       window.history.pushState({}, '', '/');
+    } else {
+      setRoute(next);
+      window.history.pushState({}, '', routeId ? `/${routeId}` : '/');
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -64,25 +51,7 @@ const App: React.FC = () => {
   // Sync state with back/forward history events
   useEffect(() => {
     const handlePopState = () => {
-      const path = window.location.pathname;
-      const cleanPath = path.replace(/^\//, '');
-      if (STATIC_PAGES.includes(cleanPath)) {
-        setCurrentPage(cleanPath);
-        setCurrentLocationId('');
-        setCurrentServiceId('');
-      } else if (locations[cleanPath]) {
-        setCurrentLocationId(cleanPath);
-        setCurrentServiceId('');
-        setCurrentPage('');
-      } else if (services[cleanPath]) {
-        setCurrentServiceId(cleanPath);
-        setCurrentLocationId('');
-        setCurrentPage('');
-      } else {
-        setCurrentLocationId('');
-        setCurrentServiceId('');
-        setCurrentPage('');
-      }
+      setRoute(resolveRoute(window.location.pathname));
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
@@ -90,50 +59,43 @@ const App: React.FC = () => {
 
   // Manage SEO metadata & JSON-LD schema dynamically
   useEffect(() => {
-    const activeLocation = locations[currentLocationId];
-    const activeService = services[currentServiceId];
-    
-    // Store original document values (from index.html)
-    const originalTitle = "Courier Austin TX | Same Day Delivery & Rush Courier Service | Speedy Bat";
+    const originalTitle = "Courier Austin TX | 24/7 Same-Day & Rush Delivery | Speedy Bat";
     const originalDescription = "Speedy Bat Couriers — Austin's 24/7 courier service for same day delivery, air hand carry, hot shot & emergency logistics. Courier Austin trusts for rush pickup in 30-60 min. Text (512) 910-4938.";
-    const originalKeywords = "courier in austin texas, courier austin, courier service austin tx, same day courier austin, same day delivery austin tx, last minute courier service austin, air hand carry austin, on board courier austin, hand carry courier austin, expedited delivery austin, emergency courier texas, urgent delivery austin, medical courier austin, hot shot delivery austin, legal courier austin tx, courier near me austin, austin texas courier company, rush delivery austin, dedicated courier austin texas, overnight courier austin tx";
 
     const descMeta = document.querySelector('meta[name="description"]');
-    const kwMeta = document.querySelector('meta[name="keywords"]');
+    const robotsMeta = document.querySelector('meta[name="robots"]');
     const canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
 
-    if (currentPage === 'faq') {
+    if (route.type === 'notFound') {
+      document.title = "Page Not Found | Speedy Bat Couriers";
+      if (robotsMeta) robotsMeta.setAttribute('content', 'noindex, follow');
+      return () => {
+        if (robotsMeta) robotsMeta.setAttribute('content', 'index, follow');
+      };
+    }
+
+    if (route.type === 'page' && route.id === 'faq') {
       document.title = "FAQ | Speedy Bat Couriers — Austin TX Courier Service";
       if (descMeta) descMeta.setAttribute('content', 'Frequently asked questions about Speedy Bat Couriers. Learn about our same-day delivery, air hand carry, pricing, service areas, and 24/7 courier operations in Austin, Texas.');
       if (canonicalLink) canonicalLink.setAttribute('href', 'https://speedybat.com/faq');
-    } else if (currentPage === 'about') {
+    } else if (route.type === 'page' && route.id === 'about') {
       document.title = "About | Speedy Bat Couriers — Austin TX Courier Service";
       if (descMeta) descMeta.setAttribute('content', "Learn about Speedy Bat Couriers — Austin, Texas's trusted 24/7 courier service for time-critical, same-day, and emergency deliveries across Central Texas and nationwide.");
       if (canonicalLink) canonicalLink.setAttribute('href', 'https://speedybat.com/about');
-    } else if (activeLocation) {
+    } else if (route.type === 'location') {
+      const activeLocation = locations[route.id];
       document.title = activeLocation.title;
-      
-      if (descMeta) {
-        descMeta.setAttribute('content', activeLocation.metaDescription);
-      }
+      if (descMeta) descMeta.setAttribute('content', activeLocation.metaDescription);
       if (canonicalLink) canonicalLink.setAttribute('href', `https://speedybat.com/${activeLocation.id}`);
-      if (kwMeta) {
-        kwMeta.setAttribute('content', activeLocation.keywords.join(', '));
-      }
 
       const cleanupSchema = injectLocationSchema(activeLocation);
       return () => {
         cleanupSchema();
       };
-    } else if (activeService) {
+    } else if (route.type === 'service') {
+      const activeService = services[route.id];
       document.title = activeService.title;
-      
-      if (descMeta) {
-        descMeta.setAttribute('content', activeService.metaDescription);
-      }
-      if (kwMeta) {
-        kwMeta.setAttribute('content', activeService.keywords.join(', '));
-      }
+      if (descMeta) descMeta.setAttribute('content', activeService.metaDescription);
       if (canonicalLink) canonicalLink.setAttribute('href', `https://speedybat.com/${activeService.id}`);
 
       const cleanupSchema = injectServiceSchema(activeService);
@@ -142,24 +104,17 @@ const App: React.FC = () => {
       };
     } else {
       document.title = originalTitle;
-      if (descMeta) {
-        descMeta.setAttribute('content', originalDescription);
-      }
-      if (kwMeta) {
-        kwMeta.setAttribute('content', originalKeywords);
-      }
-      if (canonicalLink) canonicalLink.setAttribute('href', 'https://speedybat.com');
+      if (descMeta) descMeta.setAttribute('content', originalDescription);
+      if (canonicalLink) canonicalLink.setAttribute('href', 'https://speedybat.com/');
     }
-  }, [currentLocationId, currentServiceId, currentPage]);
-
-  const activeLocation = locations[currentLocationId];
-  const activeService = services[currentServiceId];
+  }, [route]);
 
   const renderContent = () => {
-    if (currentPage === 'faq') return <FaqPage />;
-    if (currentPage === 'about') return <AboutPage />;
-    if (activeLocation) return <LocationLandingPage location={activeLocation} onNavigate={handleNavigate} />;
-    if (activeService) return <ServiceLandingPage service={activeService} onNavigate={handleNavigate} />;
+    if (route.type === 'page' && route.id === 'faq') return <FaqPage />;
+    if (route.type === 'page' && route.id === 'about') return <AboutPage />;
+    if (route.type === 'location') return <LocationLandingPage location={locations[route.id]} onNavigate={handleNavigate} />;
+    if (route.type === 'service') return <ServiceLandingPage service={services[route.id]} onNavigate={handleNavigate} />;
+    if (route.type === 'notFound') return <NotFound onNavigate={handleNavigate} />;
 
     return (
       <main>

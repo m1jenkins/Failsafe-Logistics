@@ -1,20 +1,11 @@
 import { LocationData, ServiceData } from '../types';
 
 /**
- * Dynamically injects a JSON-LD LocalBusiness (CourierService) and Service schema
- * tailored to the current location into the head of the document.
- * 
- * @param location The LocationData profile for the active neighborhood.
+ * Pure builder for the location CourierService JSON-LD structure.
+ * Used both client-side (injectLocationSchema) and at build time (prerender.js).
  */
-export const injectLocationSchema = (location: LocationData): () => void => {
-  // 1. Remove any existing location schema tags to avoid duplicate metadata
-  const existingScript = document.getElementById('jsonld-location-schema');
-  if (existingScript) {
-    existingScript.remove();
-  }
-
-  // 2. Build the CourierService / LocalBusiness JSON-LD structure
-  const schema = {
+export const buildLocationSchema = (location: LocationData) => {
+  return {
     '@context': 'https://schema.org',
     '@type': 'CourierService',
     '@id': `https://speedybat.com/${location.id}#courierservice`,
@@ -67,15 +58,24 @@ export const injectLocationSchema = (location: LocationData): () => void => {
       }))
     }
   };
+};
 
-  // 3. Create the script element and append it to head
+/**
+ * Dynamically injects the location JSON-LD into the document head.
+ * Replaces any statically prerendered copy (same element id).
+ */
+export const injectLocationSchema = (location: LocationData): () => void => {
+  const existingScript = document.getElementById('jsonld-location-schema');
+  if (existingScript) {
+    existingScript.remove();
+  }
+
   const script = document.createElement('script');
   script.id = 'jsonld-location-schema';
   script.type = 'application/ld+json';
-  script.innerHTML = JSON.stringify(schema);
+  script.innerHTML = JSON.stringify(buildLocationSchema(location));
   document.head.appendChild(script);
 
-  // 4. Return cleanup function
   return () => {
     const scriptToRemove = document.getElementById('jsonld-location-schema');
     if (scriptToRemove) {
@@ -85,19 +85,10 @@ export const injectLocationSchema = (location: LocationData): () => void => {
 };
 
 /**
- * Dynamically injects a JSON-LD Service and FAQPage schema
- * tailored to the current service page into the head of the document.
- * 
- * @param service The ServiceData profile for the active service.
+ * Pure builder for the service Service + FAQPage JSON-LD structure.
+ * Used both client-side (injectServiceSchema) and at build time (prerender.js).
  */
-export const injectServiceSchema = (service: ServiceData): () => void => {
-  // 1. Remove any existing service schema tags to avoid duplicate metadata
-  const existingScript = document.getElementById('jsonld-service-schema');
-  if (existingScript) {
-    existingScript.remove();
-  }
-
-  // 2. Build the Service schema
+export const buildServiceSchema = (service: ServiceData) => {
   const serviceSchema = {
     '@context': 'https://schema.org',
     '@type': 'Service',
@@ -145,7 +136,7 @@ export const injectServiceSchema = (service: ServiceData): () => void => {
     }
   };
 
-  // 3. Build the FAQPage schema if FAQs exist
+  // Build the FAQPage schema if FAQs exist
   const faqSchema = service.faq && service.faq.length > 0 ? {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -159,17 +150,25 @@ export const injectServiceSchema = (service: ServiceData): () => void => {
     }))
   } : null;
 
-  // 4. Combine into an array if FAQ exists
-  const combinedSchema = faqSchema ? [serviceSchema, faqSchema] : serviceSchema;
+  return faqSchema ? [serviceSchema, faqSchema] : serviceSchema;
+};
 
-  // 5. Create the script element and append to head
+/**
+ * Dynamically injects the service JSON-LD into the document head.
+ * Replaces any statically prerendered copy (same element id).
+ */
+export const injectServiceSchema = (service: ServiceData): () => void => {
+  const existingScript = document.getElementById('jsonld-service-schema');
+  if (existingScript) {
+    existingScript.remove();
+  }
+
   const script = document.createElement('script');
   script.id = 'jsonld-service-schema';
   script.type = 'application/ld+json';
-  script.innerHTML = JSON.stringify(combinedSchema);
+  script.innerHTML = JSON.stringify(buildServiceSchema(service));
   document.head.appendChild(script);
 
-  // 6. Return cleanup function
   return () => {
     const scriptToRemove = document.getElementById('jsonld-service-schema');
     if (scriptToRemove) {

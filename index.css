@@ -182,37 +182,6 @@ body {
 }
 
 /* ──────────────────────────────────────────────
-   LEAFLET MAP
-   ────────────────────────────────────────────── */
-
-.leaflet-container {
-  background: #f8fafc !important;
-  font-family: 'DM Sans', 'Inter', sans-serif;
-}
-
-/* Route Animation */
-.route-path-ground {
-  stroke: #dc2626;
-  stroke-width: 3;
-  stroke-dasharray: 10 10;
-  animation: dash-flow 1s linear infinite;
-  opacity: 0.8;
-}
-
-.route-path-air {
-  stroke: #3b82f6;
-  stroke-width: 3;
-  stroke-dasharray: 10 10;
-  animation: dash-flow 1s linear infinite;
-  opacity: 0.8;
-}
-
-@keyframes dash-flow {
-  from { stroke-dashoffset: 20; }
-  to { stroke-dashoffset: 0; }
-}
-
-/* ──────────────────────────────────────────────
    PULSE SLOW
    ────────────────────────────────────────────── */
 
@@ -294,32 +263,6 @@ body {
 }
 
 /* ──────────────────────────────────────────────
-   MAP MARKERS
-   ────────────────────────────────────────────── */
-
-.marker-pin {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  position: relative;
-}
-
-.marker-origin {
-  background-color: #1c1c24;
-  box-shadow: 0 0 0 4px rgba(28, 28, 36, 0.3);
-}
-
-.marker-destination-ground {
-  background-color: #dc2626;
-  box-shadow: 0 0 10px #dc2626, 0 0 0 4px rgba(220, 38, 38, 0.2);
-}
-
-.marker-destination-air {
-  background-color: #3b82f6;
-  box-shadow: 0 0 10px #3b82f6, 0 0 0 4px rgba(59, 130, 246, 0.2);
-}
-
-/* ──────────────────────────────────────────────
    ACCESSIBILITY — Reduced Motion
    ────────────────────────────────────────────── */
 
@@ -328,11 +271,6 @@ body {
   .animate-pulse-slow,
   .animate-pulse {
     animation: none !important;
-  }
-
-  .route-path-ground,
-  .route-path-air {
-    animation: none;
   }
 
   .hero-emphasis,
@@ -554,20 +492,6 @@ body {
 .light select option {
   background-color: #f8fafc !important;
   color: #0f172a !important;
-}
-
-/* Map specific tweaks (Leaflet controls, etc.) */
-.light .leaflet-bar a {
-  background-color: #f8fafc !important;
-  color: #0f172a !important;
-  border-bottom-color: rgba(15, 23, 42, 0.1) !important;
-}
-.light .leaflet-bar a:hover {
-  background-color: #f1f5f9 !important;
-}
-.light .marker-origin {
-  background-color: #cbd5e1 !important;
-  box-shadow: 0 0 0 4px rgba(203, 213, 225, 0.3) !important;
 }
 
 /* ──────────────────────────────────────────────

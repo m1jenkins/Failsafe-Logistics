@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MessageSquare, Menu, X, Sun, Moon } from 'lucide-react';
+import { MessageSquare, Menu, X } from 'lucide-react';
 
 interface HeaderProps {
   onNavigate?: (locationId: string) => void;
@@ -14,25 +14,6 @@ const navLinks = [
 export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    if (typeof window !== 'undefined') {
-      return document.documentElement.classList.contains('light') ? 'light' : 'dark';
-    }
-    return 'dark';
-  });
-
-  const toggleTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    if (nextTheme === 'light') {
-      document.documentElement.classList.add('light');
-      localStorage.setItem('theme', 'light');
-    } else {
-      document.documentElement.classList.remove('light');
-      localStorage.setItem('theme', 'dark');
-    }
-    setTheme(nextTheme);
-  };
-
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -79,22 +60,6 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
 
         {/* Right side: CTA + Mobile menu toggle */}
         <div className="flex items-center space-x-3">
-          {/* Theme Toggle */}
-          <button
-            onClick={toggleTheme}
-            className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.06] hover:border-white/[0.12] text-slate-400 hover:text-white transition-all duration-300 shadow-sm relative overflow-hidden group cursor-pointer"
-            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-          >
-            <div className="absolute inset-0 bg-gradient-to-tr from-red-500/10 to-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            <span className="relative z-10 transition-transform duration-500 rotate-0 group-hover:rotate-12 flex items-center justify-center">
-              {theme === 'dark' ? (
-                <Sun className="h-4 w-4 sm:h-[18px] sm:w-[18px] text-amber-400 hover:text-amber-300 transition-colors" />
-              ) : (
-                <Moon className="h-4 w-4 sm:h-[18px] sm:w-[18px] text-indigo-400 hover:text-indigo-500 transition-colors" />
-              )}
-            </span>
-          </button>
-
           <a href="sms:5129104938" className="group flex items-center space-x-1.5 sm:space-x-2 bg-white/[0.03] hover:bg-gradient-to-r hover:from-red-600 hover:to-red-700 text-slate-200 hover:text-white px-3 sm:px-5 py-2 sm:py-2.5 text-xs md:text-sm font-bold uppercase tracking-wider transition-all duration-300 shadow-md shadow-black/20 rounded-full border border-red-500/30 hover:border-red-500/50 backdrop-blur-sm whitespace-nowrap shrink-0">
             <MessageSquare className="h-3.5 w-3.5 shrink-0 text-red-500 group-hover:text-white transition-colors" />
             <span>

@@ -15,11 +15,11 @@ export const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-l from-transparent via-obsidian/40 to-obsidian z-10"></div>
         <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent z-10"></div>
         <img
-          src="/austin-bats.png"
+          src="/austin-bats.webp"
           alt="Speedy Bat Couriers - Premier courier service in Austin Texas providing same day delivery and rush logistics"
           className="w-full h-full object-cover object-center lg:object-right opacity-30 mix-blend-lighten"
-          width="1200"
-          height="800"
+          width="1024"
+          height="1024"
           fetchPriority="high"
           loading="eager"
         />

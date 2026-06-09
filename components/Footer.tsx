@@ -81,8 +81,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
       {/* The car resting at the bottom of the website */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 md:left-auto md:right-4 md:translate-x-0 lg:right-12 max-w-[240px] sm:max-w-[280px] md:max-w-[360px] lg:max-w-[420px] w-full z-10 transition-transform duration-500 ease-out hover:-translate-y-2">
         <img
-          src="/speedybat-crossover.png"
+          src="/speedybat-crossover.webp"
           alt="SpeedyBat Courier Crossover Vehicle"
+          width="800"
+          height="447"
           className="w-full h-auto object-contain block opacity-85 hover:opacity-100 transition-opacity duration-500"
           loading="lazy"
         />

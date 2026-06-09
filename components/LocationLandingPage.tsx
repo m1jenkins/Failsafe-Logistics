@@ -47,7 +47,7 @@ export const LocationLandingPage: React.FC<LocationLandingPageProps> = ({ locati
             {/* Geographical Transit E-E-A-T introduction */}
             <div className="glass-panel p-6 rounded-2xl border border-white/[0.04] shadow-lg max-w-xl">
               <p className="text-slate-300 font-light leading-relaxed text-sm md:text-base">
-                Speedy Bat Couriers is the premier local solution for secure, prompt transport in the <strong className="text-white font-semibold">{location.name}</strong> area. 
+                Speedy Bat Couriers is the premier local solution for secure, prompt transport in the <strong className="text-white font-semibold">{location.name}</strong> area.{' '}
                 {location.transitInfo} We provide 24/7 dedicated direct-drive delivery solutions to corporate, legal, and medical teams who cannot afford delay.
               </p>
             </div>

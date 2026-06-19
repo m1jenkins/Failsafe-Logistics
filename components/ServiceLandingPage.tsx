@@ -5,7 +5,7 @@ import { locations } from '../data/locations';
 import { 
   ArrowRight, Shield, Zap, CheckCircle, MapPin, 
   Phone, Plus, Minus, Clock, Truck, Globe, Cpu, Plane, Calendar, 
-  Activity, FileText, Briefcase
+  Activity, FileText, Briefcase, EyeOff, Gem
 } from 'lucide-react';
 import { QuoteForm } from './QuoteForm';
 import { scrollToElement } from '../utils/scrollHelper';
@@ -18,7 +18,7 @@ interface ServiceLandingPageProps {
 
 // Icon helper map to dynamically render Lucide icons
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  Clock, Zap, Shield, Truck, Globe, Cpu, Plane, Calendar, Activity, FileText, Briefcase, MapPin
+  Clock, Zap, Shield, Truck, Globe, Cpu, Plane, Calendar, Activity, FileText, Briefcase, MapPin, EyeOff, Gem
 };
 
 export const ServiceLandingPage: React.FC<ServiceLandingPageProps> = ({ service, onNavigate }) => {

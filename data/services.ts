@@ -478,6 +478,62 @@ export const services: Record<string, ServiceData> = {
       }
     ],
     priceRange: '$$$$'
+  },
+  'high-value-secure-courier': {
+    id: 'high-value-secure-courier',
+    name: 'High-Value & Secure Item Courier',
+    title: 'High-Value Secure Courier Austin | Diamond, Bond & Document Transport',
+    metaDescription: 'Secure courier for high-value items in Austin, TX. Discreet direct-drive transport for bearer bonds, loose diamonds, gold bullion, passports, original contracts, and irreplaceable assets. 24/7 chain of custody.',
+    keywords: [
+      'secure courier high value items Austin',
+      'diamond courier service Texas',
+      'bearer bond delivery service',
+      'luxury watch courier Austin',
+      'gold bullion transport courier',
+      'secure document transport',
+      'precious items courier'
+    ],
+    tagline: 'When the item is worth more than the vehicle carrying it.',
+    overview: 'Some items cannot be risked in the mail — their value far exceeds any insurance claim, and many are simply irreplaceable. Our High-Value & Secure Item Courier service provides discreet, dedicated, direct-drive transport with court-grade chain of custody for financial instruments, precious goods, identity documents, and irreplaceable personal assets. Unmarked vehicles, plain-clothes couriers, tamper-evident packaging, and declared-value cargo coverage ensure your most valuable items arrive exactly as they left.',
+    features: [
+      {
+        title: 'Tamper-Evident Chain of Custody',
+        description: 'Sealed packaging with documented seal verification at origin and destination. Every handoff is photographed, timestamped, and logged for court-grade auditability.',
+        iconName: 'Shield'
+      },
+      {
+        title: 'Discreet Transport',
+        description: 'Unmarked vehicles, plain-clothes couriers, and zero external signage. Your shipment travels invisibly — no one knows what is being carried or where.',
+        iconName: 'EyeOff'
+      },
+      {
+        title: 'Declared Value Coverage',
+        description: 'Cargo insurance scaled to your item\'s declared value — not limited to standard carrier caps. Coverage tailored for diamonds, gold, bonds, and irreplaceable originals.',
+        iconName: 'Gem'
+      }
+    ],
+    capabilities: [
+      'Bearer bonds, stock certificates, cashier\'s checks, and financial instruments',
+      'Loose diamonds, luxury watches, gold bullion, rare coins, and rare stamps',
+      'Original legal contracts, signed deeds, and court-admissible evidence',
+      'Passports, visas, work permits, and sensitive identity documents',
+      'Pharmaceutical prototypes, clinical trial samples, and specialized medical specimens',
+      'Family heirlooms, estate items, original architectural blueprints, and small original artwork'
+    ],
+    faq: [
+      {
+        question: 'What insurance coverage do you carry for high-value items?',
+        answer: 'We offer declared-value cargo coverage that scales with your item\'s worth, well beyond standard carrier limits. For items of extraordinary value, we coordinate supplemental coverage and can provide proof of insurance before pickup. Every run is fully insured with documented chain of custody.'
+      },
+      {
+        question: 'Is there a size or weight limit for secure item transport?',
+        answer: 'Our high-value service handles items that fit in a secure lockbox or hard-sided case — typically under 50 lbs and small enough for a single courier to maintain constant physical custody. For larger items, we coordinate dedicated cargo vehicles with enhanced security protocols.'
+      },
+      {
+        question: 'How do you ensure discretion during transport?',
+        answer: 'All high-value runs use unmarked personal vehicles with no company branding. Couriers dress in plain clothes and carry no documentation visible to third parties. Pickup and delivery are coordinated to minimize exposure, and we never disclose cargo contents to anyone outside the chain of custody.'
+      }
+    ],
+    priceRange: '$$$$'
   }
 };
-

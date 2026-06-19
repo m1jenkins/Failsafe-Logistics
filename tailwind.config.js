@@ -22,7 +22,10 @@ export default {
                 red: {
                     600: '#dc2626',
                     700: '#b91c1c',
-                }
+                },
+                vault: '#b8860b',
+                'vault-light': '#d4a033',
+                'vault-glow': '#f5c842',
             },
             fontFamily: {
                 sans: ['DM Sans', 'Inter', 'sans-serif'],

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, FileCheck, HeartPulse, Clock, Stethoscope, Scale, Cpu, Plane } from 'lucide-react';
+import { ShieldCheck, FileCheck, HeartPulse, Clock, Stethoscope, Scale, Cpu, Plane, EyeOff, Gem, Landmark } from 'lucide-react';
 import { SectionHeading } from './SectionHeading';
 
 const credentials = [
@@ -23,6 +23,11 @@ const credentials = [
     title: '24/7/365 Live Dispatch',
     description: 'A real dispatcher answers any hour, any day. Urgent pickups roll in 30-60 minutes.',
   },
+  {
+    icon: EyeOff,
+    title: 'Discreet Transport',
+    description: 'Unmarked vehicles, plain-clothes couriers, and zero external signage. Your high-value shipment stays invisible.',
+  },
 ];
 
 const industries = [
@@ -30,6 +35,8 @@ const industries = [
   { icon: Scale, label: 'Legal & Court Filings' },
   { icon: Cpu, label: 'Semiconductor & Manufacturing' },
   { icon: Plane, label: 'Aviation & AOG' },
+  { icon: Gem, label: 'Precious Goods & Valuables' },
+  { icon: Landmark, label: 'Financial & Estate Services' },
 ];
 
 export const TrustSection: React.FC = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Clock, Plane, Cpu, FileText, Wrench, ShieldAlert, ArrowRight } from 'lucide-react';
+import { Clock, Plane, Cpu, FileText, Gem, ShieldAlert, ArrowRight } from 'lucide-react';
 import { Button } from './Button';
 import { scrollToElement } from '../utils/scrollHelper';
 
@@ -10,6 +10,7 @@ interface CargoItem {
   icon: React.ComponentType<{ className?: string }>;
   routeId: string;
   ctaText: string;
+  gold?: boolean;
 }
 
 const cargoItems: CargoItem[] = [
@@ -35,11 +36,12 @@ const cargoItems: CargoItem[] = [
     ctaText: "Secure Document Run"
   },
   {
-    title: "Critical Tools & Machinery",
-    description: "Emergency replacement parts, diagnostic tools, and hardware to resume operations.",
-    icon: Wrench,
-    routeId: "hot-shot-expedited-freight",
-    ctaText: "Emergency Parts Delivery"
+    title: "High-Value & Secure Items",
+    description: "Bearer bonds, loose diamonds, original contracts, passports, and items too valuable for ordinary carriers.",
+    icon: Gem,
+    routeId: "high-value-secure-courier",
+    ctaText: "Secure Transport",
+    gold: true
   }
 ];
 
@@ -145,11 +147,23 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
                     e.preventDefault();
                     if (onNavigate) onNavigate(item.routeId);
                   }}
-                  className="group relative glass-panel p-6 rounded-2xl flex flex-col justify-between border border-white/[0.04] hover:border-red-500/20 cursor-pointer transition-all duration-300 no-underline"
+                  className={`group relative glass-panel p-6 rounded-2xl flex flex-col justify-between border cursor-pointer transition-all duration-300 no-underline ${
+                    item.gold
+                      ? 'border-amber-500/10 hover:border-amber-500/25'
+                      : 'border-white/[0.04] hover:border-red-500/20'
+                  }`}
                 >
                   <div>
-                    <div className="bg-white/[0.02] border border-white/[0.06] w-10 h-10 flex items-center justify-center mb-4 group-hover:border-ember/30 group-hover:bg-red-950/20 transition-all duration-300 rounded-xl">
-                      <item.icon className="text-slate-400 h-4.5 w-4.5 group-hover:text-red-500 transition-colors duration-300" />
+                    <div className={`w-10 h-10 flex items-center justify-center mb-4 transition-all duration-300 rounded-xl ${
+                      item.gold
+                        ? 'bg-amber-950/20 border border-amber-500/20 group-hover:border-amber-500/40 group-hover:bg-amber-950/30'
+                        : 'bg-white/[0.02] border border-white/[0.06] group-hover:border-ember/30 group-hover:bg-red-950/20'
+                    }`}>
+                      <item.icon className={`h-4.5 w-4.5 transition-colors duration-300 ${
+                        item.gold
+                          ? 'text-amber-500/70 group-hover:text-amber-400'
+                          : 'text-slate-400 group-hover:text-red-500'
+                      }`} />
                     </div>
 
                     <h5 className="text-sm font-bold uppercase text-white mb-2 tracking-wider font-display">
@@ -160,7 +174,11 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
                     </p>
                   </div>
                   <div className="pt-2">
-                    <span className="text-xs font-bold text-red-500 hover:text-red-400 uppercase tracking-wider font-display flex items-center space-x-1.5 transition-all duration-300 opacity-80 group-hover:opacity-100">
+                    <span className={`text-xs font-bold uppercase tracking-wider font-display flex items-center space-x-1.5 transition-all duration-300 opacity-80 group-hover:opacity-100 ${
+                      item.gold
+                        ? 'text-amber-500 hover:text-amber-400'
+                        : 'text-red-500 hover:text-red-400'
+                    }`}>
                       <span>{item.ctaText}</span>
                       <ArrowRight className="h-3 w-3 transform group-hover:translate-x-1 transition-transform" />
                     </span>

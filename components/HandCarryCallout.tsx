@@ -59,6 +59,30 @@ export const HandCarryCallout: React.FC = () => {
                 </li>
               </ul>
 
+              {/* High-value items ticker */}
+              <div className="overflow-hidden py-4 border-t border-b border-white/[0.03] relative">
+                <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-[rgba(14,14,20,0.6)] to-transparent z-10 pointer-events-none" />
+                <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[rgba(14,14,20,0.6)] to-transparent z-10 pointer-events-none" />
+                <div className="ticker-scroll flex whitespace-nowrap">
+                  {[0, 1].map((copy) => (
+                    <span key={copy} className="flex items-center text-[10px] font-bold tracking-[0.25em] uppercase font-display text-amber-500/30 shrink-0">
+                      <span>Bearer Bonds</span><span className="mx-3 text-amber-500/15">·</span>
+                      <span>Loose Diamonds</span><span className="mx-3 text-amber-500/15">·</span>
+                      <span>Stock Certificates</span><span className="mx-3 text-amber-500/15">·</span>
+                      <span>Passports</span><span className="mx-3 text-amber-500/15">·</span>
+                      <span>Gold Bullion</span><span className="mx-3 text-amber-500/15">·</span>
+                      <span>Rare Coins</span><span className="mx-3 text-amber-500/15">·</span>
+                      <span>Luxury Watches</span><span className="mx-3 text-amber-500/15">·</span>
+                      <span>Original Contracts</span><span className="mx-3 text-amber-500/15">·</span>
+                      <span>Pharmaceutical Prototypes</span><span className="mx-3 text-amber-500/15">·</span>
+                      <span>Family Heirlooms</span><span className="mx-3 text-amber-500/15">·</span>
+                      <span>Rare Stamps</span><span className="mx-3 text-amber-500/15">·</span>
+                      <span>Architectural Blueprints</span><span className="mx-3 text-amber-500/15">·</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+
               {/* How It Works Flow */}
               <div className="pt-6 border-t border-white/[0.04] space-y-4">
                 <h4 className="text-xs font-bold text-blue-400 uppercase tracking-widest font-display">

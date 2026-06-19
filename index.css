@@ -24,6 +24,11 @@
   --color-ember: #c4421a;
   --color-molten: #e85d2c;
 
+  /* Gold / Vault Accent */
+  --color-vault: #b8860b;
+  --color-vault-light: #d4a033;
+  --color-vault-glow: #f5c842;
+
   /* Typography */
   --font-family-sans: 'DM Sans', 'Inter', sans-serif;
   --font-display: 'Outfit', sans-serif;
@@ -179,6 +184,13 @@ body {
   background-clip: text;
 }
 
+.text-gradient-gold {
+  background: linear-gradient(135deg, #f5c842 0%, #d4a033 50%, #b8860b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* ──────────────────────────────────────────────
    PULSE SLOW
    ────────────────────────────────────────────── */
@@ -190,6 +202,19 @@ body {
 
 .animate-pulse-slow {
   animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ──────────────────────────────────────────────
+   TICKER SCROLL — infinite horizontal marquee
+   ────────────────────────────────────────────── */
+
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-scroll {
+  animation: ticker-scroll 30s linear infinite;
 }
 
 /* ──────────────────────────────────────────────
@@ -257,7 +282,8 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .form-premium-glow::before,
   .animate-pulse-slow,
-  .animate-pulse {
+  .animate-pulse,
+  .ticker-scroll {
     animation: none !important;
   }
 

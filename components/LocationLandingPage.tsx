@@ -104,10 +104,10 @@ export const LocationLandingPage: React.FC<LocationLandingPageProps> = ({ locati
             
             <div className="text-center space-y-4">
               <h2 id="insights-heading" className="text-2xl sm:text-4xl font-extrabold text-white uppercase tracking-wider font-display">
-                Austin Hub Geographic Familiarity
+                {location.name} Geographic Familiarity
               </h2>
               <p className="text-slate-400 text-sm md:text-base font-light max-w-2xl mx-auto leading-relaxed">
-                Why central logistics requires more than just navigation software. How Speedy Bat secures speed and reliability inside the {location.name} corridor.
+                Why local delivery requires more than just navigation software. How Speedy Bat secures speed and reliability in the {location.name} area.
               </p>
             </div>
 
@@ -122,10 +122,10 @@ export const LocationLandingPage: React.FC<LocationLandingPageProps> = ({ locati
                   Traffic & Infrastructure Bypasses
                 </h3>
                 <p className="text-slate-400 text-sm font-light leading-relaxed mb-4">
-                  Every courier knows the coordinates, but local dispatch dictates routes that skip notorious bottlenecks. We understand when the I-35 deck split is backed up, how Congress Avenue events create detours, and how to optimize MoPac express lanes for time-sensitive cargo.
+                  Every courier knows the coordinates, but knowing which route actually moves at a given hour is what keeps a delivery on schedule. {location.transitInfo}
                 </p>
                 <div className="p-4 bg-white/[0.01] border border-white/[0.03] rounded-xl text-xs text-slate-500 font-sans italic leading-relaxed">
-                  "For immediate {location.name} dispatch, our drivers route through local transit cuts, avoiding highway back-ups to maintain our 60-minute pickup promise."
+                  "For {location.name} dispatch, our drivers already know the way to {location.localHighlights[0]} - no map app required."
                 </div>
               </div>
 
@@ -152,6 +152,19 @@ export const LocationLandingPage: React.FC<LocationLandingPageProps> = ({ locati
                 </div>
               </div>
 
+            </div>
+
+            {/* Local Operating Narrative card */}
+            <div className="glass-panel p-8 rounded-2xl relative overflow-hidden group">
+              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.04] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+              <h3 className="text-lg font-bold text-white uppercase mb-4 flex items-center font-display tracking-wider">
+                <span className="w-1.5 h-6 bg-red-600 mr-3 rounded-full"></span>
+                On The Ground In {location.name}
+              </h3>
+              <p className="text-slate-400 text-sm font-light leading-relaxed">
+                {location.localNarrative}
+              </p>
             </div>
 
           </div>

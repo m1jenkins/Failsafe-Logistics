@@ -28,7 +28,7 @@ export default {
                 'vault-glow': '#f5c842',
             },
             fontFamily: {
-                sans: ['DM Sans', 'Inter', 'sans-serif'],
+                sans: ['DM Sans', 'sans-serif'],
                 display: ['Outfit', 'sans-serif'],
             },
             animation: {

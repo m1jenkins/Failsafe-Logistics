@@ -8,7 +8,7 @@
  * 3. Injects route-specific JSON-LD (location/service schema, breadcrumbs,
  *    FAQ schema on /faq only)
  * 4. Writes dist/<route>/index.html
- * It also generates dist/sitemap.xml with the build date as lastmod.
+ * It also writes dist/sitemap.xml, dist/404.html, and dist/_redirects.
  */
 
 import fs from 'fs';
@@ -45,18 +45,7 @@ function jsonLdTag(schema, id) {
   return `<script${idAttr} type="application/ld+json">${JSON.stringify(schema)}</script>`;
 }
 
-function breadcrumbSchema(slug, name) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    'itemListElement': [
-      { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': `${BASE_URL}/` },
-      { '@type': 'ListItem', 'position': 2, 'name': name, 'item': `${BASE_URL}/${slug}` }
-    ]
-  };
-}
-
-function prerenderRoute(template, { slug, title, description, html, schemas }) {
+function prerenderRoute(template, { slug, title, description, html, schemas, robots }) {
   let out = template;
 
   // The homepage LocalBusiness schema belongs on the homepage only —
@@ -72,6 +61,10 @@ function prerenderRoute(template, { slug, title, description, html, schemas }) {
   out = replaceMultilineMetaTag(out, 'og:description', description, true);
   out = replaceMultilineMetaTag(out, 'twitter:title', title);
   out = replaceMultilineMetaTag(out, 'twitter:description', description);
+
+  if (robots) {
+    out = replaceMultilineMetaTag(out, 'robots', robots);
+  }
 
   // Canonical + og:url
   const url = slug ? `${BASE_URL}/${slug}` : `${BASE_URL}/`;
@@ -93,13 +86,50 @@ function prerenderRoute(template, { slug, title, description, html, schemas }) {
   return out;
 }
 
+/**
+ * The 404 page is a host-level fallback (served for any unmatched path with a
+ * real HTTP 404 status on Vercel/Netlify/Cloudflare Pages/GitHub Pages), not a
+ * normal route: it must not be indexable and has no canonical URL of its own.
+ */
+function prerenderNotFound(template, html) {
+  let out = prerenderRoute(template, {
+    slug: '404-not-found', // dummy slug, only used to strip the homepage schema; never a real path
+    title: '404: Page Not Found | Speedy Bat Couriers',
+    description: "The page you're looking for doesn't exist. Text (512) 910-4938 for 24/7 courier dispatch in Austin, TX.",
+    html,
+    schemas: [],
+    robots: 'noindex, follow'
+  });
+  // Neither a canonical link nor og:url apply to a non-indexable utility page
+  // served for many different bad paths — drop both rather than leave them
+  // pointing at the internal dummy slug prerenderRoute() built the rest of
+  // this page's URL-based tags from.
+  out = out.replace(/<link rel="canonical" href="[^"]*"\s*\/?>\n?/, '');
+  out = out.replace(/<meta property="og:url" content="[^"]*"\s*\/?>\n?/, '');
+  return out;
+}
+
+/**
+ * Static hosts that use Netlify-style _redirects (Netlify, Cloudflare Pages,
+ * Render, etc.) don't collapse /route/ and /route to one canonical URL the
+ * way Vercel's `trailingSlash` config does — so every route gets an explicit
+ * 301 from its trailing-slash form to the canonical no-slash form used by
+ * every canonical tag, sitemap entry, and JSON-LD @id/url in this build.
+ */
+function generateRedirects(routes) {
+  const lines = routes
+    .filter(({ slug }) => slug) // homepage has no distinct trailing-slash form to redirect
+    .map(({ slug }) => `/${slug}/  /${slug}  301!`);
+  return lines.join('\n') + '\n';
+}
+
+// No <lastmod>/<changefreq>/<priority>: Google documents that it ignores all
+// three when it can't verify them, and stamping every URL with the build date
+// on every deploy (the previous behavior) is worse than omitting them — it
+// actively misreports every page as having just changed.
 function generateSitemap(routes) {
-  const today = new Date().toISOString().slice(0, 10);
-  const urls = routes.map(({ slug, priority, changefreq }) => `  <url>
+  const urls = routes.map(({ slug }) => `  <url>
     <loc>${slug ? `${BASE_URL}/${slug}` : `${BASE_URL}/`}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>${changefreq}</changefreq>
-    <priority>${priority}</priority>
   </url>`).join('\n');
 
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
@@ -122,8 +152,8 @@ async function main() {
   }
 
   const {
-    renderRoute, locations, services, faqItems,
-    buildLocationSchema, buildServiceSchema
+    renderRoute, renderNotFound, locations, services, faqItems,
+    buildLocationSchema, buildServiceSchema, buildBreadcrumbSchema
   } = await import(entryPath);
 
   const template = fs.readFileSync(TEMPLATE_PATH, 'utf-8');
@@ -135,10 +165,8 @@ async function main() {
   routes.push({
     slug: '',
     title: 'Courier Austin TX | 24/7 Same-Day & Rush Delivery | Speedy Bat',
-    description: "Speedy Bat Couriers — Austin's 24/7 courier for same day delivery, air hand carry, hot shot & emergency logistics. Rush pickup in 30-60 min. Text (512) 910-4938.",
-    schemas: [],
-    priority: '1.0',
-    changefreq: 'weekly'
+    description: "Speedy Bat Couriers — Austin's 24/7 courier for same-day delivery, air hand carry, hot shot & emergency logistics. Pickup in 30-60 min. Text (512) 910-4938.",
+    schemas: []
   });
 
   for (const slug of Object.keys(services)) {
@@ -149,10 +177,8 @@ async function main() {
       description: service.metaDescription,
       schemas: [
         { schema: buildServiceSchema(service), id: 'jsonld-service-schema' },
-        { schema: breadcrumbSchema(slug, service.name) }
-      ],
-      priority: '0.8',
-      changefreq: 'weekly'
+        { schema: buildBreadcrumbSchema(slug, service.name), id: 'jsonld-breadcrumb' }
+      ]
     });
   }
 
@@ -164,10 +190,8 @@ async function main() {
       description: location.metaDescription,
       schemas: [
         { schema: buildLocationSchema(location), id: 'jsonld-location-schema' },
-        { schema: breadcrumbSchema(slug, `${location.name} Courier Service`) }
-      ],
-      priority: '0.6',
-      changefreq: 'weekly'
+        { schema: buildBreadcrumbSchema(slug, `${location.name} Courier Service`), id: 'jsonld-breadcrumb' }
+      ]
     });
   }
 
@@ -187,19 +211,15 @@ async function main() {
           }))
         }
       },
-      { schema: breadcrumbSchema('faq', 'FAQ') }
-    ],
-    priority: '0.5',
-    changefreq: 'monthly'
+      { schema: buildBreadcrumbSchema('faq', 'FAQ'), id: 'jsonld-breadcrumb' }
+    ]
   });
 
   routes.push({
     slug: 'about',
     title: 'About | Speedy Bat Couriers — Austin TX Courier Service',
     description: "Learn about Speedy Bat Couriers — Austin, Texas's trusted 24/7 courier service for time-critical, same-day, and emergency deliveries across Central Texas and nationwide.",
-    schemas: [{ schema: breadcrumbSchema('about', 'About') }],
-    priority: '0.5',
-    changefreq: 'monthly'
+    schemas: [{ schema: buildBreadcrumbSchema('about', 'About'), id: 'jsonld-breadcrumb' }]
   });
 
   // Render + write every route
@@ -216,6 +236,18 @@ async function main() {
 
   // Sitemap
   fs.writeFileSync(path.join(DIST_DIR, 'sitemap.xml'), generateSitemap(routes));
+
+  // 404 page — a flat dist/404.html (not a route subdirectory) so Vercel,
+  // Netlify, Cloudflare Pages, and GitHub Pages all auto-serve it with a real
+  // HTTP 404 status for any unmatched path.
+  fs.writeFileSync(
+    path.join(DIST_DIR, '404.html'),
+    prerenderNotFound(template, renderNotFound())
+  );
+
+  // _redirects — trailing-slash cleanup for Netlify-style static hosts.
+  // Vercel gets the same behavior from vercel.json's trailingSlash setting.
+  fs.writeFileSync(path.join(DIST_DIR, '_redirects'), generateRedirects(routes));
 
   // Clean up the throwaway SSR bundle
   fs.rmSync(SSR_DIR, { recursive: true, force: true });

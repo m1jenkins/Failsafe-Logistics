@@ -18,12 +18,13 @@ import { FaqPage } from './components/FaqPage';
 import { AboutPage } from './components/AboutPage';
 import { LocationLandingPage } from './components/LocationLandingPage';
 import { ServiceLandingPage } from './components/ServiceLandingPage';
+import { NotFound } from './components/NotFound';
 import { locations } from './data/locations';
 import { services } from './data/services';
 import { faqItems } from './data/faq';
-import { buildLocationSchema, buildServiceSchema } from './utils/schemaHelper';
+import { buildLocationSchema, buildServiceSchema, buildBreadcrumbSchema } from './utils/schemaHelper';
 
-export { locations, services, faqItems, buildLocationSchema, buildServiceSchema };
+export { locations, services, faqItems, buildLocationSchema, buildServiceSchema, buildBreadcrumbSchema };
 
 const noop = () => {};
 
@@ -64,4 +65,9 @@ export function renderRoute(routeId: string): string {
   }
 
   return renderToString(<Shell>{content}</Shell>);
+}
+
+/** Render the 404 page markup, written to dist/404.html (not part of the sitemap). */
+export function renderNotFound(): string {
+  return renderToString(<Shell><NotFound onNavigate={noop} /></Shell>);
 }

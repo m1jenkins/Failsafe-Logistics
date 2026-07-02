@@ -33,15 +33,16 @@ export const Hero: React.FC = () => {
           
           {/* Left Column: Headline and text */}
           <div className="lg:col-span-7 space-y-3 lg:space-y-4">
-            
+
+            <span className="text-[11px] text-red-500/80 font-bold uppercase tracking-[0.3em] font-display block">
+              Courier Service in Austin, Texas &middot; 24/7 Same-Day &amp; Rush Delivery
+            </span>
+
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-black text-white leading-[1.08] tracking-tight font-display">
-              <span className="sr-only">Courier Service in Austin, Texas — Same Day & Rush Delivery 24/7</span>
-              <span aria-hidden="true">
-                The Courier <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-700">Austin Calls</span>
-                <br />
-                <span className="hero-emphasis">at 2am</span>
-              </span>
+              The Courier <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-700">Austin Calls</span>
+              <br />
+              <span className="hero-emphasis">at 2am</span>
             </h1>
 
             <div className="hidden sm:block backdrop-blur-md bg-white/[0.02] border border-white/[0.04] rounded-2xl p-4 lg:p-5 shadow-xl shadow-black/30 max-w-2xl">

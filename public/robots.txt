@@ -3,13 +3,6 @@
 
 User-agent: *
 Allow: /
-Disallow: /success
-Disallow: /success/
-
-# Block development/build directories
-Disallow: /node_modules/
-Disallow: /.git/
-Disallow: /src/
 
 # Sitemap location
 Sitemap: https://speedybat.com/sitemap.xml

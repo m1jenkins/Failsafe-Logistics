@@ -67,12 +67,12 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
             
             <div className="space-y-8 lg:space-y-10">
               <div className="space-y-4">
-                <h3 className="text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase text-white font-display tracking-tight leading-tight">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase text-white font-display tracking-tight leading-tight">
                   For when tomorrow is <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-ember to-molten font-black">
                     Too Late
                   </span>
-                </h3>
+                </h2>
 
                 <p className="text-slate-300 font-light text-base lg:text-lg leading-relaxed">
                   Every run is direct-drive: one vehicle, one courier, zero transfers. Your shipment gets a dedicated driver who doesn't stop until the job is done.
@@ -133,9 +133,9 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
           {/* Right Column: 2x2 Cargo categories grid */}
           <div className="lg:col-span-6 flex flex-col justify-center space-y-6">
             <div>
-              <h4 className="text-2xl md:text-3xl font-extrabold uppercase text-white font-display tracking-wider">
+              <h2 className="text-2xl md:text-3xl font-extrabold uppercase text-white font-display tracking-wider">
                 What We Transport
-              </h4>
+              </h2>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -166,9 +166,9 @@ export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
                       }`} />
                     </div>
 
-                    <h5 className="text-sm font-bold uppercase text-white mb-2 tracking-wider font-display">
+                    <h3 className="text-sm font-bold uppercase text-white mb-2 tracking-wider font-display">
                       {item.title}
-                    </h5>
+                    </h3>
                     <p className="text-slate-400 leading-relaxed text-xs font-light mb-4">
                       {item.description}
                     </p>

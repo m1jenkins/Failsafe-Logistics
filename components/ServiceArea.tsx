@@ -2,14 +2,13 @@ import React from 'react';
 import { SectionHeading } from './SectionHeading';
 import { Crosshair, MapPin, ArrowRight } from 'lucide-react';
 import { services } from '../data/services';
+import { locations } from '../data/locations';
 
 const hubs = [
   "Houston", "Dallas / Fort Worth", "San Antonio", "El Paso"
 ];
 
-const serviceCities = [
-  "Round Rock", "Taylor", "Cedar Park", "Georgetown", "Kyle"
-];
+const serviceCityIds = ['round-rock', 'taylor', 'cedar-park', 'georgetown', 'kyle'];
 
 interface ServiceAreaProps {
   onNavigate?: (locationId: string) => void;
@@ -53,10 +52,19 @@ export const ServiceArea: React.FC<ServiceAreaProps> = ({ onNavigate }) => {
               Same-day pickup and delivery coverage across the Austin metro's key commercial corridors:
             </p>
             <ul className="space-y-3 font-display">
-              {serviceCities.map(city => (
-                <li key={city} className="flex items-center space-x-3">
-                  <MapPin className="h-4 w-4 text-red-500/70 shrink-0" />
-                  <span className="text-sm text-slate-200 font-bold uppercase tracking-wider">{city}</span>
+              {serviceCityIds.map(id => (
+                <li key={id}>
+                  <a
+                    href={`/${id}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (onNavigate) onNavigate(id);
+                    }}
+                    className="flex items-center space-x-3 text-slate-200 hover:text-red-500 transition-colors duration-200"
+                  >
+                    <MapPin className="h-4 w-4 text-red-500/70 shrink-0" />
+                    <span className="text-sm font-bold uppercase tracking-wider">{locations[id].name}</span>
+                  </a>
                 </li>
               ))}
             </ul>

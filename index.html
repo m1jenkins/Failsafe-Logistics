@@ -5,20 +5,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#08080c" />
-  <script>
-    (function() {
-      try {
-        const theme = localStorage.getItem('theme');
-        if (theme === 'light') {
-          document.documentElement.classList.add('light');
-        } else {
-          document.documentElement.classList.remove('light');
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-  </script>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
@@ -26,14 +12,14 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-  <!-- Preconnect for performance (SEO signal) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Self-hosted variable fonts (see index.css for @font-face) -->
+  <link rel="preload" href="/fonts/dm-sans-variable.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/outfit-variable.woff2" as="font" type="font/woff2" crossorigin />
 
   <!-- SEO Meta Tags -->
   <title>Courier Austin TX | 24/7 Same-Day & Rush Delivery | Speedy Bat</title>
   <meta name="description"
-    content="Speedy Bat Couriers — Austin's 24/7 courier service for same day delivery, air hand carry, hot shot & emergency logistics. Courier Austin trusts for rush pickup in 30-60 min. Text (512) 910-4938." />
+    content="Speedy Bat Couriers — Austin's 24/7 courier for same-day delivery, air hand carry, hot shot & emergency logistics. Pickup in 30-60 min. Text (512) 910-4938." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://speedybat.com/" />
 
@@ -43,7 +29,7 @@
     content="Austin's 24/7 courier service — same day delivery, air hand carry, hot shot & emergency logistics. Pickup in 30-60 min." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="en_US" />
-  <meta property="og:url" content="https://speedybat.com" />
+  <meta property="og:url" content="https://speedybat.com/" />
   <meta property="og:image" content="https://speedybat.com/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -57,18 +43,14 @@
     content="Austin's 24/7 courier service — same day delivery, air hand carry, hot shot & emergency logistics. Pickup in 30-60 min." />
   <meta name="twitter:image" content="https://speedybat.com/og-image.png" />
 
-  <!-- Geographic Targeting -->
-  <meta name="geo.region" content="US-TX" />
-  <meta name="geo.placename" content="Austin" />
-  <meta name="geo.position" content="30.2672;-97.7431" />
-  <meta name="ICBM" content="30.2672, -97.7431" />
   <meta name="author" content="Speedy Bat Couriers" />
 
   <!-- Structured Data: Local Business -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "CourierService",
+      "@type": "LocalBusiness",
+      "additionalType": "https://en.wikipedia.org/wiki/Courier",
       "name": "Speedy Bat Couriers - Courier in Austin Texas",
       "image": "https://speedybat.com/speedy-bat-logo.png",
       "telephone": "+1-512-910-4938",
@@ -167,10 +149,6 @@
       ]
     }
   </script>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3M0NV2T1HB"></script>

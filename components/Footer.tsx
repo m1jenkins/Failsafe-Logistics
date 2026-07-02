@@ -1,5 +1,6 @@
 import React from 'react';
 import { services } from '../data/services';
+import { locations } from '../data/locations';
 
 interface FooterProps {
   onNavigate?: (routeId: string) => void;
@@ -15,12 +16,16 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
           {/* Column 1: Main Business Info */}
           <div className="md:col-span-5 text-center md:text-left order-1">
-            <div 
-              className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter font-display mb-2 cursor-pointer inline-block"
-              onClick={() => onNavigate && onNavigate('')}
+            <a
+              href="/"
+              onClick={(e) => {
+                e.preventDefault();
+                if (onNavigate) onNavigate('');
+              }}
+              className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter font-display mb-2 inline-block"
             >
               Speedy Bat Couriers
-            </div>
+            </a>
             <p className="text-slate-400 text-xs md:text-sm mb-1 font-medium font-display tracking-wider uppercase">
               Courier Service in Austin, Texas
             </p>
@@ -42,7 +47,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <span>Text or Call: (512) 910-4938</span>
               </a>
             </div>
-            <div className="text-slate-500 text-[11px] font-mono tracking-widest uppercase">
+            <div className="text-slate-500 text-[11px] font-mono tracking-widest uppercase" suppressHydrationWarning>
               &copy; {new Date().getFullYear()} SPEEDY BAT COURIERS · AUSTIN, TX · ALL RIGHTS RESERVED.
             </div>
           </div>
@@ -75,6 +80,30 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* Column 3: Spacer for the car on desktop */}
           <div className="hidden md:block md:col-span-3 order-3" />
+
+          {/* Row 2: Service Area Links (Internal SEO Links) */}
+          <div className="md:col-span-12 order-4 pt-10 mt-2 border-t border-white/[0.03] text-center md:text-left">
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider font-display mb-5 flex items-center justify-center md:justify-start">
+              <span className="w-1.5 h-4 bg-red-600 mr-2.5 rounded-full"></span>
+              Austin Service Areas
+            </h3>
+            <div className="flex flex-wrap justify-center md:justify-start gap-x-5 gap-y-2 font-display text-xs">
+              {Object.values(locations).slice(0, 8).map((location) => (
+                <a
+                  key={location.id}
+                  href={`/${location.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (onNavigate) onNavigate(location.id);
+                  }}
+                  className="text-slate-400 hover:text-red-500 transition-colors duration-200"
+                >
+                  {location.name}
+                </a>
+              ))}
+              <span className="text-slate-600">+ 19 more Central Texas communities</span>
+            </div>
+          </div>
         </div>
       </div>
 

@@ -61,10 +61,10 @@ export const ServiceLandingPage: React.FC<ServiceLandingPageProps> = ({ service,
                   </span>
                 </React.Fragment>
               ))}
-              <span className="text-slate-300 block text-xl sm:text-2xl font-light mt-4 tracking-normal font-sans">
-                {service.tagline}
-              </span>
             </h1>
+            <p className="text-slate-300 text-xl sm:text-2xl font-light mt-4 tracking-normal font-sans">
+              {service.tagline}
+            </p>
 
             {/* Detailed service overview */}
             <div className="glass-panel p-6 rounded-2xl border border-white/[0.04] shadow-lg max-w-2xl">

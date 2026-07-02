@@ -57,7 +57,7 @@ export const services: Record<string, ServiceData> = {
   'hot-shot-expedited-freight': {
     id: 'hot-shot-expedited-freight',
     name: 'Hot Shot & Expedited Freight',
-    title: 'Hot Shot Delivery Austin | Expedited Freight Courier Services',
+    title: 'Hot Shot Delivery Austin | Expedited Freight Courier',
     metaDescription: 'Flagship hot shot and expedited freight logistics in Austin and Central Texas. 24/7 dedicated direct-drive cargo vans and trucks for critical parts & machinery.',
     keywords: [
       'Hot shot delivery Austin',
@@ -164,7 +164,7 @@ export const services: Record<string, ServiceData> = {
   'medical-stat-courier': {
     id: 'medical-stat-courier',
     name: 'Medical / STAT Courier',
-    title: 'Medical STAT Courier Austin | HIPAA Compliant Specimen Delivery',
+    title: 'Medical STAT Courier Austin | HIPAA Compliant Delivery',
     metaDescription: 'HIPAA-compliant medical courier services in Austin, TX. 24/7 STAT specimen runs, laboratory logistics, blood bank transport, and pharmacy routes.',
     keywords: [
       'Medical courier Austin',
@@ -217,7 +217,7 @@ export const services: Record<string, ServiceData> = {
   'legal-courier-court-filing': {
     id: 'legal-courier-court-filing',
     name: 'Legal Courier & Court Filing',
-    title: 'Legal Courier Austin | Same-Day Court Filing & Document Messenger',
+    title: 'Legal Courier Austin | Same-Day Court Filing Service',
     metaDescription: 'Secure legal courier services in Austin, TX. 24/7 same-day court filing, contract pickup, process serving, and confidential legal messenger runs.',
     keywords: [
       'Legal courier Austin',
@@ -270,7 +270,7 @@ export const services: Record<string, ServiceData> = {
   'manufacturing-line-down-delivery': {
     id: 'manufacturing-line-down-delivery',
     name: 'Manufacturing / Line-Down / Just-in-Time Parts Delivery',
-    title: 'Manufacturing Line-Down Parts Delivery | Just-in-Time Courier',
+    title: 'Manufacturing Line-Down Delivery | JIT Courier Austin',
     metaDescription: 'Emergency manufacturing line-down courier in Austin, TX. 24/7 same-day delivery of microchips, automotive components, and silicon wafers to factories.',
     keywords: [
       'Manufacturing courier service',
@@ -430,7 +430,7 @@ export const services: Record<string, ServiceData> = {
     id: 'air-hand-carry-on-board-courier',
     name: 'Air Hand Carry / On-Board Courier',
     title: 'Air Hand Carry Austin | On-Board Courier Service TX',
-    metaDescription: 'Premium air hand carry and on-board courier (OBC) services in Austin, TX. A dedicated courier personally accompanies your package on commercial flights for secure, same-day delivery nationwide.',
+    metaDescription: 'Premium air hand carry & on-board courier (OBC) in Austin, TX. A dedicated courier flies with your package for secure, same-day delivery nationwide.',
     keywords: [
       'Air hand carry Austin',
       'on board courier Austin',
@@ -482,8 +482,8 @@ export const services: Record<string, ServiceData> = {
   'high-value-secure-courier': {
     id: 'high-value-secure-courier',
     name: 'High-Value & Secure Item Courier',
-    title: 'High-Value Secure Courier Austin | Diamond, Bond & Document Transport',
-    metaDescription: 'Secure courier for high-value items in Austin, TX. Discreet direct-drive transport for bearer bonds, loose diamonds, gold bullion, passports, original contracts, and irreplaceable assets. 24/7 chain of custody.',
+    title: 'High-Value Secure Courier Austin | Diamonds & Bonds',
+    metaDescription: 'Secure courier for high-value items in Austin, TX. Discreet transport for bearer bonds, diamonds, gold, and irreplaceable assets. 24/7 chain of custody.',
     keywords: [
       'secure courier high value items Austin',
       'diamond courier service Texas',

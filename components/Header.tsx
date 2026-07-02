@@ -33,13 +33,17 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
     <header className={`fixed top-0 left-0 right-0 z-50 floating-header transition-all duration-300 ${scrolled ? 'scrolled py-3' : 'py-4'}`}>
       <div className="container mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
-        <div 
-          className="flex flex-col cursor-pointer shrink-0" 
-          onClick={() => handleNav('')}
+        <a
+          href="/"
+          onClick={(e) => {
+            e.preventDefault();
+            handleNav('');
+          }}
+          className="flex flex-col shrink-0"
         >
           <span className="text-xl md:text-2xl font-black tracking-tighter uppercase font-display text-white">Speedy Bat</span>
           <span className="text-[10px] text-red-500 font-bold tracking-[0.4em] uppercase mt-0.5 ml-0.5">Couriers</span>
-        </div>
+        </a>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center space-x-1 mx-6" aria-label="Main navigation">

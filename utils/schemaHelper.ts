@@ -1,15 +1,19 @@
 import { LocationData, ServiceData } from '../types';
 
 /**
- * Pure builder for the location CourierService JSON-LD structure.
+ * Pure builder for the location LocalBusiness JSON-LD structure.
+ * Models one Austin business serving many areas — the served city's own
+ * coordinates live under areaServed.geo, not as the business's own address/geo,
+ * since Speedy Bat has a single real premise, not one per served city.
  * Used both client-side (injectLocationSchema) and at build time (prerender.js).
  */
 export const buildLocationSchema = (location: LocationData) => {
   return {
     '@context': 'https://schema.org',
-    '@type': 'CourierService',
+    '@type': 'LocalBusiness',
+    'additionalType': 'https://en.wikipedia.org/wiki/Courier',
     '@id': `https://speedybat.com/${location.id}#courierservice`,
-    'name': `Speedy Bat Couriers - ${location.name} Delivery Hub`,
+    'name': 'Speedy Bat Couriers',
     'image': 'https://speedybat.com/speedy-bat-logo.png',
     'telephone': '+1-512-910-4938',
     'priceRange': location.priceRange || '$$$',
@@ -18,18 +22,27 @@ export const buildLocationSchema = (location: LocationData) => {
       '@type': 'PostalAddress',
       'addressLocality': 'Austin',
       'addressRegion': 'TX',
-      'postalCode': location.zipCodes[0],
+      'postalCode': '78701',
       'addressCountry': 'US'
     },
     'geo': {
       '@type': 'GeoCoordinates',
-      'latitude': location.coordinates.latitude,
-      'longitude': location.coordinates.longitude
+      'latitude': 30.2672,
+      'longitude': -97.7431
     },
     'areaServed': {
       '@type': 'AdministrativeArea',
       'name': location.name,
-      'description': location.areaServed
+      'description': location.areaServed,
+      'geo': {
+        '@type': 'GeoCircle',
+        'geoMidpoint': {
+          '@type': 'GeoCoordinates',
+          'latitude': location.coordinates.latitude,
+          'longitude': location.coordinates.longitude
+        },
+        'geoRadius': '8000'
+      }
     },
     'openingHoursSpecification': {
       '@type': 'OpeningHoursSpecification',
@@ -96,7 +109,8 @@ export const buildServiceSchema = (service: ServiceData) => {
     'name': service.title,
     'description': service.metaDescription,
     'provider': {
-      '@type': 'CourierService',
+      '@type': 'LocalBusiness',
+      'additionalType': 'https://en.wikipedia.org/wiki/Courier',
       'name': 'Speedy Bat Couriers',
       'telephone': '+1-512-910-4938',
       'url': 'https://speedybat.com',
@@ -171,6 +185,47 @@ export const injectServiceSchema = (service: ServiceData): () => void => {
 
   return () => {
     const scriptToRemove = document.getElementById('jsonld-service-schema');
+    if (scriptToRemove) {
+      scriptToRemove.remove();
+    }
+  };
+};
+
+/**
+ * Pure builder for a two-level BreadcrumbList (Home > page). Shared by
+ * prerender.js (build time) and injectBreadcrumbSchema (client-side route
+ * changes) so both emit the exact same structure under the same id.
+ */
+export const buildBreadcrumbSchema = (slug: string, name: string) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  'itemListElement': [
+    { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': 'https://speedybat.com/' },
+    { '@type': 'ListItem', 'position': 2, 'name': name, 'item': `https://speedybat.com/${slug}` }
+  ]
+});
+
+/**
+ * Dynamically injects/replaces the breadcrumb JSON-LD for the current route.
+ * Prerendered pages already carry one under this same id; this keeps it in
+ * sync (or removes it on the homepage, which has no breadcrumb) across
+ * client-side SPA navigations, which otherwise leave the previous route's
+ * breadcrumb (and, on /faq, its FAQPage schema) stuck in the document head.
+ */
+export const injectBreadcrumbSchema = (slug: string, name: string): () => void => {
+  const existingScript = document.getElementById('jsonld-breadcrumb');
+  if (existingScript) {
+    existingScript.remove();
+  }
+
+  const script = document.createElement('script');
+  script.id = 'jsonld-breadcrumb';
+  script.type = 'application/ld+json';
+  script.innerHTML = JSON.stringify(buildBreadcrumbSchema(slug, name));
+  document.head.appendChild(script);
+
+  return () => {
+    const scriptToRemove = document.getElementById('jsonld-breadcrumb');
     if (scriptToRemove) {
       scriptToRemove.remove();
     }

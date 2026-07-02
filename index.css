@@ -1,6 +1,30 @@
 @import "tailwindcss";
 
 /* ──────────────────────────────────────────────
+   SELF-HOSTED FONTS
+   Variable fonts covering their full weight range from one file each —
+   replaces the Google Fonts CSS+font request chain (3 families, one of
+   which — Inter — was an unreachable fallback behind DM Sans and never
+   actually rendered).
+   ────────────────────────────────────────────── */
+
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/dm-sans-variable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url('/fonts/outfit-variable.woff2') format('woff2');
+}
+
+/* ──────────────────────────────────────────────
    DARK LIQUID GLASS — Theme Configuration
    Warm-dark palette, organic motion, tactile glass
    ────────────────────────────────────────────── */
@@ -30,7 +54,7 @@
   --color-vault-glow: #f5c842;
 
   /* Typography */
-  --font-family-sans: 'DM Sans', 'Inter', sans-serif;
+  --font-family-sans: 'DM Sans', sans-serif;
   --font-display: 'Outfit', sans-serif;
 }
 

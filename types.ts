@@ -33,6 +33,7 @@ export interface LocationData {
   transitInfo: string;
   localHighlights: string[];
   localServices: string[];
+  localNarrative: string;
 }
 
 export interface ServiceFeature {

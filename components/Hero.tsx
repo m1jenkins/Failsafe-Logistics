@@ -20,8 +20,8 @@ export const Hero: React.FC = () => {
           src="/austin-bats.webp"
           alt="Austin skyline and bats at dusk"
           className="h-full w-full object-cover object-center opacity-45 mix-blend-lighten lg:object-right"
-          width="1024"
-          height="1024"
+          width="1717"
+          height="916"
           fetchPriority="high"
           loading="eager"
         />

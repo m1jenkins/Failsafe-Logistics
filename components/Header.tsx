@@ -36,18 +36,18 @@ export const Header: React.FC = () => {
         </nav>
 
         <div className="flex items-center gap-2">
-          <a href="tel:+15129104938" className="hidden sm:inline-flex items-center gap-2 bg-white/[0.03] hover:bg-white/[0.06] text-slate-200 px-3 md:px-4 py-2.5 text-xs font-bold uppercase tracking-wider rounded-full border border-white/[0.06]">
+          <a href="tel:+15129104938" className="hidden min-h-11 sm:inline-flex items-center gap-2 bg-white/[0.03] hover:bg-white/[0.06] text-slate-200 px-3 md:px-4 py-2.5 text-xs font-bold uppercase tracking-wider rounded-full border border-white/[0.06]">
             <Phone className="h-3.5 w-3.5 text-red-500" />
             Call
           </a>
-          <a href="sms:+15129104938" className="inline-flex items-center gap-2 bg-white/[0.03] hover:bg-gradient-to-r hover:from-red-600 hover:to-red-700 text-slate-200 hover:text-white px-3 md:px-4 py-2.5 text-xs font-bold uppercase tracking-wider rounded-full border border-red-500/30">
+          <a href="sms:+15129104938" className="inline-flex min-h-11 items-center gap-2 bg-white/[0.03] hover:bg-gradient-to-r hover:from-red-600 hover:to-red-700 text-slate-200 hover:text-white px-3 md:px-4 py-2.5 text-xs font-bold uppercase tracking-wider rounded-full border border-red-500/30">
             <MessageSquare className="h-3.5 w-3.5 text-red-500" />
             <span className="hidden sm:inline">Text </span>(512) 910-4938
           </a>
           <button
             type="button"
             onClick={() => setMobileMenuOpen(open => !open)}
-            className="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-white/[0.03] border border-white/[0.06] text-slate-400 hover:text-white"
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/[0.06] bg-white/[0.03] text-slate-300 hover:text-white lg:hidden"
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-navigation"
@@ -60,7 +60,7 @@ export const Header: React.FC = () => {
       <div id="mobile-navigation" className={`lg:hidden overflow-hidden bg-obsidian/95 backdrop-blur-xl border-t border-white/[0.04] shadow-2xl transition-all duration-300 ${mobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
         <nav className="container mx-auto px-6 pb-4 pt-3 flex flex-col gap-1" aria-label="Mobile navigation">
           {navLinks.map(link => (
-            <a key={link.href} href={link.href} className="text-xs font-bold text-slate-400 hover:text-white uppercase tracking-widest font-display px-4 py-3 rounded-xl hover:bg-white/[0.03]">
+            <a key={link.href} href={link.href} className="flex min-h-11 items-center rounded-xl px-4 py-3 font-display text-xs font-bold uppercase tracking-widest text-slate-300 hover:bg-white/[0.03] hover:text-white">
               {link.label}
             </a>
           ))}

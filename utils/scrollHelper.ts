@@ -28,6 +28,6 @@ export const scrollToElement = (elementId: string, offsetBuffer = 24) => {
   const targetPosition = rect.top + window.scrollY - totalOffset;
   window.scrollTo({
     top: targetPosition,
-    behavior: 'smooth'
+    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
   });
 };

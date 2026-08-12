@@ -23,17 +23,17 @@ export const Footer: React.FC = () => (
     <div className="container mx-auto px-6 relative z-10 pb-36 md:pb-20">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
         <div className="md:col-span-5 text-center md:text-left">
-          <a href="/" className="text-xl md:text-2xl font-black text-white uppercase tracking-tighter font-display mb-2 inline-block">Speedy Bat Couriers</a>
+          <a href="/" className="mb-2 inline-flex min-h-11 items-center text-xl font-black uppercase tracking-tighter text-white font-display md:min-h-0 md:text-2xl">Speedy Bat Couriers</a>
           <p className="text-slate-400 text-xs md:text-sm mb-4 font-medium font-display tracking-wider uppercase">Austin-based service-area courier</p>
-          <p className="text-slate-500 text-xs max-w-sm leading-relaxed mx-auto md:mx-0">
-            Urgent B2B courier requests originating in the Austin metro. Dispatch confirms availability, timing, vehicle, routing, handling, custody, access, and applicable coverage for each accepted job.
+          <p className="text-slate-400 text-xs max-w-sm leading-relaxed mx-auto md:mx-0">
+            Urgent courier requests for businesses and individuals originating in the Austin metro. Dispatch confirms availability, timing, vehicle, routing, handling, custody, access, and applicable coverage for each accepted job.
           </p>
           <div className="mt-6 flex flex-wrap justify-center md:justify-start gap-3">
-            <a href="tel:+15129104938" className="text-red-500 hover:text-red-400 font-bold text-sm font-display">Call (512) 910-4938</a>
+            <a href="tel:+15129104938" className="inline-flex min-h-11 items-center text-red-500 hover:text-red-400 font-bold text-sm font-display md:min-h-0">Call (512) 910-4938</a>
             <span className="text-slate-700" aria-hidden="true">·</span>
-            <a href="sms:+15129104938" className="text-red-500 hover:text-red-400 font-bold text-sm font-display">Text dispatch</a>
+            <a href="sms:+15129104938" className="inline-flex min-h-11 items-center text-red-500 hover:text-red-400 font-bold text-sm font-display md:min-h-0">Text dispatch</a>
           </div>
-          <p className="mt-5 text-[11px] text-slate-600 leading-relaxed max-w-md mx-auto md:mx-0">
+          <p className="mt-5 text-[11px] text-slate-500 leading-relaxed max-w-md mx-auto md:mx-0">
             Do not submit health information, patient names, IDs, financial account data, access credentials, or detailed descriptions of valuables through the public form or SMS.
           </p>
         </div>
@@ -42,7 +42,7 @@ export const Footer: React.FC = () => (
           <h2 className="text-sm font-bold text-white uppercase tracking-wider font-display mb-5">Priority services</h2>
           <ul className="space-y-3 text-xs">
             {serviceLinks.map(([label, href]) => (
-              <li key={href}><a href={href} className="text-slate-400 hover:text-red-500 transition-colors">{label}</a></li>
+              <li key={href}><a href={href} className="inline-flex min-h-11 min-w-11 items-center justify-center text-slate-400 hover:text-red-500 transition-colors md:min-h-0 md:min-w-0 md:justify-start">{label}</a></li>
             ))}
           </ul>
         </div>
@@ -51,13 +51,13 @@ export const Footer: React.FC = () => (
           <h2 className="text-sm font-bold text-white uppercase tracking-wider font-display mb-5">Company & policies</h2>
           <ul className="space-y-3 text-xs">
             {companyLinks.map(([label, href]) => (
-              <li key={href}><a href={href} className="text-slate-400 hover:text-red-500 transition-colors">{label}</a></li>
+              <li key={href}><a href={href} className="inline-flex min-h-11 min-w-11 items-center justify-center text-slate-400 hover:text-red-500 transition-colors md:min-h-0 md:min-w-0 md:justify-start">{label}</a></li>
             ))}
           </ul>
         </div>
       </div>
 
-      <div className="mt-12 pt-6 border-t border-white/[0.04] text-center md:text-left text-slate-600 text-[11px] font-mono tracking-widest uppercase" suppressHydrationWarning>
+      <div className="mt-12 pt-6 border-t border-white/[0.04] text-center md:text-left text-slate-500 text-[11px] font-mono tracking-widest uppercase" suppressHydrationWarning>
         &copy; {new Date().getFullYear()} Speedy Bat Couriers · Austin, TX · All rights reserved.
       </div>
     </div>

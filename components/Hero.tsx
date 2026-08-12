@@ -7,45 +7,43 @@ export const Hero: React.FC = () => {
   const focusQuoteForm = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     scrollToElement('quick-quote-form');
-    document.getElementById('fullName')?.focus({ preventScroll: true });
+    document.getElementById('pickupZip')?.focus({ preventScroll: true });
   };
 
   return (
-    <section id="hero" className="relative min-h-[auto] lg:min-h-screen flex items-center pt-24 pb-10 lg:py-28 overflow-hidden bg-obsidian">
+    <section id="hero" className="relative flex min-h-[auto] items-center overflow-hidden bg-obsidian pb-8 pt-24 lg:min-h-screen lg:py-24">
       <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:32px_32px]" />
-      <div className="absolute right-0 top-0 bottom-0 w-full lg:w-2/3 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-obsidian/40 to-obsidian z-10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-full lg:w-[70%]">
+        <div className="absolute inset-0 z-10 bg-gradient-to-l from-transparent via-obsidian/25 to-obsidian" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-obsidian via-transparent to-obsidian/15" />
         <img
           src="/austin-bats.webp"
           alt="Austin skyline and bats at dusk"
-          className="w-full h-full object-cover object-center lg:object-right opacity-30 mix-blend-lighten"
+          className="h-full w-full object-cover object-center opacity-45 mix-blend-lighten lg:object-right"
           width="1024"
           height="1024"
           fetchPriority="high"
           loading="eager"
         />
       </div>
-      <div className="absolute inset-0 bg-gradient-to-r from-obsidian via-obsidian/80 to-transparent z-10" />
+      <div className="absolute inset-0 z-10 bg-gradient-to-r from-obsidian via-obsidian/70 to-transparent" />
 
       <div className="container mx-auto px-6 md:px-8 relative z-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          <div className="lg:col-span-7 space-y-5">
+        <div className="grid grid-cols-1 items-center gap-7 lg:grid-cols-12 lg:gap-10 xl:gap-14">
+          <div className="space-y-4 lg:col-span-7 lg:space-y-5">
             <p className="text-[11px] text-red-500/80 font-bold uppercase tracking-[0.3em] font-display">
-              Austin-based service-area courier · urgent B2B requests
+              Austin-based courier for businesses and individuals
             </p>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.03] tracking-tight font-display">
-              Urgent Courier Service <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-700">in Austin, TX</span>
+              Urgent Courier Service <span className="text-red-500">in Austin, TX</span>
             </h1>
             <p className="text-xl md:text-2xl text-white font-display font-bold">
-              The courier Austin calls <span className="hero-emphasis">at 2am</span>
+              Quick dispatch review when timing matters.
             </p>
-            <div className="backdrop-blur-md bg-white/[0.02] border border-white/[0.04] rounded-2xl p-5 shadow-xl shadow-black/30 max-w-2xl space-y-3">
-              <p className="text-sm md:text-base text-slate-300 font-light leading-relaxed">
+            <div className="max-w-2xl rounded-2xl border border-white/[0.04] bg-white/[0.02] p-4 shadow-xl shadow-black/30 backdrop-blur-md sm:p-5">
+              <p className="text-sm font-light leading-relaxed text-slate-300 md:text-base">
                 Request same-day, hot shot, line-down, airport recovery, air hand carry, legal-document, secure-item, or recurring courier service originating in the Austin metro.
-              </p>
-              <p className="text-sm text-slate-400 leading-relaxed">
-                Dispatch confirms availability, pickup timing, vehicle, route, handling, custody, access, and any applicable coverage for each accepted job.
+                <span className="mt-2 block text-slate-400">Dispatch confirms availability, pickup timing, vehicle, route, handling, custody, access, and any applicable coverage for each accepted job.</span>
               </p>
             </div>
             <div className="flex flex-wrap gap-3 pt-1">

@@ -26,7 +26,7 @@ const comparisons = [
 ];
 
 export const HandCarryCallout: React.FC = () => (
-  <section className="py-20 border-b border-white/[0.03] bg-deep-space" aria-labelledby="route-choice-heading">
+  <section className="border-b border-white/[0.03] bg-deep-space py-14 md:py-20" aria-labelledby="route-choice-heading">
     <div className="container mx-auto px-6">
       <div className="max-w-3xl mx-auto text-center space-y-4 mb-12">
         <p className="text-[11px] text-red-500/80 font-bold uppercase tracking-[0.3em] font-display">Ground or air?</p>
@@ -40,7 +40,7 @@ export const HandCarryCallout: React.FC = () => (
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 max-w-6xl mx-auto">
         {comparisons.map(item => (
-          <article key={item.title} className="glass-panel p-7 rounded-2xl flex flex-col">
+          <article key={item.title} className="glass-panel flex flex-col rounded-2xl p-6 md:p-7">
             <div className="bg-blue-950/20 border border-blue-500/20 w-11 h-11 flex items-center justify-center mb-5 rounded-xl">
               <item.icon className="h-5 w-5 text-blue-400" />
             </div>

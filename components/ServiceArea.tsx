@@ -3,7 +3,7 @@ import { ArrowRight, MapPin, Navigation } from 'lucide-react';
 import { SectionHeading } from './SectionHeading';
 
 export const ServiceArea: React.FC = () => (
-  <section id="service-area" className="py-20 bg-obsidian relative overflow-hidden">
+  <section id="service-area" className="relative overflow-hidden bg-obsidian py-14 md:py-20">
     <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-ember/5 rounded-full blur-[100px] pointer-events-none" />
     <div className="container mx-auto px-6 relative z-10">
       <SectionHeading
@@ -12,7 +12,7 @@ export const ServiceArea: React.FC = () => (
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10 max-w-5xl mx-auto">
-        <article className="glass-panel p-8 rounded-2xl">
+        <article className="glass-panel rounded-2xl p-6 md:p-8">
           <div className="bg-red-950/20 border border-red-500/20 w-11 h-11 flex items-center justify-center mb-5 rounded-xl">
             <MapPin className="h-5 w-5 text-red-500" />
           </div>
@@ -23,7 +23,7 @@ export const ServiceArea: React.FC = () => (
           <p className="text-xs text-slate-500">Austin neighborhood pages are consolidated into one coverage source so the business identity stays accurate.</p>
         </article>
 
-        <article className="glass-panel p-8 rounded-2xl">
+        <article className="glass-panel rounded-2xl p-6 md:p-8">
           <div className="bg-red-950/20 border border-red-500/20 w-11 h-11 flex items-center justify-center mb-5 rounded-xl">
             <Navigation className="h-5 w-5 text-red-500" />
           </div>

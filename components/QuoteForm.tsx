@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   AlertCircle,
   Check,
+  ChevronDown,
   Clock,
   Mail,
   MapPin,
@@ -74,15 +75,14 @@ const SIZE_WEIGHT_OPTIONS = [
   { value: 'unsure', label: 'Not sure — dispatch must confirm' }
 ];
 
-const formFieldOrder: Array<keyof FormState> = [
-  'fullName',
-  'preferredContact',
-  'contactValue',
+const requiredFieldOrder: Array<keyof FormState> = [
   'pickupZip',
   'destinationZip',
   'deadline',
   'cargoCategory',
-  'sizeWeight'
+  'fullName',
+  'preferredContact',
+  'contactValue'
 ];
 
 const initialFormState = (defaultPickup: string): FormState => ({
@@ -135,7 +135,7 @@ const validateField = (name: keyof FormState, state: FormState): string => {
     case 'cargoCategory':
       return value ? '' : 'Choose a cargo category';
     case 'sizeWeight':
-      return value ? '' : 'Choose an approximate size and weight';
+      return '';
     default:
       return '';
   }
@@ -187,17 +187,20 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
     setSubmitError(null);
     const nextErrors: FormErrors = {};
 
-    for (const field of formFieldOrder) {
+    for (const field of requiredFieldOrder) {
       const message = validateField(field, formState);
       if (message) nextErrors[field] = message;
     }
 
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
-      setTouched(Object.fromEntries(formFieldOrder.map(field => [field, true])) as Record<keyof FormState, boolean>);
+      setTouched(Object.fromEntries(requiredFieldOrder.map(field => [field, true])) as Record<keyof FormState, boolean>);
       window.setTimeout(() => {
         errorSummaryRef.current?.focus();
-        errorSummaryRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        errorSummaryRef.current?.scrollIntoView({
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+          block: 'center'
+        });
       }, 50);
       return;
     }
@@ -217,7 +220,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
       `Destination ZIP: ${formState.destinationZip}`,
       `Deadline: ${formState.deadline}`,
       `Cargo category: ${formState.cargoCategory}`,
-      `Approximate size/weight: ${formState.sizeWeight}`
+      `Approximate size/weight: ${formState.sizeWeight || 'Not provided'}`
     ].join('\n');
 
     try {
@@ -264,7 +267,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
     }
   };
 
-  const inputClasses = (hasError: boolean) => `w-full glass-input text-slate-200 px-4 py-3 rounded-xl outline-none placeholder:text-slate-600 text-sm md:text-base border transition-all duration-300 font-sans ${
+  const inputClasses = (hasError: boolean) => `w-full min-h-11 glass-input text-slate-200 px-4 py-2.5 rounded-xl outline-none placeholder:text-slate-500 text-sm md:text-base border transition-all duration-300 font-sans ${
     hasError
       ? 'border-red-500 bg-red-950/10 focus:border-red-400 focus:shadow-[0_0_12px_rgba(239,68,68,0.15)]'
       : 'border-white/[0.04] focus:border-red-500/50'
@@ -282,7 +285,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
   return (
     <div className="form-premium-glow relative rounded-3xl group/form">
       <div className="form-glow-backdrop" />
-      <div className="glass-panel-elevated p-4 sm:p-5 lg:p-6 rounded-3xl shadow-2xl relative border border-white/[0.05] z-10">
+      <div className="glass-panel-elevated relative z-10 rounded-3xl border border-white/[0.05] p-4 shadow-2xl sm:p-5 lg:p-6">
         <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
 
         {isSubmitted ? (
@@ -302,16 +305,27 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
             </Button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+          <form onSubmit={handleSubmit} className="space-y-3" noValidate>
             <input type="hidden" name="access_key" value="4d84c98a-eb94-4f22-8a55-a7e4a80855ec" />
 
-            <div className="p-4 bg-amber-950/20 border border-amber-500/30 rounded-xl text-xs text-amber-100 flex items-start gap-2" role="note">
-              <ShieldAlert className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
-              <p className="font-sans leading-relaxed">
-                <strong>Do not submit sensitive information.</strong> Do not include patient information, IDs, financial or account data, access codes, credentials, or detailed descriptions of valuables. Use categories only. See our{' '}
-                <a href="/privacy" className="font-bold underline underline-offset-2 hover:text-white">Privacy Notice</a>.
-              </p>
+            <div>
+              <h2 className="font-display text-lg font-bold uppercase tracking-wider text-white">Start your request</h2>
+              <p className="mt-1 text-xs leading-relaxed text-slate-400">Send the essentials now. Dispatch will follow up to confirm the job.</p>
             </div>
+
+            <details className="group rounded-xl border border-amber-500/30 bg-amber-950/20 text-xs text-amber-100" role="note">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-3 py-2.5 font-bold [&::-webkit-details-marker]:hidden">
+                <span className="flex items-center gap-2">
+                  <ShieldAlert className="h-4 w-4 shrink-0 text-amber-400" />
+                  Privacy first: use broad categories only
+                </span>
+                <ChevronDown className="h-4 w-4 shrink-0 text-amber-400 transition-transform group-open:rotate-180" aria-hidden="true" />
+              </summary>
+              <p className="px-3 pb-3 font-sans leading-relaxed">
+                <strong>Do not submit sensitive information.</strong> Do not include patient information, IDs, financial or account data, access codes, credentials, or detailed descriptions of valuables. Use categories only. See our{' '}
+                <a href="/privacy" className="inline-flex min-h-11 items-center font-bold underline underline-offset-2 hover:text-white">Privacy Notice</a>.
+              </p>
+            </details>
 
             {Object.keys(errors).length > 0 && (
               <div
@@ -326,7 +340,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
                   Please correct the following errors:
                 </h3>
                 <ul className="list-disc pl-5 font-sans space-y-0.5">
-                  {formFieldOrder.map(field => errors[field] ? <li key={field}>{errors[field]}</li> : null)}
+                  {requiredFieldOrder.map(field => errors[field] ? <li key={field}>{errors[field]}</li> : null)}
                 </ul>
               </div>
             )}
@@ -338,81 +352,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
               </div>
             )}
 
-            <div>
-              <label htmlFor="fullName" className={labelClasses}>Name or company</label>
-              <div className="relative group/input">
-                <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
-                <input
-                  id="fullName"
-                  name="fullName"
-                  type="text"
-                  required
-                  maxLength={120}
-                  className={`${inputClasses(!!errors.fullName)} pl-11`}
-                  placeholder="Your name or company"
-                  value={formState.fullName}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  autoComplete="name"
-                  aria-invalid={!!errors.fullName}
-                  aria-describedby={errors.fullName ? 'err-fullName' : undefined}
-                />
-              </div>
-              {inlineError('fullName')}
-            </div>
-
-            <fieldset>
-              <legend className={labelClasses}>Preferred contact method</legend>
-              <div className="grid grid-cols-3 gap-2">
-                {CONTACT_OPTIONS.map(option => (
-                  <label
-                    key={option.value}
-                    className={`cursor-pointer rounded-xl border px-3 py-2.5 text-center text-xs font-bold uppercase tracking-wider font-display transition-colors flex items-center justify-center ${
-                      formState.preferredContact === option.value
-                        ? 'border-red-500/60 bg-red-950/30 text-white'
-                        : 'border-white/[0.05] bg-white/[0.02] text-slate-400 hover:text-white'
-                    }`}
-                  >
-                    <input
-                      className="mr-2 h-3.5 w-3.5 accent-red-600"
-                      type="radio"
-                      name="preferredContact"
-                      value={option.value}
-                      checked={formState.preferredContact === option.value}
-                      onChange={handleChange}
-                    />
-                    {option.label}
-                  </label>
-                ))}
-              </div>
-            </fieldset>
-
-            <div>
-              <label htmlFor="contactValue" className={labelClasses}>
-                {contactIsEmail ? 'Email address' : 'Phone number'}
-              </label>
-              <div className="relative group/input">
-                <ContactIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
-                <input
-                  id="contactValue"
-                  name="contactValue"
-                  type={contactIsEmail ? 'email' : 'tel'}
-                  required
-                  className={`${inputClasses(!!errors.contactValue)} pl-11`}
-                  placeholder={contactIsEmail ? 'name@company.com' : '(512) 555-0123'}
-                  value={formState.contactValue}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  autoComplete={contactIsEmail ? 'email' : 'tel'}
-                  inputMode={contactIsEmail ? 'email' : 'tel'}
-                  aria-invalid={!!errors.contactValue}
-                  aria-describedby={errors.contactValue ? 'err-contactValue' : undefined}
-                />
-              </div>
-              {inlineError('contactValue')}
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2">
               <div>
                 <label htmlFor="pickupZip" className={labelClasses}>Pickup ZIP</label>
                 <div className="relative group/input">
@@ -462,8 +402,9 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
               </div>
             </div>
 
-            <div>
-              <label htmlFor="deadline" className={labelClasses}>Required delivery deadline</label>
+            <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2">
+              <div>
+              <label htmlFor="deadline" className={labelClasses}>Delivery deadline</label>
               <div className="relative group/input">
                 <Clock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
                 <input
@@ -483,9 +424,9 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
                 Enter your local time. Dispatch confirms all timing and availability.
               </span>
               {inlineError('deadline')}
-            </div>
+              </div>
 
-            <div>
+              <div>
               <label htmlFor="cargoCategory" className={labelClasses}>Cargo category</label>
               <div className="relative group/input">
                 <Package className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
@@ -505,44 +446,122 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
                 </select>
               </div>
               {inlineError('cargoCategory')}
+              </div>
             </div>
 
-            <div>
-              <label htmlFor="sizeWeight" className={labelClasses}>Approximate size and weight</label>
-              <div className="relative group/input">
-                <Scale className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
-                <select
-                  id="sizeWeight"
-                  name="sizeWeight"
-                  required
-                  className={`${inputClasses(!!errors.sizeWeight)} pl-11 pr-10`}
-                  value={formState.sizeWeight}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  aria-invalid={!!errors.sizeWeight}
-                  aria-describedby={errors.sizeWeight ? 'err-sizeWeight' : undefined}
-                >
-                  <option value="">Select the closest range</option>
-                  {SIZE_WEIGHT_OPTIONS.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
-                </select>
+            <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2">
+              <fieldset className="min-[360px]:col-span-2">
+                <legend className={labelClasses}>Preferred contact method</legend>
+                <div className="grid grid-cols-3 gap-2">
+                  {CONTACT_OPTIONS.map(option => (
+                    <label
+                      key={option.value}
+                      className={`flex min-h-11 cursor-pointer items-center justify-center rounded-xl border px-3 py-2 text-center text-xs font-bold uppercase tracking-wider font-display transition-colors ${
+                        formState.preferredContact === option.value
+                          ? 'border-red-500/60 bg-red-950/30 text-white'
+                          : 'border-white/[0.05] bg-white/[0.02] text-slate-400 hover:text-white'
+                      }`}
+                    >
+                      <input
+                        className="mr-2 h-4 w-4 accent-red-600"
+                        type="radio"
+                        name="preferredContact"
+                        value={option.value}
+                        checked={formState.preferredContact === option.value}
+                        onChange={handleChange}
+                      />
+                      {option.label}
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+
+              <div>
+                <label htmlFor="fullName" className={labelClasses}>Name or company</label>
+                <div className="relative group/input">
+                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
+                  <input
+                    id="fullName"
+                    name="fullName"
+                    type="text"
+                    required
+                    maxLength={120}
+                    className={`${inputClasses(!!errors.fullName)} pl-11`}
+                    placeholder="Your name or company"
+                    value={formState.fullName}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    autoComplete="name"
+                    aria-invalid={!!errors.fullName}
+                    aria-describedby={errors.fullName ? 'err-fullName' : undefined}
+                  />
+                </div>
+                {inlineError('fullName')}
               </div>
-              {inlineError('sizeWeight')}
+
+              <div>
+                <label htmlFor="contactValue" className={labelClasses}>
+                  {contactIsEmail ? 'Email address' : 'Phone number'}
+                </label>
+                <div className="relative group/input">
+                  <ContactIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
+                  <input
+                    id="contactValue"
+                    name="contactValue"
+                    type={contactIsEmail ? 'email' : 'tel'}
+                    required
+                    className={`${inputClasses(!!errors.contactValue)} pl-11`}
+                    placeholder={contactIsEmail ? 'name@company.com' : '(512) 555-0123'}
+                    value={formState.contactValue}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    autoComplete={contactIsEmail ? 'email' : 'tel'}
+                    inputMode={contactIsEmail ? 'email' : 'tel'}
+                    aria-invalid={!!errors.contactValue}
+                    aria-describedby={errors.contactValue ? 'err-contactValue' : undefined}
+                  />
+                </div>
+                {inlineError('contactValue')}
+              </div>
             </div>
+
+            <details className="group rounded-xl border border-white/[0.05] bg-white/[0.02]">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-slate-300 font-display [&::-webkit-details-marker]:hidden">
+                <span>Size &amp; weight <span className="font-sans font-normal normal-case tracking-normal text-slate-400">(optional)</span></span>
+                <ChevronDown className="h-4 w-4 text-red-500 transition-transform group-open:rotate-180" aria-hidden="true" />
+              </summary>
+              <div className="px-4 pb-4 pt-1">
+                <label htmlFor="sizeWeight" className={labelClasses}>Approximate size and weight</label>
+                <div className="relative group/input">
+                  <Scale className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
+                  <select
+                    id="sizeWeight"
+                    name="sizeWeight"
+                    className={`${inputClasses(false)} pl-11 pr-10`}
+                    value={formState.sizeWeight}
+                    onChange={handleChange}
+                  >
+                    <option value="">Skip for now</option>
+                    {SIZE_WEIGHT_OPTIONS.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
+                  </select>
+                </div>
+              </div>
+            </details>
 
             <div className="pt-1">
               <Button
                 variant="alert"
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex items-center justify-center space-x-3 py-3 text-base rounded-full shadow-lg hover:shadow-red-900/10 transition-all cursor-pointer font-display font-bold uppercase tracking-wider"
+                className="w-full flex items-center justify-center space-x-3 py-3 text-base rounded-full shadow-lg hover:shadow-red-900/10 transition-all cursor-pointer font-display font-bold uppercase tracking-wider disabled:cursor-wait disabled:opacity-60"
               >
                 <span>{isSubmitting ? 'PROCESSING REQUEST...' : 'DISPATCH REQUEST →'}</span>
               </Button>
-              <p className="text-center text-slate-500 text-xs mt-3 leading-relaxed">
+              <p className="mt-3 text-center text-xs leading-relaxed text-slate-400">
                 By submitting, you agree to the{' '}
-                <a href="/terms" className="font-bold underline underline-offset-2 hover:text-slate-300">Service Terms</a>{' '}
+                <a href="/terms" className="inline-flex min-h-11 items-center font-bold underline underline-offset-2 hover:text-slate-300">Service Terms</a>{' '}
                 and acknowledge the{' '}
-                <a href="/privacy" className="font-bold underline underline-offset-2 hover:text-slate-300">Privacy Notice</a>.
+                <a href="/privacy" className="inline-flex min-h-11 items-center font-bold underline underline-offset-2 hover:text-slate-300">Privacy Notice</a>.
                 Availability and job details require dispatch confirmation.
               </p>
             </div>

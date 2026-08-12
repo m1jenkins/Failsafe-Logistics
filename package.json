@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "postbuild": "vite build --ssr prerender-entry.tsx --outDir dist-ssr && node prerender.js",
-    "preview": "vite preview"
+    "postbuild": "vite build --ssr prerender-entry.tsx --outDir dist-ssr && node prerender.js && node scripts/seo-regression.mjs",
+    "test:seo": "node scripts/seo-regression.mjs",
+    "preview": "node scripts/preview-dist.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.563.0",

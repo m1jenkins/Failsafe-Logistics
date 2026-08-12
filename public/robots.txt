@@ -1,8 +1,23 @@
-# Speedy Bat Couriers - robots.txt
-# https://speedybat.com
+# Speedy Bat crawler policy — reviewed 2026-08-12
+# Public search and AI-search retrieval are allowed. Identifiable training
+# controls are handled separately. robots.txt is not an access-control system.
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Disallow: /
+
+# Google documents that this product token does not affect Google Search or
+# Search AI features. It also controls some Gemini-app grounding in addition
+# to future-model training, so this opt-out intentionally includes that tradeoff.
+User-agent: Google-Extended
+Disallow: /
 
 User-agent: *
 Allow: /
 
-# Sitemap location
 Sitemap: https://speedybat.com/sitemap.xml

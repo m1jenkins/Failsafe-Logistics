@@ -5,43 +5,59 @@ export interface FaqItem {
 
 export const faqItems: FaqItem[] = [
   {
-    question: "What is a last-minute courier service?",
-    answer: "A last-minute courier service provides urgent, time-critical delivery when you need something shipped immediately. Speedy Bat Couriers offers 24/7 same-day pickup and delivery throughout Austin, Texas and nationwide. We specialize in the jobs other carriers won't take — after hours, weekends, holidays, and when every minute counts."
+    question: 'What does Speedy Bat do?',
+    answer: 'Speedy Bat is an Austin-based service-area courier business for urgent business delivery requests. Dispatch reviews the pickup, destination, deadline, cargo category, vehicle needs, access, and handling requirements before accepting a job.'
   },
   {
-    question: "What is air hand carry service?",
-    answer: "Air hand carry is a premium courier service where a dedicated courier personally accompanies your package on a commercial flight as carry-on luggage. The chain of custody is never broken. Speedy Bat Couriers offers hand carry from Austin-Bergstrom International Airport to any US destination and select international hubs."
+    question: 'How quickly can pickup happen?',
+    answer: 'There is no universal pickup-time promise. Dispatch provides a job-specific estimate after reviewing the Austin pickup location, cargo, suitable courier and vehicle availability, traffic, site access, and requested deadline.'
   },
   {
-    question: "How fast can you pick up in Austin?",
-    answer: "For urgent shipments we can pick up within 30–60 minutes of your call or text. We maintain 24/7 readiness across Central Texas with dedicated vehicles positioned for rapid dispatch."
+    question: 'Can I submit a request after normal business hours?',
+    answer: 'Urgent requests can be submitted at any time. Submission is not job acceptance; pickup and delivery timing are confirmed only when dispatch accepts the request.'
   },
   {
-    question: "What areas do you serve near Austin?",
-    answer: "We serve all of Central Texas from our Austin headquarters — Round Rock, Georgetown, Cedar Park, Taylor, Kyle, Pflugerville, Leander, Hutto, Buda, Bastrop, San Marcos, and every community in between. We also provide expedited ground delivery to Houston, Dallas/Fort Worth, San Antonio, and El Paso, plus nationwide air hand carry."
+    question: 'What is the routine pickup area?',
+    answer: 'Routine pickup is limited to the Austin metro. Pickup eligibility is confirmed for each request. Farther cities are described as possible destinations for accepted Austin-origin jobs, not as staffed Speedy Bat locations or routine local pickup markets.'
   },
   {
-    question: "Do you operate 24/7?",
-    answer: "Yes. Speedy Bat Couriers operates 24 hours a day, 7 days a week, 365 days a year. We're always available for emergency and time-critical deliveries, including holidays and overnight runs."
+    question: 'What information is needed for a quote?',
+    answer: 'Provide the pickup and destination ZIPs, requested deadline, broad cargo category, approximate dimensions or weight, site-access needs, and a contact method. Dispatch may request more information through an appropriate channel before deciding whether to quote or accept the job.'
   },
   {
-    question: "How much does a courier cost in Austin?",
-    answer: "Pricing varies based on distance, urgency, and service type. Our ground expedited rates start with a $175 base fee plus mileage. Air hand carry and specialized services like medical or legal courier are quoted individually. Text us at (512) 910-4938 for a fast quote."
+    question: 'How is courier pricing determined?',
+    answer: 'Pricing is job-specific. Relevant factors can include distance, urgency, vehicle, cargo size and weight, waiting, tolls, airport handling, access requirements, and after-hours work. Dispatch confirms the quoted scope and price before booking.'
   },
   {
-    question: "Do you offer medical courier services?",
-    answer: "Yes, we provide HIPAA-compliant medical courier services throughout Austin and Central Texas. We handle UN3373 Biological Substance transport, cold chain logistics, STAT medical delivery, and secure specimen transport for hospitals, labs, and healthcare providers."
+    question: 'Is every shipment direct drive or assigned one courier?',
+    answer: 'No universal configuration is promised. Vehicle, routing, stops, couriers, handoffs, custody, and update methods are confirmed for each accepted job. Request a dedicated or direct configuration when it is required so dispatch can evaluate it explicitly.'
   },
   {
-    question: "What is on-board courier (OBC) service?",
-    answer: "On-board courier is when a dedicated Speedy Bat courier personally flies with your shipment as carry-on luggage. This ensures chain of custody is never broken and provides the fastest possible transit for ultra-critical shipments — semiconductor wafers, legal documents, medical specimens, and more."
+    question: 'Can Speedy Bat handle airport recovery, NFO, or AOG requests?',
+    answer: 'Austin airport and cargo-terminal requests may be evaluated. Dispatch must confirm the airline or handler, shipment release, documents, cargo, public or authorized access, operating hours, timing, and onward route. Speedy Bat does not represent customs-broker authority, security clearance, or guaranteed ramp access.'
   },
   {
-    question: "How far will you drive for a hot shot delivery?",
-    answer: "We regularly handle overnight direct-drive runs of 1,000+ miles. One dedicated vehicle, one driver, zero transfers, non-stop to destination. Common routes include Austin to Houston, Dallas, San Antonio, El Paso, and across state lines."
+    question: 'What is air hand carry or on-board courier service?',
+    answer: 'Air hand carry is accompanied transport on a passenger flight. An Austin-origin request is accepted only after dispatch confirms the item, packaging, dimensions, weight, traveler, flight, screening, carrier rules, documents, custody plan, and final handoff. No item or itinerary is automatically eligible.'
   },
   {
-    question: "Can I track my delivery?",
-    answer: "Yes. We provide real-time tracking updates for all deliveries — ground and air. For hand carry shipments, you'll receive live flight tracking. For ground shipments, we provide GPS-based location updates and ETAs throughout the run."
+    question: 'Do you provide process service or guarantee court filing?',
+    answer: 'No process service, legal advice, filing acceptance, filing deadline, or court-admissibility guarantee is represented. A legal-document delivery or courthouse task is considered only after dispatch reviews the requested action, clerk or recipient requirements, timing, access, and receipt method.'
+  },
+  {
+    question: 'Do you advertise medical specimen or cold-chain transport?',
+    answer: 'No. The public site does not claim HIPAA or OSHA certification, UN3373 handling, organ or blood transport, specimen transport, or validated cold-chain capability. Do not submit health information or patient details through the public form or SMS.'
+  },
+  {
+    question: 'What insurance or security applies to a shipment?',
+    answer: 'No universal insurance amount, screening status, custody method, or security configuration is advertised. Dispatch must review the cargo and confirm any available coverage, exclusions, vehicle, custody, packaging, access, and receipt requirements in the accepted job scope.'
+  },
+  {
+    question: 'Will I receive tracking or proof of delivery?',
+    answer: 'The update and receipt method is agreed for each accepted job. Depending on the service, the scope may include milestone updates, recipient signature, photo confirmation, or another documented handoff method.'
+  },
+  {
+    question: 'What should I leave out of the public form or SMS?',
+    answer: 'Do not submit health information, patient names, identification numbers, financial account data, access credentials, or detailed descriptions of valuables. Use a broad cargo category and let dispatch arrange an appropriate next step if more detail is necessary.'
   }
 ];

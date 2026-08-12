@@ -1,11 +1,7 @@
 import React from 'react';
 import { ArrowRight, Home } from 'lucide-react';
 
-interface NotFoundProps {
-  onNavigate?: (routeId: string) => void;
-}
-
-export const NotFound: React.FC<NotFoundProps> = ({ onNavigate }) => {
+export const NotFound: React.FC = () => {
   return (
     <main className="pt-24 pb-20 bg-obsidian min-h-screen flex items-center">
       <div className="container mx-auto px-6 max-w-2xl text-center space-y-8">
@@ -24,17 +20,13 @@ export const NotFound: React.FC<NotFoundProps> = ({ onNavigate }) => {
         <div className="flex flex-wrap justify-center gap-4">
           <a
             href="/"
-            onClick={(e) => {
-              e.preventDefault();
-              if (onNavigate) onNavigate('');
-            }}
             className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 border border-red-500/20 text-white font-bold uppercase tracking-wider text-xs md:text-sm px-6 py-3.5 rounded-full shadow-lg shadow-red-950/30 transition-all inline-flex items-center space-x-2 font-display"
           >
             <Home className="h-4 w-4" />
             <span>Back to Home</span>
           </a>
           <a
-            href="sms:5129104938"
+            href="sms:+15129104938"
             className="bg-white/[0.02] border border-white/[0.04] hover:bg-white/[0.05] text-slate-300 hover:text-white font-bold uppercase tracking-wider text-xs md:text-sm px-6 py-3.5 rounded-full shadow-md transition-all inline-flex items-center space-x-2 font-display"
           >
             <span>Text Dispatch (512) 910-4938</span>

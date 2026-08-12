@@ -1,4 +1,41 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "trailingSlash": false,
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.speedybat.com" }],
+      "destination": "https://speedybat.com/:path*",
+      "permanent": true
+    },
+    { "source": "/downtown-austin", "destination": "/service-areas#austin", "permanent": true },
+    { "source": "/south-austin", "destination": "/service-areas#austin", "permanent": true },
+    { "source": "/east-austin", "destination": "/service-areas#austin", "permanent": true },
+    { "source": "/mueller", "destination": "/service-areas#austin", "permanent": true },
+    { "source": "/west-campus", "destination": "/service-areas#austin", "permanent": true },
+    { "source": "/hyde-park", "destination": "/service-areas#austin", "permanent": true },
+    { "source": "/west-lake-hills", "destination": "/service-areas#coverage", "permanent": true },
+    { "source": "/cedar-park", "destination": "/service-areas#coverage", "permanent": true },
+    { "source": "/round-rock", "destination": "/service-areas#coverage", "permanent": true },
+    { "source": "/georgetown", "destination": "/service-areas#coverage", "permanent": true },
+    { "source": "/pflugerville", "destination": "/service-areas#coverage", "permanent": true },
+    { "source": "/lakeway", "destination": "/service-areas#coverage", "permanent": true },
+    { "source": "/bee-cave", "destination": "/service-areas#coverage", "permanent": true },
+    { "source": "/kyle", "destination": "/service-areas#coverage", "permanent": true },
+    { "source": "/leander", "destination": "/service-areas#coverage", "permanent": true },
+    { "source": "/liberty-hill", "destination": "/service-areas#coverage", "permanent": true },
+    { "source": "/lago-vista", "destination": "/service-areas#coverage", "permanent": true },
+    { "source": "/taylor", "destination": "/service-areas#coverage", "permanent": true },
+    { "source": "/hutto", "destination": "/service-areas#coverage", "permanent": true },
+    { "source": "/buda", "destination": "/service-areas#coverage", "permanent": true },
+    { "source": "/bastrop", "destination": "/service-areas#coverage", "permanent": true },
+    { "source": "/elgin", "destination": "/service-areas#coverage", "permanent": true },
+    { "source": "/san-marcos", "destination": "/service-areas#coverage", "permanent": true },
+    { "source": "/salado", "destination": "/service-areas#destinations", "permanent": true },
+    { "source": "/killeen", "destination": "/service-areas#destinations", "permanent": true },
+    { "source": "/temple", "destination": "/service-areas#destinations", "permanent": true },
+    { "source": "/new-braunfels", "destination": "/service-areas#destinations", "permanent": true },
+    { "source": "/medical-stat-courier", "destination": "/services", "permanent": true }
+  ]
 }

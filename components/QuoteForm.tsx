@@ -1,393 +1,553 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ArrowRight, AlertCircle, Check, Clock, User, Phone, MapPin } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  AlertCircle,
+  Check,
+  Clock,
+  Mail,
+  MapPin,
+  Package,
+  Phone,
+  Scale,
+  ShieldAlert,
+  User
+} from 'lucide-react';
 import { Button } from './Button';
+import { getAnalyticsContext, trackGenerateLead } from '../utils/analytics';
 
 interface QuoteFormProps {
-  sourceName: string; // e.g. "Downtown Austin", "Same-Day Courier", "Austin Main Page"
-  routeId: string;    // e.g. "downtown-austin", "same-day-courier", ""
+  sourceName: string;
+  routeId: string;
   pageType: 'main' | 'location' | 'service';
-  defaultPickup?: string; // prefilled pickup zip/address (useful for location pages)
+  defaultPickup?: string;
 }
+
+type PreferredContact = 'call' | 'text' | 'email';
 
 interface FormState {
   fullName: string;
-  phone: string;
-  itemDescription: string;
-  deliveryNeeded: string;
+  preferredContact: PreferredContact;
+  contactValue: string;
+  pickupZip: string;
+  destinationZip: string;
+  deadline: string;
+  cargoCategory: string;
+  sizeWeight: string;
 }
 
-interface FormErrors {
-  fullName?: string;
-  phone?: string;
-  itemDescription?: string;
-  deliveryNeeded?: string;
-}
+type FormErrors = Partial<Record<keyof FormState, string>>;
 
-export const QuoteForm: React.FC<QuoteFormProps> = ({ 
-  sourceName, 
-  routeId, 
+const setFieldError = (
+  previous: FormErrors,
+  field: keyof FormState,
+  message: string
+): FormErrors => {
+  const next = { ...previous };
+  if (message) {
+    next[field] = message;
+  } else {
+    delete next[field];
+  }
+  return next;
+};
+
+const CONTACT_OPTIONS: Array<{ value: PreferredContact; label: string }> = [
+  { value: 'text', label: 'Text' },
+  { value: 'call', label: 'Call' },
+  { value: 'email', label: 'Email' }
+];
+
+const CARGO_OPTIONS = [
+  { value: 'business-documents', label: 'Business or legal documents' },
+  { value: 'manufacturing-parts', label: 'Manufacturing parts or tools' },
+  { value: 'aviation-parts', label: 'Aviation or AOG parts' },
+  { value: 'packaged-goods', label: 'Packaged goods' },
+  { value: 'airport-cargo', label: 'Airport cargo pickup or tender' },
+  { value: 'high-value-item', label: 'High-value item (no details here)' },
+  { value: 'other-review', label: 'Other cargo for dispatch review' }
+];
+
+const SIZE_WEIGHT_OPTIONS = [
+  { value: 'envelope-under-2lb', label: 'Envelope or small parcel — under 2 lb' },
+  { value: 'small-under-20lb', label: 'Small box — under 20 lb' },
+  { value: 'medium-20-50lb', label: 'Medium item — 20–50 lb' },
+  { value: 'large-over-50lb', label: 'Large item — over 50 lb' },
+  { value: 'unsure', label: 'Not sure — dispatch must confirm' }
+];
+
+const formFieldOrder: Array<keyof FormState> = [
+  'fullName',
+  'preferredContact',
+  'contactValue',
+  'pickupZip',
+  'destinationZip',
+  'deadline',
+  'cargoCategory',
+  'sizeWeight'
+];
+
+const initialFormState = (defaultPickup: string): FormState => ({
+  fullName: '',
+  preferredContact: 'text',
+  contactValue: '',
+  pickupZip: defaultPickup,
+  destinationZip: '',
+  deadline: '',
+  cargoCategory: '',
+  sizeWeight: ''
+});
+
+const validateField = (name: keyof FormState, state: FormState): string => {
+  const value = state[name].trim();
+
+  switch (name) {
+    case 'fullName':
+      if (!value) return 'Name or company is required';
+      if (value.length > 120) return 'Name or company must be 120 characters or fewer';
+      return '';
+    case 'preferredContact':
+      return value ? '' : 'Choose how dispatch should contact you';
+    case 'contactValue': {
+      if (!value) return state.preferredContact === 'email'
+        ? 'Email address is required'
+        : 'Phone number is required';
+
+      if (state.preferredContact === 'email') {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+          ? ''
+          : 'Enter a valid email address';
+      }
+
+      const digits = value.replace(/\D/g, '');
+      return digits.length >= 10 && digits.length <= 15
+        ? ''
+        : 'Enter a valid phone number';
+    }
+    case 'pickupZip':
+      return /^\d{5}(?:-\d{4})?$/.test(value)
+        ? ''
+        : 'Enter a valid pickup ZIP code';
+    case 'destinationZip':
+      return /^\d{5}(?:-\d{4})?$/.test(value)
+        ? ''
+        : 'Enter a valid destination ZIP code';
+    case 'deadline':
+      return value ? '' : 'Delivery deadline is required';
+    case 'cargoCategory':
+      return value ? '' : 'Choose a cargo category';
+    case 'sizeWeight':
+      return value ? '' : 'Choose an approximate size and weight';
+    default:
+      return '';
+  }
+};
+
+export const QuoteForm: React.FC<QuoteFormProps> = ({
+  sourceName,
+  routeId,
   pageType,
   defaultPickup = ''
 }) => {
-  const [formState, setFormState] = useState<FormState>({
-    fullName: '',
-    phone: '',
-    itemDescription: defaultPickup ? `Pickup: ${defaultPickup}\nDelivery: ` : '',
-    deliveryNeeded: ''
-  });
-
+  const [formState, setFormState] = useState<FormState>(() => initialFormState(defaultPickup));
   const [errors, setErrors] = useState<FormErrors>({});
-  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [touched, setTouched] = useState<Partial<Record<keyof FormState, boolean>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-
-  // Focus reference for validation accessibility
   const errorSummaryRef = useRef<HTMLDivElement>(null);
+  const submissionInFlightRef = useRef(false);
 
-  // Sync state if defaultPickup changes
   useEffect(() => {
-    if (defaultPickup) {
-      setFormState(prev => {
-        if (!prev.itemDescription || prev.itemDescription.startsWith('Pickup:')) {
-          return {
-            ...prev,
-            itemDescription: `Pickup: ${defaultPickup}\nDelivery: `
-          };
-        }
-        return prev;
-      });
-    }
+    if (!defaultPickup) return;
+    setFormState(previous => previous.pickupZip
+      ? previous
+      : { ...previous, pickupZip: defaultPickup });
   }, [defaultPickup]);
 
-  // Validation function
-  const validateField = (name: string, value: string): string => {
-    switch (name) {
-      case 'fullName':
-        if (!value.trim()) return 'Full Name (Or company) is required';
-        return '';
-      case 'phone': {
-        const val = value.trim();
-        if (!val) return 'Phone Number (or email) is required';
-        const isEmail = val.includes('@');
-        if (isEmail) {
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!emailRegex.test(val)) return 'Please enter a valid email address';
-          return '';
-        } else {
-          const digits = val.replace(/\D/g, '');
-          if (digits.length < 10) return 'Please enter a valid 10-digit phone number or email';
-          return '';
-        }
-      }
-      case 'itemDescription':
-        if (!value.trim()) return 'Please describe what you are shipping';
-        return '';
-      case 'deliveryNeeded':
-        // Optional field
-        return '';
-      default:
-        return '';
-    }
+  const setField = (name: keyof FormState, value: string) => {
+    setFormState(previous => ({ ...previous, [name]: value }));
+    setErrors(previous => setFieldError(previous, name, ''));
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    let formattedValue = value;
-    
-    if (name === 'phone') {
-      const isEmailLike = value.includes('@') || /[a-zA-Z]/.test(value);
-      if (!isEmailLike) {
-        const x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-        if (x) {
-          formattedValue = !x[2] ? x[1] : `(${x[1]}) ${x[2]}${x[3] ? `-${x[3]}` : ''}`;
-        }
-      }
-    }
-
-    setFormState(prev => ({ ...prev, [name]: formattedValue }));
-    
-    if (errors[name as keyof FormErrors]) {
-      setErrors(prev => ({ ...prev, [name]: undefined }));
-    }
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const name = event.target.name as keyof FormState;
+    setField(name, event.target.value);
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setTouched(prev => ({ ...prev, [name]: true }));
-    
-    const errorMsg = validateField(name, value);
-    setErrors(prev => ({ ...prev, [name]: errorMsg || undefined }));
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const name = event.target.name as keyof FormState;
+    const nextState = { ...formState, [name]: event.target.value };
+    setTouched(previous => ({ ...previous, [name]: true }));
+    setErrors(previous => setFieldError(previous, name, validateField(name, nextState)));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (submissionInFlightRef.current) return;
+
     setSubmitError(null);
+    const nextErrors: FormErrors = {};
 
-    const newErrors: FormErrors = {};
-    Object.keys(formState).forEach(key => {
-      const errorMsg = validateField(key, formState[key as keyof FormState]);
-      if (errorMsg) {
-        newErrors[key as keyof FormErrors] = errorMsg;
-      }
-    });
+    for (const field of formFieldOrder) {
+      const message = validateField(field, formState);
+      if (message) nextErrors[field] = message;
+    }
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      const allTouched: Record<string, boolean> = {};
-      Object.keys(formState).forEach(key => { allTouched[key] = true; });
-      setTouched(allTouched);
-
-      setTimeout(() => {
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      setTouched(Object.fromEntries(formFieldOrder.map(field => [field, true])) as Record<keyof FormState, boolean>);
+      window.setTimeout(() => {
         errorSummaryRef.current?.focus();
         errorSummaryRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }, 50);
       return;
     }
 
+    submissionInFlightRef.current = true;
     setIsSubmitting(true);
 
-    try {
-      const isEmail = formState.phone.includes('@');
-      const contactLabel = isEmail ? 'Email' : 'Phone';
-      const messageBody = `DISPATCH Request from ${formState.fullName}\n${contactLabel}: ${formState.phone}\nCargo/Details: ${formState.itemDescription}${formState.deliveryNeeded ? `\nTiming: ${formState.deliveryNeeded}` : ''}`;
+    const serviceId = pageType === 'service' ? routeId : '';
+    const analyticsContext = getAnalyticsContext({ routeId, pageType, serviceId });
+    const isEmail = formState.preferredContact === 'email';
+    const message = [
+      'DISPATCH REQUEST',
+      `Name/company: ${formState.fullName}`,
+      `Preferred contact: ${formState.preferredContact}`,
+      `Contact: ${formState.contactValue}`,
+      `Pickup ZIP: ${formState.pickupZip}`,
+      `Destination ZIP: ${formState.destinationZip}`,
+      `Deadline: ${formState.deadline}`,
+      `Cargo category: ${formState.cargoCategory}`,
+      `Approximate size/weight: ${formState.sizeWeight}`
+    ].join('\n');
 
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify({
-          access_key: "4d84c98a-eb94-4f22-8a55-a7e4a80855ec",
+          access_key: '4d84c98a-eb94-4f22-8a55-a7e4a80855ec',
+          subject: `New Lead - ${sourceName} Quote Request`,
           name: formState.fullName,
           fullName: formState.fullName,
-          email: isEmail ? formState.phone : "quick-request@speedybat.com",
-          phone: isEmail ? 'N/A' : formState.phone,
-          pickupAddress: 'N/A (Quick Dispatch)',
-          deliveryAddress: 'N/A (Quick Dispatch)',
-          itemDescription: formState.itemDescription,
-          deliveryNeeded: formState.deliveryNeeded,
-          message: messageBody,
-          subject: `New Lead - ${sourceName} Quote Request`
+          preferredContact: formState.preferredContact,
+          contactValue: formState.contactValue,
+          email: isEmail ? formState.contactValue : 'quick-request@speedybat.com',
+          phone: isEmail ? '' : formState.contactValue,
+          pickupZip: formState.pickupZip,
+          destinationZip: formState.destinationZip,
+          deadline: formState.deadline,
+          cargoCategory: formState.cargoCategory,
+          sizeWeight: formState.sizeWeight,
+          message,
+          ...analyticsContext
         })
       });
 
-      const result = await response.json();
-      if (result.success) {
-        setIsSubmitted(true);
-        setFormState({
-          fullName: '',
-          phone: '',
-          itemDescription: defaultPickup ? `Pickup: ${defaultPickup}\nDelivery: ` : '',
-          deliveryNeeded: ''
-        });
-        setErrors({});
-        setTouched({});
-      } else {
-        throw new Error(result.message || "Form submission failed");
+      const result = await response.json() as { success?: boolean; message?: string };
+      if (result.success !== true) {
+        throw new Error(result.message || 'Form submission failed');
       }
-    } catch (error) {
-      console.error("Submission Error:", error);
-      setSubmitError("There was a connection issue submitting your request. Please call or text dispatch directly at (512) 910-4938.");
+
+      trackGenerateLead(analyticsContext);
+      setIsSubmitted(true);
+      setFormState(initialFormState(defaultPickup));
+      setErrors({});
+      setTouched({});
+    } catch {
+      setSubmitError('We could not submit this request. Call or text dispatch at (512) 910-4938.');
     } finally {
+      submissionInFlightRef.current = false;
       setIsSubmitting(false);
     }
   };
 
   const inputClasses = (hasError: boolean) => `w-full glass-input text-slate-200 px-4 py-3 rounded-xl outline-none placeholder:text-slate-600 text-sm md:text-base border transition-all duration-300 font-sans ${
-    hasError 
-      ? 'border-red-500 bg-red-950/10 focus:border-red-400 focus:shadow-[0_0_12px_rgba(239,68,68,0.15)]' 
+    hasError
+      ? 'border-red-500 bg-red-950/10 focus:border-red-400 focus:shadow-[0_0_12px_rgba(239,68,68,0.15)]'
       : 'border-white/[0.04] focus:border-red-500/50'
   }`;
+  const labelClasses = 'block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5 font-display';
+  const contactIsEmail = formState.preferredContact === 'email';
+  const ContactIcon = contactIsEmail ? Mail : Phone;
 
-  const labelClasses = "block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5 font-display";
+  const inlineError = (field: keyof FormState) => errors[field] && touched[field] ? (
+    <span id={`err-${field}`} className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
+      {errors[field]}
+    </span>
+  ) : null;
 
   return (
     <div className="form-premium-glow relative rounded-3xl group/form">
       <div className="form-glow-backdrop" />
       <div className="glass-panel-elevated p-4 sm:p-5 lg:p-6 rounded-3xl shadow-2xl relative border border-white/[0.05] z-10">
         <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
-      
-      {isSubmitted ? (
-        <div className="text-center py-10 space-y-4 font-sans" role="alert" aria-live="polite">
-          <div className="w-16 h-16 bg-red-950/20 border border-red-500/30 text-red-500 rounded-full flex items-center justify-center mx-auto shadow-md">
-            <Check className="h-8 w-8 animate-[scaleUp_0.3s_ease]" />
-          </div>
-          <h3 className="text-lg font-bold text-white uppercase font-display tracking-wider">Thank you, we'll be in touch.</h3>
-          <p className="text-slate-400 text-sm leading-relaxed max-w-xs mx-auto">
-            If this is extremely urgent, please text <a href="sms:5129104938" className="text-red-500 hover:text-red-400 font-bold underline transition-colors">512-910-4938</a>.
-          </p>
-          <Button 
-            variant="secondary" 
-            onClick={() => setIsSubmitted(false)}
-            className="mt-6"
-          >
-            Send Another Request
-          </Button>
-        </div>
-      ) : (
-        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-          {/* Web3Forms Access Key HTML Input */}
-          <input type="hidden" name="access_key" value="4d84c98a-eb94-4f22-8a55-a7e4a80855ec" />
-          
-          {Object.keys(errors).length > 0 && (
-            <div 
-              ref={errorSummaryRef}
-              tabIndex={-1} 
-              className="p-4 bg-red-950/20 border border-red-500/20 rounded-xl text-xs text-red-400 space-y-1 focus:outline-none focus:border-red-400"
-              role="alert"
-              aria-labelledby="err-summary-title"
-            >
-              <h3 id="err-summary-title" className="font-bold font-display uppercase tracking-wider flex items-center">
-                <AlertCircle className="h-4 w-4 mr-1.5 shrink-0" />
-                Please correct the following errors:
-              </h3>
-              <ul className="list-disc pl-5 font-sans space-y-0.5">
-                {errors.fullName && <li>{errors.fullName}</li>}
-                {errors.phone && <li>{errors.phone}</li>}
-                {errors.itemDescription && <li>{errors.itemDescription}</li>}
-              </ul>
-            </div>
-          )}
 
-          {submitError && (
-            <div className="p-4 bg-red-950/40 border border-red-500/40 rounded-xl text-xs text-red-300 flex items-start space-x-2" role="alert">
-              <AlertCircle className="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
-              <span className="font-sans leading-relaxed">{submitError}</span>
+        {isSubmitted ? (
+          <div className="text-center py-10 space-y-4 font-sans" role="status" aria-live="polite">
+            <div className="w-16 h-16 bg-red-950/20 border border-red-500/30 text-red-500 rounded-full flex items-center justify-center mx-auto shadow-md">
+              <Check className="h-8 w-8 animate-[scaleUp_0.3s_ease]" />
             </div>
-          )}
-
-          {/* Full Name */}
-          <div>
-            <label htmlFor="fullName" className={labelClasses}>Full Name (Or company)</label>
-            <div className="relative group/input">
-              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
-                <User className="h-4.5 w-4.5" />
-              </div>
-              <input
-                id="fullName"
-                name="fullName"
-                type="text"
-                required
-                className={`${inputClasses(!!errors.fullName)} pl-11`}
-                placeholder="John Doe or Company Name"
-                value={formState.fullName}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoComplete="name"
-                aria-invalid={!!errors.fullName}
-                aria-describedby={errors.fullName ? "err-fullName" : undefined}
-              />
-            </div>
-            {errors.fullName && touched.fullName && (
-              <span id="err-fullName" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
-                {errors.fullName}
-              </span>
-            )}
-          </div>
-
-          {/* Phone Number */}
-          <div>
-            <label htmlFor="phone" className={labelClasses}>Phone Number (or email)</label>
-            <div className="relative group/input">
-              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
-                <Phone className="h-4.5 w-4.5" />
-              </div>
-              <input
-                id="phone"
-                name="phone"
-                type="text"
-                required
-                className={`${inputClasses(!!errors.phone)} pl-11`}
-                placeholder="(512) 910-4938 or email@example.com"
-                value={formState.phone}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoComplete="tel"
-                aria-invalid={!!errors.phone}
-                aria-describedby={errors.phone ? "err-phone" : undefined}
-              />
-            </div>
-            {errors.phone && touched.phone && (
-              <span id="err-phone" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
-                {errors.phone}
-              </span>
-            )}
-          </div>
-
-          {/* What are you shipping */}
-          <div>
-            <label htmlFor="itemDescription" className={labelClasses}>What are you shipping</label>
-            <div className="relative group/input">
-              <div className="absolute left-3.5 top-3.5 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
-                <MapPin className="h-4.5 w-4.5" />
-              </div>
-              <textarea
-                id="itemDescription"
-                name="itemDescription"
-                required
-                rows={3}
-                className={`${inputClasses(!!errors.itemDescription)} pl-11 resize-none`}
-                placeholder="e.g. Medical kit from St. David's Main to Round Rock Clinic, or parts to Samsung Taylor fab"
-                value={formState.itemDescription}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                aria-invalid={!!errors.itemDescription}
-                aria-describedby={errors.itemDescription ? "err-itemDescription" : undefined}
-              />
-            </div>
-            {errors.itemDescription && touched.itemDescription && (
-              <span id="err-itemDescription" className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
-                {errors.itemDescription}
-              </span>
-            )}
-          </div>
-
-          {/* Timing */}
-          <div>
-            <label htmlFor="deliveryNeeded" className={labelClasses}>
-              Timing <span className="text-slate-500 font-light font-sans lowercase italic">(optional)</span>
-            </label>
-            <div className="relative group/input">
-              <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 transition-colors duration-300 group-focus-within/input:text-red-500">
-                <Clock className="h-4.5 w-4.5" />
-              </div>
-              <input
-                id="deliveryNeeded"
-                name="deliveryNeeded"
-                type="text"
-                className={`${inputClasses(!!errors.deliveryNeeded)} pl-11`}
-                placeholder="ASAP or Date/Time"
-                value={formState.deliveryNeeded}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                aria-invalid={!!errors.deliveryNeeded}
-                aria-describedby={errors.deliveryNeeded ? "err-deliveryNeeded" : undefined}
-              />
-            </div>
-          </div>
-
-          {/* Submission Button */}
-          <div className="pt-1">
-            <Button
-              variant="alert"
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full flex items-center justify-center space-x-3 py-3 text-base rounded-full shadow-lg hover:shadow-red-900/10 transition-all cursor-pointer font-display font-bold uppercase tracking-wider"
-            >
-              {isSubmitting ? (
-                <span>PROCESSING REQUEST...</span>
-              ) : (
-                <span>DISPATCH REQUEST →</span>
-              )}
-            </Button>
-            <p className="text-center text-slate-500 text-xs mt-3 leading-relaxed">
-              By clicking Request, you agree to our service terms. Immediate availability is subject to confirmation.
+            <h3 className="text-lg font-bold text-white uppercase font-display tracking-wider">Request received</h3>
+            <p className="text-slate-400 text-sm leading-relaxed max-w-xs mx-auto">
+              Dispatch will review the job details and confirm availability. For urgent follow-up,{' '}
+              <a href="sms:+15129104938" className="text-red-500 hover:text-red-400 font-bold underline transition-colors">
+                text (512) 910-4938
+              </a>.
             </p>
+            <Button variant="secondary" onClick={() => setIsSubmitted(false)} className="mt-6">
+              Send Another Request
+            </Button>
           </div>
-        </form>
-      )}
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+            <input type="hidden" name="access_key" value="4d84c98a-eb94-4f22-8a55-a7e4a80855ec" />
+
+            <div className="p-4 bg-amber-950/20 border border-amber-500/30 rounded-xl text-xs text-amber-100 flex items-start gap-2" role="note">
+              <ShieldAlert className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
+              <p className="font-sans leading-relaxed">
+                <strong>Do not submit sensitive information.</strong> Do not include patient information, IDs, financial or account data, access codes, credentials, or detailed descriptions of valuables. Use categories only. See our{' '}
+                <a href="/privacy" className="font-bold underline underline-offset-2 hover:text-white">Privacy Notice</a>.
+              </p>
+            </div>
+
+            {Object.keys(errors).length > 0 && (
+              <div
+                ref={errorSummaryRef}
+                tabIndex={-1}
+                className="p-4 bg-red-950/20 border border-red-500/20 rounded-xl text-xs text-red-400 space-y-1 focus:outline-none focus:border-red-400"
+                role="alert"
+                aria-labelledby="err-summary-title"
+              >
+                <h3 id="err-summary-title" className="font-bold font-display uppercase tracking-wider flex items-center">
+                  <AlertCircle className="h-4 w-4 mr-1.5 shrink-0" />
+                  Please correct the following errors:
+                </h3>
+                <ul className="list-disc pl-5 font-sans space-y-0.5">
+                  {formFieldOrder.map(field => errors[field] ? <li key={field}>{errors[field]}</li> : null)}
+                </ul>
+              </div>
+            )}
+
+            {submitError && (
+              <div className="p-4 bg-red-950/40 border border-red-500/40 rounded-xl text-xs text-red-300 flex items-start space-x-2" role="alert">
+                <AlertCircle className="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
+                <span className="font-sans leading-relaxed">{submitError}</span>
+              </div>
+            )}
+
+            <div>
+              <label htmlFor="fullName" className={labelClasses}>Name or company</label>
+              <div className="relative group/input">
+                <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
+                <input
+                  id="fullName"
+                  name="fullName"
+                  type="text"
+                  required
+                  maxLength={120}
+                  className={`${inputClasses(!!errors.fullName)} pl-11`}
+                  placeholder="Your name or company"
+                  value={formState.fullName}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  autoComplete="name"
+                  aria-invalid={!!errors.fullName}
+                  aria-describedby={errors.fullName ? 'err-fullName' : undefined}
+                />
+              </div>
+              {inlineError('fullName')}
+            </div>
+
+            <fieldset>
+              <legend className={labelClasses}>Preferred contact method</legend>
+              <div className="grid grid-cols-3 gap-2">
+                {CONTACT_OPTIONS.map(option => (
+                  <label
+                    key={option.value}
+                    className={`cursor-pointer rounded-xl border px-3 py-2.5 text-center text-xs font-bold uppercase tracking-wider font-display transition-colors flex items-center justify-center ${
+                      formState.preferredContact === option.value
+                        ? 'border-red-500/60 bg-red-950/30 text-white'
+                        : 'border-white/[0.05] bg-white/[0.02] text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <input
+                      className="mr-2 h-3.5 w-3.5 accent-red-600"
+                      type="radio"
+                      name="preferredContact"
+                      value={option.value}
+                      checked={formState.preferredContact === option.value}
+                      onChange={handleChange}
+                    />
+                    {option.label}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <div>
+              <label htmlFor="contactValue" className={labelClasses}>
+                {contactIsEmail ? 'Email address' : 'Phone number'}
+              </label>
+              <div className="relative group/input">
+                <ContactIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
+                <input
+                  id="contactValue"
+                  name="contactValue"
+                  type={contactIsEmail ? 'email' : 'tel'}
+                  required
+                  className={`${inputClasses(!!errors.contactValue)} pl-11`}
+                  placeholder={contactIsEmail ? 'name@company.com' : '(512) 555-0123'}
+                  value={formState.contactValue}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  autoComplete={contactIsEmail ? 'email' : 'tel'}
+                  inputMode={contactIsEmail ? 'email' : 'tel'}
+                  aria-invalid={!!errors.contactValue}
+                  aria-describedby={errors.contactValue ? 'err-contactValue' : undefined}
+                />
+              </div>
+              {inlineError('contactValue')}
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="pickupZip" className={labelClasses}>Pickup ZIP</label>
+                <div className="relative group/input">
+                  <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
+                  <input
+                    id="pickupZip"
+                    name="pickupZip"
+                    type="text"
+                    required
+                    inputMode="numeric"
+                    maxLength={10}
+                    className={`${inputClasses(!!errors.pickupZip)} pl-11`}
+                    placeholder="78701"
+                    value={formState.pickupZip}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    autoComplete="postal-code"
+                    aria-invalid={!!errors.pickupZip}
+                    aria-describedby={errors.pickupZip ? 'err-pickupZip' : undefined}
+                  />
+                </div>
+                {inlineError('pickupZip')}
+              </div>
+
+              <div>
+                <label htmlFor="destinationZip" className={labelClasses}>Destination ZIP</label>
+                <div className="relative group/input">
+                  <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
+                  <input
+                    id="destinationZip"
+                    name="destinationZip"
+                    type="text"
+                    required
+                    inputMode="numeric"
+                    maxLength={10}
+                    className={`${inputClasses(!!errors.destinationZip)} pl-11`}
+                    placeholder="75001"
+                    value={formState.destinationZip}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    autoComplete="postal-code"
+                    aria-invalid={!!errors.destinationZip}
+                    aria-describedby={errors.destinationZip ? 'err-destinationZip' : undefined}
+                  />
+                </div>
+                {inlineError('destinationZip')}
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="deadline" className={labelClasses}>Required delivery deadline</label>
+              <div className="relative group/input">
+                <Clock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
+                <input
+                  id="deadline"
+                  name="deadline"
+                  type="datetime-local"
+                  required
+                  className={`${inputClasses(!!errors.deadline)} pl-11`}
+                  value={formState.deadline}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={!!errors.deadline}
+                  aria-describedby={errors.deadline ? 'err-deadline deadline-help' : 'deadline-help'}
+                />
+              </div>
+              <span id="deadline-help" className="text-slate-500 text-[11px] mt-1 block font-sans">
+                Enter your local time. Dispatch confirms all timing and availability.
+              </span>
+              {inlineError('deadline')}
+            </div>
+
+            <div>
+              <label htmlFor="cargoCategory" className={labelClasses}>Cargo category</label>
+              <div className="relative group/input">
+                <Package className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
+                <select
+                  id="cargoCategory"
+                  name="cargoCategory"
+                  required
+                  className={`${inputClasses(!!errors.cargoCategory)} pl-11 pr-10`}
+                  value={formState.cargoCategory}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={!!errors.cargoCategory}
+                  aria-describedby={errors.cargoCategory ? 'err-cargoCategory' : undefined}
+                >
+                  <option value="">Select a category</option>
+                  {CARGO_OPTIONS.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
+                </select>
+              </div>
+              {inlineError('cargoCategory')}
+            </div>
+
+            <div>
+              <label htmlFor="sizeWeight" className={labelClasses}>Approximate size and weight</label>
+              <div className="relative group/input">
+                <Scale className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
+                <select
+                  id="sizeWeight"
+                  name="sizeWeight"
+                  required
+                  className={`${inputClasses(!!errors.sizeWeight)} pl-11 pr-10`}
+                  value={formState.sizeWeight}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  aria-invalid={!!errors.sizeWeight}
+                  aria-describedby={errors.sizeWeight ? 'err-sizeWeight' : undefined}
+                >
+                  <option value="">Select the closest range</option>
+                  {SIZE_WEIGHT_OPTIONS.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
+                </select>
+              </div>
+              {inlineError('sizeWeight')}
+            </div>
+
+            <div className="pt-1">
+              <Button
+                variant="alert"
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full flex items-center justify-center space-x-3 py-3 text-base rounded-full shadow-lg hover:shadow-red-900/10 transition-all cursor-pointer font-display font-bold uppercase tracking-wider"
+              >
+                <span>{isSubmitting ? 'PROCESSING REQUEST...' : 'DISPATCH REQUEST →'}</span>
+              </Button>
+              <p className="text-center text-slate-500 text-xs mt-3 leading-relaxed">
+                By submitting, you agree to the{' '}
+                <a href="/terms" className="font-bold underline underline-offset-2 hover:text-slate-300">Service Terms</a>{' '}
+                and acknowledge the{' '}
+                <a href="/privacy" className="font-bold underline underline-offset-2 hover:text-slate-300">Privacy Notice</a>.
+                Availability and job details require dispatch confirmation.
+              </p>
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );

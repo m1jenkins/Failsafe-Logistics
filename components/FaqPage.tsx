@@ -64,7 +64,7 @@ export const FaqPage: React.FC = () => {
             Still have questions? We respond fast.
           </p>
           <a
-            href="sms:5129104938"
+            href="sms:+15129104938"
             className="inline-flex items-center space-x-2 bg-gradient-to-r from-red-600/90 to-red-700/90 hover:from-red-600 hover:to-red-700 text-white px-8 py-3 text-sm font-bold uppercase tracking-wider transition-all duration-300 shadow-md shadow-red-950/20 rounded-full border border-red-500/20"
           >
             <span>Text Us: (512) 910-4938</span>

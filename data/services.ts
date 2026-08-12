@@ -1,539 +1,451 @@
 import { ServiceData } from '../types';
 
+const LAST_REVIEWED = '2026-08-12';
+const COMMON_CLAIMS = [
+  'austin-service-area-business',
+  'request-availability',
+  'job-specific-configuration',
+  'austin-origin-coverage'
+];
+
 export const services: Record<string, ServiceData> = {
   'same-day-on-demand-courier': {
     id: 'same-day-on-demand-courier',
-    name: 'Same-Day / On-Demand Courier',
-    title: 'Same-Day Courier Austin | On-Demand Courier Services TX',
-    metaDescription: 'Speedy Bat Couriers offers 24/7 same-day and on-demand courier services in Austin, TX. Rapid 30-60 min pickup for documents, parcels, and secure freight.',
-    keywords: [
-      'Same-day courier Austin',
-      'on-demand courier service',
-      'last-minute courier delivery',
-      'rush package delivery Austin',
-      'express local courier'
+    name: 'Same-Day Courier',
+    group: 'Urgent ground',
+    title: 'Same-Day Courier Service in Austin, TX | Speedy Bat',
+    metaDescription: 'Request same-day courier pickup in the Austin metro. Speedy Bat confirms availability, timing, vehicle, route, and handling for each accepted job.',
+    tagline: 'Austin-metro pickup and direct delivery planned around your actual deadline.',
+    overview: 'Speedy Bat evaluates urgent document, parcel, and business-cargo requests that originate in the Austin metro. Dispatch reviews the pickup, destination, deadline, item category, and vehicle needs before confirming whether the job can be accepted.',
+    eligibility: [
+      'Pickup originates in the Austin metro',
+      'The item can be described without sensitive personal or account data',
+      'The sender can provide an authorized pickup and delivery contact'
     ],
-    tagline: 'Local express delivery dispatched within minutes, not hours.',
-    overview: 'When a critical delivery cannot wait for standard transit windows, our same-day, on-demand courier service is your ultimate response mechanism. We operate 24/7/365 to handle your most urgent shipments with dedicated, direct-drive vehicles that go straight from your pickup point to the recipient, bypassing traditional distribution hubs and eliminating risk.',
+    limits: [
+      'Pickup and arrival times are estimates until dispatch confirms the job',
+      'Restricted, regulated, hazardous, or unusually valuable items require advance review',
+      'Vehicle type, routing, custody, tracking, and coverage are job-specific'
+    ],
+    process: [
+      'Share pickup ZIP, destination ZIP, deadline, cargo category, and approximate size or weight',
+      'Dispatch checks availability, route conditions, handling needs, and price factors',
+      'Speedy Bat confirms the accepted scope and update method before pickup',
+      'The delivery contact confirms receipt using the method agreed for the job'
+    ],
+    exceptions: [
+      'Traffic, site access, weather, recipient availability, and incomplete shipment details can change timing',
+      'Jobs outside the routine pickup area are evaluated as Austin-origin routes or by special arrangement'
+    ],
     features: [
-      {
-        title: '30-60 Min Local Pickup',
-        description: 'Our dispatch grid responds instantly. We have couriers stationed throughout the Austin metro area ready to pick up within an hour.',
-        iconName: 'Clock'
-      },
-      {
-        title: 'Direct-Drive Transport',
-        description: 'Your cargo is the only priority. The vehicle is dedicated to your delivery, with zero co-loading or intermediate stops.',
-        iconName: 'Zap'
-      },
-      {
-        title: 'Strict Chain of Custody',
-        description: 'Every courier maintains constant physical control of your shipment, backed by signature verification and real-time hand-off logs.',
-        iconName: 'Shield'
-      }
+      { title: 'Deadline Review', description: 'Dispatch compares the requested deadline with the route before accepting the job.', iconName: 'Clock' },
+      { title: 'Vehicle Fit', description: 'Cargo dimensions and handling needs determine the vehicle proposed for the run.', iconName: 'Truck' },
+      { title: 'Receipt Plan', description: 'Pickup, updates, and proof-of-delivery options are agreed before dispatch.', iconName: 'FileText' }
     ],
     capabilities: [
-      'Urgent medical specimens and STAT clinical deliveries',
-      'Time-critical corporate contracts, closing documents, and legal filings',
-      'Critical manufacturing parts, chips, and hardware replenishment',
-      'High-value electronics, retail inventory balancing, and secure parcels'
+      'Urgent Austin business documents and parcels',
+      'Same-day parts, samples, and supplies',
+      'Direct delivery when confirmed for the accepted job',
+      'Recipient signature or delivery confirmation when arranged'
     ],
     faq: [
-      {
-        question: 'What is your typical pickup time in Austin?',
-        answer: 'For on-demand orders in central Austin, we typically achieve pickup within 30 to 60 minutes of your phone confirmation. Outer communities may take slightly longer depending on traffic.'
-      },
-      {
-        question: 'Is the delivery driver dedicated solely to my package?',
-        answer: 'Yes. Every same-day, on-demand dispatch is a direct-drive route. The vehicle picks up your package and drives straight to the destination with zero stops or other pickups in between.'
-      },
-      {
-        question: 'Do you operate on weekends and holidays?',
-        answer: 'Absolutely. We operate 24/7/365. Emergency dispatchers are always on duty to route couriers in the middle of the night, on weekends, or during federal holidays.'
-      }
+      { question: 'How quickly can pickup happen?', answer: 'Dispatch provides a job-specific estimate after reviewing the pickup ZIP, cargo, driver and vehicle availability, traffic, and site access. The website does not promise a universal pickup window.' },
+      { question: 'What information is needed for a quote?', answer: 'Provide pickup and destination ZIPs, the deadline, cargo category, approximate size or weight, and a contact method. Do not send health information, IDs, financial details, access codes, or detailed descriptions of valuables through the public form or SMS.' },
+      { question: 'Is every same-day job direct?', answer: 'Routing and custody are confirmed for each job. If direct service is required, state that requirement so dispatch can quote and accept the correct configuration.' }
     ],
-    priceRange: '$$'
+    relatedServiceIds: ['hot-shot-expedited-freight', 'long-distance-intercity-courier', 'scheduled-dedicated-routes'],
+    claimIds: COMMON_CLAIMS,
+    lastReviewed: LAST_REVIEWED
   },
   'hot-shot-expedited-freight': {
     id: 'hot-shot-expedited-freight',
     name: 'Hot Shot & Expedited Freight',
-    title: 'Hot Shot Delivery Austin | Expedited Freight Courier',
-    metaDescription: 'Flagship hot shot and expedited freight logistics in Austin and Central Texas. 24/7 dedicated direct-drive cargo vans and trucks for critical parts & machinery.',
-    keywords: [
-      'Hot shot delivery Austin',
-      'expedited freight service',
-      'industrial cargo courier',
-      'same-day freight logistics',
-      'dedicated cargo van dispatch'
+    group: 'Urgent ground',
+    title: 'Hot Shot Delivery from Austin, TX | Speedy Bat',
+    metaDescription: 'Request Austin-origin hot shot and expedited ground delivery. Dispatch confirms cargo fit, vehicle, route, custody, timing, and coverage for each job.',
+    tagline: 'Austin-origin expedited ground transport for time-critical business cargo.',
+    overview: 'Hot shot delivery is considered when a business shipment needs a faster, more controlled ground route than a scheduled carrier can provide. Speedy Bat reviews the Austin pickup, cargo dimensions, handling constraints, destination, deadline, and vehicle requirements before acceptance.',
+    eligibility: [
+      'The shipment originates in the Austin metro or is accepted by special arrangement',
+      'Dimensions, weight, packaging, and loading requirements are known',
+      'Pickup and delivery sites can authorize the handoff'
     ],
-    tagline: 'Flagship high-stakes logistics for heavy cargo, machinery, and pallets.',
-    overview: 'Our flagship hot shot and expedited freight service is built for high-stakes industrial, manufacturing, and heavy-cargo needs. When an assembly line goes down, or critical equipment requires immediate regional transport, we dispatch dedicated cargo vans or flatbeds directly to your dock. With non-stop transit up to 1,000+ miles, we keep your business moving when traditional carriers fall short.',
+    limits: [
+      'Vehicle availability and cargo fit must be confirmed before pickup',
+      'Drive times depend on routing, weather, traffic, rest and safety requirements, and site access',
+      'Special equipment, securement, insurance, and custody requirements must be approved in writing'
+    ],
+    process: [
+      'Dispatch collects lane, deadline, cargo, dock, equipment, and contact details',
+      'The proposed vehicle, route, handling, price, and update cadence are reviewed',
+      'The job begins only after the sender accepts the confirmed scope',
+      'Delivery is documented using the agreed receipt method'
+    ],
+    exceptions: [
+      'Cargo that is oversized, hazardous, temperature-controlled, export-controlled, or otherwise regulated may be declined',
+      'A requested nonstop or dedicated configuration is not assumed unless it appears in the accepted scope'
+    ],
     features: [
-      {
-        title: 'Dedicated Cargo Vehicles',
-        description: 'Vans, trucks, and flatbeds tailored to carry heavy cargo, industrial components, and oversized boxes safely.',
-        iconName: 'Truck'
-      },
-      {
-        title: 'Up to 1,000+ Mile Range',
-        description: 'We drive your critical cargo across municipal lines, across the state of Texas, or nationwide without stopping.',
-        iconName: 'Zap'
-      },
-      {
-        title: 'Immediate Dock-to-Dock Routing',
-        description: 'No cross-docks, no routing hubs. We load at your loading dock and drive directly to the receiving dock.',
-        iconName: 'Shield'
-      }
+      { title: 'Cargo Fit', description: 'Dimensions, weight, securement, and access details inform the proposed vehicle.', iconName: 'Truck' },
+      { title: 'Lane Review', description: 'Dispatch checks the Austin-origin lane and requested deadline before acceptance.', iconName: 'MapPin' },
+      { title: 'Defined Handoffs', description: 'Authorized pickup and delivery contacts are recorded for the job.', iconName: 'Shield' }
     ],
     capabilities: [
-      'Line-down parts and heavy industrial machinery transport',
-      'Palletized raw materials and manufactured inventory balancing',
-      'Aviation grounding parts (AOG) and heavy machinery components',
-      'Construction site equipment, tools, and structural materials'
+      'Time-critical parts and business freight',
+      'Austin-origin regional and interstate lanes',
+      'Cargo-appropriate vehicle selection when available',
+      'Job-specific status and delivery confirmation'
     ],
     faq: [
-      {
-        question: 'What types of vehicles are available in your hot shot fleet?',
-        answer: 'Our hot shot fleet includes fuel-efficient crossovers for medium parts, high-capacity cargo vans, and heavy-duty trucks to match different cargo sizes and weight requirements.'
-      },
-      {
-        question: 'How far will your expedited freight drivers travel?',
-        answer: 'We cover the entire state of Texas and can execute long-haul, direct-drive freight shipments up to 1,000+ miles across the continental United States.'
-      },
-      {
-        question: 'How fast can a vehicle be at our loading dock?',
-        answer: 'For hot shot and expedited freight, we aim to dispatch a cargo vehicle to your dock within 45 to 90 minutes in the Greater Austin area.'
-      }
+      { question: 'What makes a shipment a hot shot job?', answer: 'It is generally a time-critical ground shipment that needs a job-specific vehicle and route. Dispatch determines whether hot shot service fits the cargo and deadline.' },
+      { question: 'Can you quote an interstate route?', answer: 'Austin-origin interstate requests can be evaluated. Dispatch must confirm the lane, driver and vehicle availability, safety constraints, timing, and price.' },
+      { question: 'Is the vehicle dedicated?', answer: 'A dedicated configuration can be requested, but it is only part of the service when dispatch confirms it in the accepted job scope.' }
     ],
-    flagship: true,
-    priceRange: '$$$'
+    relatedServiceIds: ['manufacturing-line-down-delivery', 'long-distance-intercity-courier', 'airport-recovery-next-flight-out'],
+    claimIds: COMMON_CLAIMS,
+    lastReviewed: LAST_REVIEWED,
+    flagship: true
   },
   'long-distance-intercity-courier': {
     id: 'long-distance-intercity-courier',
-    name: 'Long-Distance / Intercity Courier',
-    title: 'Long-Distance Courier Austin | Intercity Overnight Courier',
-    metaDescription: 'Secure intercity and long-distance courier services in Austin, TX. Dedicated overnight and odd-hours runs connecting Austin, DFW, Houston, and San Antonio.',
-    keywords: [
-      'Long-distance courier Austin',
-      'intercity courier service',
-      'overnight courier transport',
-      '24/7 cross-city delivery',
-      'odd-hours courier service'
+    name: 'Long-Distance Direct Drive',
+    group: 'Urgent ground',
+    title: 'Long-Distance Courier from Austin, TX | Speedy Bat',
+    metaDescription: 'Request Austin-origin long-distance courier service. Route, vehicle, custody, driver plan, timing, and delivery confirmation are quoted per job.',
+    tagline: 'Austin-origin intercity delivery with route and custody details agreed before departure.',
+    overview: 'Long-distance direct drive can suit time-critical cargo that cannot wait for a standard parcel network. Speedy Bat evaluates the lane, deadline, cargo, vehicle, safe driving plan, handoffs, and delivery contact before confirming service.',
+    eligibility: [
+      'Pickup originates in the Austin metro',
+      'Cargo dimensions, weight, packaging, and any securement needs are disclosed',
+      'The destination has an authorized recipient and usable delivery window'
     ],
-    tagline: 'Non-stop intercity transit when next-day air cutoff has passed.',
-    overview: 'When overnight express hubs are closed and morning delivery is non-negotiable, our long-distance intercity courier service steps in. We specialize in cross-state, overnight runs connecting Austin to Houston, Dallas-Fort Worth, San Antonio, and national hubs. Your package is hand-carried in a dedicated vehicle through the night, arriving directly at its destination with absolute reliability.',
+    limits: [
+      'Travel estimates can change with distance, weather, traffic, road conditions, and safe-driving requirements',
+      'Driver changes, stops, or team-driver needs are disclosed when they affect the proposed configuration',
+      'Regulated or restricted cargo requires separate approval and may be declined'
+    ],
+    process: [
+      'Provide the lane, deadline, cargo details, site hours, and contacts',
+      'Dispatch proposes a safe route, vehicle, custody plan, and update cadence',
+      'The accepted scope identifies material handoffs or planned stops',
+      'The recipient confirms delivery using the agreed method'
+    ],
+    exceptions: [
+      'An Austin-origin quote does not imply a staffed fleet or routine local pickup at the destination',
+      'Requests that conflict with safety, access, or cargo restrictions are revised or declined'
+    ],
     features: [
-      {
-        title: '24/7 Overnight Driving',
-        description: 'We do not halt for the night. Our couriers drive through odd hours, bad weather, and holidays to hit your morning deadline.',
-        iconName: 'Clock'
-      },
-      {
-        title: 'Zero Transit Transfers',
-        description: 'Your package stays in the exact same vehicle with the same driver from origin to destination, eliminating routing errors.',
-        iconName: 'Shield'
-      },
-      {
-        title: 'Texas & National Coverage',
-        description: 'Connecting Central Texas to all major industrial and corporate centers in surrounding states with direct-drive paths.',
-        iconName: 'Globe'
-      }
+      { title: 'Origin Clarity', description: 'The service is presented as Austin-origin transport, not local service in destination cities.', iconName: 'MapPin' },
+      { title: 'Safe Route Plan', description: 'Distance and deadline are evaluated with traffic, weather, and driving constraints.', iconName: 'Globe' },
+      { title: 'Known Recipient', description: 'Delivery hours and authorized recipient details are checked before departure.', iconName: 'FileText' }
     ],
     capabilities: [
-      'Overnight corporate document exchanges between regional headquarters',
-      'Intercity transport of critical parts and laboratory specimens',
-      'Long-haul secure deliveries of confidential legal files or evidence',
-      'Direct-drive emergency shipments bypassing air cargo delays'
+      'Austin-to-Texas metro delivery requests',
+      'Austin-origin interstate courier requests',
+      'Direct-drive configuration when specifically accepted',
+      'Agreed status updates and receipt confirmation'
     ],
     faq: [
-      {
-        question: 'Which cities do you service from Austin?',
-        answer: 'We run regular long-distance routes to Houston, Dallas-Fort Worth, San Antonio, Waco, and Temple, and can coordinate custom routes anywhere in Texas and neighboring states.'
-      },
-      {
-        question: 'Can you deliver packages in the middle of the night?',
-        answer: 'Yes. We specialize in odd-hours and overnight deliveries. We can arrange secure hand-offs at 2:00 AM, 4:00 AM, or whenever your operations require it.'
-      },
-      {
-        question: 'How do you guarantee security on long-distance runs?',
-        answer: 'By maintaining a single driver and vehicle chain-of-custody. The package is never unloaded or left unattended, and we provide real-time updates directly from the road.'
-      }
+      { question: 'How far can a route go?', answer: 'Distance is evaluated per request. Dispatch considers the lane, deadline, safe driving plan, driver and vehicle availability, cargo, and destination access before quoting.' },
+      { question: 'Does long distance always mean one driver?', answer: 'No universal driver configuration is promised. The accepted scope identifies material handoffs, planned stops, or team-driver needs when applicable.' },
+      { question: 'Do you pick up in destination cities?', answer: 'Routine pickup is limited to the Austin metro. Farther cities on this site are destinations for Austin-origin jobs unless dispatch confirms a special arrangement.' }
     ],
-    priceRange: '$$$'
-  },
-  'medical-stat-courier': {
-    id: 'medical-stat-courier',
-    name: 'Medical / STAT Courier',
-    title: 'Medical STAT Courier Austin | HIPAA Compliant Delivery',
-    metaDescription: 'HIPAA-compliant medical courier services in Austin, TX. 24/7 STAT specimen runs, laboratory logistics, blood bank transport, and pharmacy routes.',
-    keywords: [
-      'Medical courier Austin',
-      'STAT specimen delivery',
-      'HIPAA compliant courier',
-      'laboratory specimen transport',
-      'medical supply logistics'
-    ],
-    tagline: 'HIPAA-compliant, temperature-controlled transport for specimens, labs, and equipment.',
-    overview: 'Medical logistics require precise care, strict compliance, and rapid response. Our medical courier services are fully HIPAA-compliant, and our drivers are trained in biohazard handling, chain-of-custody documentation, and temperature-sensitive transport. We act as a vital link between clinics, imaging centers, testing laboratories, and regional hospital networks.',
-    features: [
-      {
-        title: 'HIPAA & OSHA Compliant',
-        description: 'Our couriers are certified in patient privacy protocols, biohazard safety, and secure clinical chain of custody.',
-        iconName: 'Shield'
-      },
-      {
-        title: 'STAT 30-Minute Dispatch',
-        description: 'Critical lab work and emergency specimens receive highest-tier priority. We dispatch a specialized medical driver immediately.',
-        iconName: 'Activity'
-      },
-      {
-        title: 'Hospital & Lab Dock Familiarity',
-        description: 'Our drivers know hospital loading zones, security desks, and specific lab drop points, avoiding lost time.',
-        iconName: 'Clock'
-      }
-    ],
-    capabilities: [
-      'STAT transport of blood, urine, tissue, and pathology specimens',
-      'Secure delivery of medical devices, diagnostic tools, and surgical kits',
-      'HIPAA-compliant medical records, X-rays, and patient document transfer',
-      'Dedicated pharmacy, prescription, and temperature-sensitive pharmaceutical runs'
-    ],
-    faq: [
-      {
-        question: 'Are your drivers certified to handle biohazard specimens?',
-        answer: 'Yes. All medical couriers undergo training in OSHA biohazard safety, bloodborne pathogens, and HIPAA patient data privacy standards.'
-      },
-      {
-        question: 'How do you handle temperature-sensitive specimens?',
-        answer: 'We use insulated clinical coolers and gel packs to maintain required temperatures (ambient, chilled, or frozen) throughout the direct-drive route.'
-      },
-      {
-        question: 'Do you deliver directly to specific departments inside hospitals?',
-        answer: 'Yes. We do not just drop packages at the front desk. We navigate directly to laboratory intake docks, blood banks, or operating units as specified.'
-      }
-    ],
-    priceRange: '$$'
+    relatedServiceIds: ['hot-shot-expedited-freight', 'air-hand-carry-on-board-courier', 'same-day-on-demand-courier'],
+    claimIds: COMMON_CLAIMS,
+    lastReviewed: LAST_REVIEWED
   },
   'legal-courier-court-filing': {
     id: 'legal-courier-court-filing',
-    name: 'Legal Courier & Court Filing',
-    title: 'Legal Courier Austin | Same-Day Court Filing Service',
-    metaDescription: 'Secure legal courier services in Austin, TX. 24/7 same-day court filing, contract pickup, process serving, and confidential legal messenger runs.',
-    keywords: [
-      'Legal courier Austin',
-      'court filing service',
-      'legal document messenger',
-      'same-day filing courthouse',
-      'secure legal delivery'
+    name: 'Legal Courier & Document Delivery',
+    group: 'Secure and legal',
+    title: 'Legal Document Courier in Austin, TX | Speedy Bat',
+    metaDescription: 'Request time-sensitive legal document transport in Austin. Dispatch confirms deadline, destination access, custody notes, and receipt requirements per job.',
+    tagline: 'Time-sensitive transport for legal documents, with scope and receipt requirements confirmed in advance.',
+    overview: 'Speedy Bat evaluates courier requests for law firms, businesses, and individuals who need documents moved between authorized parties. The service is transportation and delivery; any clerk-facing task or special handoff must be described and accepted before dispatch.',
+    eligibility: [
+      'Pickup and delivery contacts are authorized to release and receive the documents',
+      'The destination, deadline, access rules, and required receipt are known',
+      'The request is limited to transportation or an explicitly accepted administrative handoff'
     ],
-    tagline: 'Uncompromising security for sensitive filings, deeds, and evidence.',
-    overview: 'Legal documents require an absolute paper trail, timely delivery, and professional representation. Our legal courier service is designed for law firms, title companies, corporate legal departments, and public offices. We navigate local, state, and federal courthouses, ensuring that your filings, deeds, contracts, and evidence are hand-carried and processed before critical deadlines.',
+    limits: [
+      'Speedy Bat does not provide legal advice or determine filing sufficiency',
+      'Service of process is not offered through the public website',
+      'No representation is made that custody records satisfy a court, agency, or evidentiary standard'
+    ],
+    process: [
+      'Provide pickup, destination, deadline, authorized contacts, and requested receipt method',
+      'Dispatch checks operating hours, public access, parking or loading constraints, and scope',
+      'Sensitive document contents should not be entered in the public form or SMS',
+      'Delivery is completed only to the recipient or location agreed for the job'
+    ],
+    exceptions: [
+      'Court, clerk, building, and recipient availability can affect completion',
+      'A filing, copy return, wait, or multiple-stop task is excluded unless dispatch accepts it explicitly'
+    ],
     features: [
-      {
-        title: 'Courthouse Verification',
-        description: 'We wait in line, present documents to filing clerks, and return stamped, physical or digital confirmation pages to your desk.',
-        iconName: 'FileText'
-      },
-      {
-        title: 'Chain-of-Custody Protocols',
-        description: 'From pickup to final signature, we maintain a secure, audited logs process suitable for court-admissible evidence.',
-        iconName: 'Shield'
-      },
-      {
-        title: 'Time-Critical Execution',
-        description: 'We coordinate closely with court schedules and clerk closing times, prioritizing routes to hit daily filing cuts.',
-        iconName: 'Briefcase'
-      }
+      { title: 'Scope First', description: 'The transport task and any administrative handoff are defined before dispatch.', iconName: 'FileText' },
+      { title: 'Access Check', description: 'Destination hours and access constraints are reviewed against the deadline.', iconName: 'Clock' },
+      { title: 'Receipt Choice', description: 'Signature or another delivery confirmation method can be requested for review.', iconName: 'Shield' }
     ],
     capabilities: [
-      'Same-day courthouse filing runs (District, Federal, and County clerks)',
-      'Title company deed pickups, mortgage files, and real estate closings',
-      'Hand-delivery of sensitive contracts, NDA agreements, and partner signatures',
-      'Secure transport of physical legal evidence, computers, and files'
+      'Contracts, deeds, exhibits, and business documents',
+      'Authorized office-to-office document transport',
+      'Deadline-aware routing within the accepted scope',
+      'Job-specific delivery confirmation'
     ],
     faq: [
-      {
-        question: 'Do you offer walk-in filing services at local courthouses?',
-        answer: 'Yes. Our couriers can receive your documents, drive to the courthouse, stand in line, file the paperwork with the clerk, and return the stamped copies to you.'
-      },
-      {
-        question: 'Can you collect signatures from clients at remote locations?',
-        answer: 'Yes. We frequently run legal routes where we carry contracts to clients, obtain physical signatures, and return the executed documents directly to the law office.'
-      },
-      {
-        question: 'What happens if a filing deadline is missed?',
-        answer: 'We coordinate our routes and dispatch timing very carefully to ensure we arrive well before clerk windows close. We provide real-time updates so you always know your document\'s status.'
-      }
+      { question: 'Do you provide service of process?', answer: 'No. The public service is courier transport, not service of process.' },
+      { question: 'Can you file documents with a clerk?', answer: 'A clerk-facing task is considered only when its exact scope, deadline, destination rules, and return requirements are reviewed and accepted by dispatch. Acceptance is not a legal sufficiency guarantee.' },
+      { question: 'Is your delivery record court admissible?', answer: 'Speedy Bat does not make that representation. Tell dispatch what receipt information you need so the available method can be described before acceptance.' }
     ],
-    priceRange: '$$'
+    relatedServiceIds: ['high-value-secure-courier', 'same-day-on-demand-courier', 'long-distance-intercity-courier'],
+    claimIds: COMMON_CLAIMS,
+    lastReviewed: LAST_REVIEWED
   },
   'manufacturing-line-down-delivery': {
     id: 'manufacturing-line-down-delivery',
-    name: 'Manufacturing / Line-Down / Just-in-Time Parts Delivery',
-    title: 'Manufacturing Line-Down Delivery | JIT Courier Austin',
-    metaDescription: 'Emergency manufacturing line-down courier in Austin, TX. 24/7 same-day delivery of microchips, automotive components, and silicon wafers to factories.',
-    keywords: [
-      'Manufacturing courier service',
-      'line-down parts delivery',
-      'just-in-time logistics',
-      'semiconductor parts courier',
-      'industrial line down shipping'
+    name: 'Manufacturing Line-Down Delivery',
+    group: 'Urgent ground',
+    title: 'Manufacturing Line-Down Courier from Austin | Speedy Bat',
+    metaDescription: 'Request Austin-origin line-down parts delivery. Speedy Bat reviews cargo fit, dock access, deadline, vehicle, routing, and handoff requirements per job.',
+    tagline: 'Urgent Austin-origin parts transport planned around the receiving dock and production deadline.',
+    overview: 'When a production delay creates an urgent parts need, Speedy Bat evaluates whether an Austin-origin courier route can meet the requested handoff. Dispatch needs accurate dimensions, weight, packaging, dock details, contacts, and deadline before confirming service.',
+    eligibility: [
+      'The pickup is in the Austin metro or accepted by special arrangement',
+      'Part dimensions, weight, packaging, and handling constraints are known',
+      'Both sites can provide authorized contacts and access instructions'
     ],
-    tagline: 'Minimizing factory downtime with rapid direct-drive parts delivery.',
-    overview: 'In modern manufacturing, factory downtime costs thousands of dollars per minute. Our specialized manufacturing and line-down logistics service is engineered to prevent and resolve production bottlenecks. We carry critical components, silicon wafers, custom calibration tools, and replacement hardware directly from suppliers to cleanrooms and assembly floors, operating 24/7/365.',
+    limits: [
+      'Production impact does not override vehicle, road, site, or driver safety constraints',
+      'Cleanroom, contamination, vibration, hazardous-material, or export-control requirements need written review',
+      'No destination facility or named manufacturer relationship is implied'
+    ],
+    process: [
+      'Share part category, dimensions, weight, pickup dock, destination dock, and deadline',
+      'Dispatch checks vehicle fit, route, access, contacts, and any wait-time requirement',
+      'The sender approves the confirmed scope and price',
+      'The receiving contact confirms the handoff'
+    ],
+    exceptions: [
+      'Incomplete part or site details can delay or prevent acceptance',
+      'Special packaging, securement, or equipment remains the sender\'s responsibility unless explicitly included'
+    ],
     features: [
-      {
-        title: 'Semiconductor Hub Access',
-        description: 'Intimate familiarity with cleanroom protocols, loading bays, and security checks at major Austin wafer fabrication sites.',
-        iconName: 'Cpu'
-      },
-      {
-        title: 'Immediate Hot-Shot Dispatch',
-        description: 'Parts orders receive instant, top-priority routing. A dedicated driver is dispatched immediately with zero intermediate stops.',
-        iconName: 'Zap'
-      },
-      {
-        title: 'Industrial Heavy Duty',
-        description: 'From lightweight silicon wafers to heavy steel components, our vehicles handle diverse payload weights securely.',
-        iconName: 'Truck'
-      }
+      { title: 'Part Profile', description: 'Dimensions, weight, packaging, and handling constraints drive the proposed setup.', iconName: 'Cpu' },
+      { title: 'Dock Coordination', description: 'Dispatch records site hours, access instructions, and authorized contacts.', iconName: 'Truck' },
+      { title: 'Deadline Check', description: 'The requested production handoff is evaluated against the actual route.', iconName: 'Clock' }
     ],
     capabilities: [
-      'High-priority semiconductor wafer and fab tool transport',
-      'Critical electronics, printed circuit boards (PCBs), and hardware runs',
-      'Automotive assembly line parts, specialized tools, and emergency supplies',
-      'Just-in-Time (JIT) warehouse-to-factory stock balancing shipments'
+      'Urgent replacement parts and components',
+      'Prototypes, samples, tools, and production supplies',
+      'Austin-origin regional or interstate routes',
+      'Job-specific status and handoff confirmation'
     ],
     faq: [
-      {
-        question: 'Are your drivers familiar with semiconductor fab security protocols?',
-        answer: 'Yes. Our couriers regularly service major fabrication campuses in Austin and Taylor, and understand badging, loading dock procedures, and secure drop-offs.'
-      },
-      {
-        question: 'How do you protect delicate electronic wafers or calibration components?',
-        answer: 'We utilize shock-absorbing storage containers, climate-appropriate vehicles, and secure cargo restraints to prevent vibration or thermal damage during transit.'
-      },
-      {
-        question: 'Can you operate on a 24-hour JIT schedule?',
-        answer: 'Yes. We integrate with your JIT supply chain, providing scheduled or on-demand dispatch at all hours of the day or night to maintain production flow.'
-      }
+      { question: 'What details speed up a line-down quote?', answer: 'Provide exact dimensions and weight, packaging, pickup and receiving dock details, authorized contacts, the needed-on-site deadline, and any handling constraints.' },
+      { question: 'Can you enter a restricted facility?', answer: 'Access is never assumed. Dispatch confirms visitor, vehicle, identification, escort, and dock requirements with the sender before accepting the job.' },
+      { question: 'Can you move sensitive manufacturing material?', answer: 'Disclose handling, contamination, vibration, security, and regulatory constraints. Dispatch will confirm what can be accepted or decline the request.' }
     ],
-    priceRange: '$$$'
+    relatedServiceIds: ['hot-shot-expedited-freight', 'airport-recovery-next-flight-out', 'same-day-on-demand-courier'],
+    claimIds: COMMON_CLAIMS,
+    lastReviewed: LAST_REVIEWED,
+    flagship: true
   },
   'airport-recovery-next-flight-out': {
     id: 'airport-recovery-next-flight-out',
-    name: 'Airport Recovery / Next-Flight-Out / AOG',
-    title: 'Airport Recovery Courier | Next-Flight-Out & AOG Austin',
-    metaDescription: '24/7 Airport recovery, Next-Flight-Out (NFO), and Aircraft on Ground (AOG) courier services at AUS and DFW. Direct air cargo pickup and delivery.',
-    keywords: [
-      'Airport recovery courier',
-      'next flight out delivery',
-      'AOG aviation courier',
-      'AUS airport cargo pickup',
-      'DFW air freight recovery'
+    name: 'Airport Recovery / NFO / AOG',
+    group: 'Air and airport',
+    title: 'Austin Airport Recovery, NFO & AOG Courier | Speedy Bat',
+    metaDescription: 'Request Austin airport recovery, next-flight-out, or AOG ground support. Access, documents, cargo release, timing, and tender scope are confirmed per job.',
+    tagline: 'Austin airport pickup or tender support when release, access, and timing can be confirmed.',
+    overview: 'Speedy Bat evaluates Austin airport and cargo-terminal courier tasks tied to next-flight-out shipments, aircraft-on-ground parts, and urgent recoveries. The exact terminal, airline or handler, release documents, cargo size, access rules, deadline, and onward route must be reviewed before acceptance.',
+    eligibility: [
+      'The task involves an Austin airport, cargo handler, or accepted Austin-origin route',
+      'The sender can provide shipment identifiers, release documents, contacts, and cargo details',
+      'The requested action is permitted by the airline, handler, airport, and applicable authorities'
     ],
-    tagline: 'Critical aviation and cargo terminal logistics at AUS and DFW.',
-    overview: 'Aviation delays and cargo terminal hold-ups are highly disruptive. Our airport recovery, Next-Flight-Out (NFO), and Aircraft on Ground (AOG) courier service is built to handle air cargo logjams. We coordinate direct recovery from commercial cargo facilities at Austin-Bergstrom (AUS) and Dallas-Fort Worth (DFW), driving critical avionics, grounding parts, or high-priority items straight to the hangar.',
+    limits: [
+      'No security clearance, ramp access, customs authority, or cargo-release authority is implied',
+      'Airline, handler, screening, terminal, weather, and flight conditions are outside Speedy Bat\'s control',
+      'Tender, recovery, waiting, storage, parking, and after-hours fees are quoted when known'
+    ],
+    process: [
+      'Share airport, terminal or handler, shipment number, cargo, deadline, and release contact',
+      'Dispatch checks public or authorized access, documents, vehicle fit, and onward route',
+      'The accepted scope identifies whether the job is recovery, tender, transfer, or ground delivery',
+      'Status and handoff evidence follow the method agreed for the job'
+    ],
+    exceptions: [
+      'Cargo cannot be released without the documents and authorization required by the handler',
+      'A missed or changed flight can require a revised quote and deadline'
+    ],
     features: [
-      {
-        title: 'TSA and Air Cargo Access',
-        description: 'Our couriers understand air cargo terminal guidelines, paper workflows, and recovery codes for rapid container retrieval.',
-        iconName: 'Plane'
-      },
-      {
-        title: 'Immediate Hangar Dispatch',
-        description: 'Aviation groundings receive instant priority. We recover and drive components directly to tarmac gates or maintenance sites.',
-        iconName: 'Zap'
-      },
-      {
-        title: 'AUS & DFW Strategic Presence',
-        description: 'Stationed near key airports, our drivers handle fast recoveries, customs clearings, and next-flight check-ins.',
-        iconName: 'Clock'
-      }
+      { title: 'Release Check', description: 'Shipment identifiers, documents, and the releasing contact are confirmed first.', iconName: 'FileText' },
+      { title: 'Access Scope', description: 'The quote covers only access and actions the relevant facility permits.', iconName: 'Shield' },
+      { title: 'Onward Plan', description: 'Recovery, transfer, tender, or ground delivery is named in the accepted scope.', iconName: 'Plane' }
     ],
     capabilities: [
-      'Aircraft on Ground (AOG) avionics, engines, and critical structural components',
-      'Next-Flight-Out (NFO) document tender and package retrieval from airlines',
-      'Airport cargo terminal recoveries (FedEx, Southwest Cargo, Delta, etc.)',
-      'On-Board Courier (OBC) hand-carry flight escorts for sensitive items'
+      'Austin cargo-terminal recovery requests',
+      'Next-flight-out tender or transfer support when permitted',
+      'AOG parts pickup and onward ground delivery',
+      'Job-specific updates and handoff confirmation'
     ],
     faq: [
-      {
-        question: 'How quickly can you retrieve packages from airport cargo docks?',
-        answer: 'Once the flight has landed and cargo is cleared by the carrier (usually 1-2 hours after landing), our airport couriers retrieve the package within 30 to 45 minutes of terminal tender.'
-      },
-      {
-        question: 'Do you offer AOG service 24/7?',
-        answer: 'Yes. Aviation emergencies happen at all hours. Our dispatchers and AOG specialists are available 24/7/365 to handle airport gate deliveries.'
-      },
-      {
-        question: 'Which airports do you service directly?',
-        answer: 'We provide direct, rapid recovery services at Austin-Bergstrom International Airport (AUS) and Dallas-Fort Worth International (DFW), and can coordinate runs to Houston (IAH/HOU) as needed.'
-      }
+      { question: 'Can you recover cargo from any airline?', answer: 'Not automatically. Dispatch must confirm the airline or handler, release requirements, public or authorized access, cargo details, operating hours, and shipment status.' },
+      { question: 'Do you clear customs?', answer: 'No customs-broker or clearance authority is represented. The shipper or its appointed broker must complete required customs work and provide releasable cargo documentation.' },
+      { question: 'What do you need for an AOG request?', answer: 'Provide the part and packaging details, pickup or cargo-release location, authorized contacts, aircraft or receiving destination, deadline, and any access or handling constraints.' }
     ],
-    priceRange: '$$$$'
+    relatedServiceIds: ['air-hand-carry-on-board-courier', 'manufacturing-line-down-delivery', 'hot-shot-expedited-freight'],
+    claimIds: COMMON_CLAIMS,
+    lastReviewed: LAST_REVIEWED,
+    flagship: true
   },
   'scheduled-dedicated-routes': {
     id: 'scheduled-dedicated-routes',
-    name: 'Scheduled & Dedicated Routes',
-    title: 'Scheduled Courier Routes Austin | Dedicated Daily Deliveries',
-    metaDescription: 'Optimize business operations with custom scheduled courier routes and dedicated daily delivery services in Austin, TX. 24/7 contract logistics.',
-    keywords: [
-      'Scheduled courier routes',
-      'dedicated daily delivery',
-      'recurring courier services',
-      'interoffice mail route',
-      'contract logistics Austin'
+    name: 'Scheduled & Recurring Routes',
+    group: 'Recurring',
+    title: 'Scheduled Courier Routes in Austin, TX | Speedy Bat',
+    metaDescription: 'Plan recurring Austin courier routes with agreed stops, windows, cargo categories, contacts, exceptions, and reporting. Availability is reviewed before setup.',
+    tagline: 'Recurring Austin routes built from documented stops, windows, cargo, and exception rules.',
+    overview: 'Scheduled service is for recurring business movements that benefit from a documented route plan. Speedy Bat reviews the Austin-area stops, frequency, cargo, site windows, contacts, vehicle needs, reporting, holidays, and exception handling before proposing service.',
+    eligibility: [
+      'The recurring pickup pattern is in the Austin metro or specifically approved',
+      'Stops, windows, contacts, cargo categories, and expected volume are documented',
+      'The customer can identify changes and exceptions before each affected run'
     ],
-    tagline: 'Reliable, optimized recurring routes tailored to your operations.',
-    overview: 'For businesses requiring consistent, recurring logistics, our scheduled and dedicated route service provides absolute predictability. We set up custom schedules for daily inter-office mail, weekly medical laboratory runs, bank deposits, or warehouse logistics. With dedicated drivers assigned to your account, you get seamless execution and familiarity with your specific pickup and dropoff requirements.',
+    limits: [
+      'A recurring route does not create universal on-demand availability',
+      'Extra stops, volume changes, waiting, after-hours work, or different cargo may require re-approval',
+      'No service to a named institution is implied unless it appears in an executed agreement'
+    ],
+    process: [
+      'Map stops, windows, frequency, cargo, volume, site contacts, and exceptions',
+      'Review vehicle, route timing, reporting, holidays, pricing factors, and backup handling',
+      'Document the agreed route and change process',
+      'Review performance and update the route when operations change'
+    ],
+    exceptions: [
+      'Closures, contact changes, unexpected volume, access changes, and severe conditions can alter a run',
+      'Regulated or sensitive cargo requires separate operational approval'
+    ],
     features: [
-      {
-        title: 'Optimized Routing Maps',
-        description: 'We construct routes to hit all your nodes in the logical order, minimizing driving time and reducing operational costs.',
-        iconName: 'Calendar'
-      },
-      {
-        title: 'Dedicated Account Drivers',
-        description: 'The same professional driver is assigned to your routine, ensuring familiarity with your docks, lockboxes, and staff.',
-        iconName: 'MapPin'
-      },
-      {
-        title: 'Flexible Recurring Slots',
-        description: 'Choose daily, bi-weekly, weekly, or monthly slots, with 24/7 capability to support overnight or morning-early shifts.',
-        iconName: 'Clock'
-      }
+      { title: 'Route Specification', description: 'Stops, windows, contacts, cargo, and exceptions are documented together.', iconName: 'Calendar' },
+      { title: 'Change Control', description: 'Customers receive a clear process for additions, closures, and volume changes.', iconName: 'FileText' },
+      { title: 'Operations Review', description: 'The route can be reviewed when timing, volume, or service needs change.', iconName: 'Clock' }
     ],
     capabilities: [
-      'Routine inter-office mail, documents, and corporate records loops',
-      'Scheduled clinical laboratory specimen collections and clinic loops',
-      'Consistent retail store inventory transfers and regional warehouse feeds',
-      'Daily financial, banking deposit runs, and secure lockbox clearing'
+      'Recurring inter-office documents and business materials',
+      'Planned parts, supply, and inventory movements',
+      'Defined stop windows and authorized contacts',
+      'Agreed reporting and exception handling'
     ],
     faq: [
-      {
-        question: 'Can we customize our scheduled route frequency?',
-        answer: 'Yes. Routes are completely customizable. We can set up daily loops, multiple runs per day, weekly pickups, or custom-timed schedules to fit your workflow.'
-      },
-      {
-        question: 'Will we have the same courier driver every day?',
-        answer: 'Yes. We assign dedicated drivers to routine routes. This guarantees they understand your facility, access codes, security rules, and personnel.'
-      },
-      {
-        question: 'What happens if a route needs to be changed temporarily?',
-        answer: 'Simply notify our dispatch desk. We can adjust route stops, times, or vehicle capacity with short notice to adapt to your business needs.'
-      }
+      { question: 'Can a route run daily or weekly?', answer: 'Frequency is part of the proposed route. Dispatch confirms capacity, stops, windows, cargo, and pricing before any recurring schedule is accepted.' },
+      { question: 'What happens when a stop changes?', answer: 'Use the agreed change process. Added stops, different cargo, closures, waiting, and volume changes may affect timing and price.' },
+      { question: 'Can urgent work be added to a scheduled route?', answer: 'Urgent work is evaluated separately so it does not silently change the route or compromise other accepted stops.' }
     ],
-    priceRange: '$$'
+    relatedServiceIds: ['same-day-on-demand-courier', 'manufacturing-line-down-delivery', 'legal-courier-court-filing'],
+    claimIds: COMMON_CLAIMS,
+    lastReviewed: LAST_REVIEWED
   },
   'air-hand-carry-on-board-courier': {
     id: 'air-hand-carry-on-board-courier',
     name: 'Air Hand Carry / On-Board Courier',
-    title: 'Air Hand Carry Austin | On-Board Courier Service TX',
-    metaDescription: 'Premium air hand carry & on-board courier (OBC) in Austin, TX. A dedicated courier flies with your package for secure, same-day delivery nationwide.',
-    keywords: [
-      'Air hand carry Austin',
-      'on board courier Austin',
-      'OBC courier service',
-      'hand carry shipping Texas',
-      'expedited air courier'
+    group: 'Air and airport',
+    title: 'Air Hand Carry & On-Board Courier from Austin | Speedy Bat',
+    metaDescription: 'Request Austin-origin air hand carry or on-board courier service. Flight, traveler, screening, baggage, documents, custody, and final-mile scope are confirmed per job.',
+    tagline: 'Austin-origin accompanied air transport when the shipment, traveler, route, and carrier rules align.',
+    overview: 'Air hand carry, also called on-board courier service, may suit small time-critical shipments that can travel under an airline\'s rules. Speedy Bat reviews the item, dimensions, weight, packaging, documents, screening, traveler availability, flight options, destination entry rules, custody plan, and final handoff before acceptance.',
+    eligibility: [
+      'The shipment originates in the Austin metro or is accepted by special arrangement',
+      'The item is lawful and eligible under applicable airline, screening, baggage, and destination rules',
+      'The sender supplies accurate contents, value, dimensions, weight, documents, and contacts'
     ],
-    tagline: 'A dedicated courier personally accompanies your critical shipment on commercial flights.',
-    overview: 'For high-stakes cargo that absolutely cannot leave human custody or risk transit delay, our premium Air Hand Carry (On-Board Courier) service is the gold standard. A dedicated, background-checked Speedy Bat courier receives your package, immediately drives to the airport, boards the next available commercial flight, and hand-delivers the package directly to the recipient at destination. Your shipment never leaves human hands, ensuring a completely unbroken chain of custody.',
+    limits: [
+      'Traveler availability, tickets, flight operations, screening, baggage decisions, and border rules are not guaranteed',
+      'No security status, expedited screening, customs authority, or unrestricted airport access is implied',
+      'Carry-on, checked-baggage, cargo, and final-mile handling are distinct scopes'
+    ],
+    process: [
+      'Share route, deadline, item category, dimensions, weight, value band, documents, and contacts',
+      'Dispatch checks traveler and flight options plus carrier, screening, and destination constraints',
+      'The quote identifies the accepted transport mode, handoffs, planned updates, and contingencies',
+      'The destination recipient confirms the final handoff'
+    ],
+    exceptions: [
+      'Flight cancellation, delay, screening, refusal, document issues, or destination restrictions can change or stop the movement',
+      'International work requires a separate document and entry review and may be declined'
+    ],
     features: [
-      {
-        title: 'Unbroken Chain of Custody',
-        description: 'Our courier maintains constant physical possession of your package from initial pickup until final hand-delivery, completely eliminating handling errors.',
-        iconName: 'Shield'
-      },
-      {
-        title: 'Immediate Flight Booking',
-        description: 'Our dispatch team actively monitors flight schedules and books the next available commercial routing out of AUS or DFW within minutes.',
-        iconName: 'Plane'
-      },
-      {
-        title: 'Real-Time Courier Updates',
-        description: 'Receive continuous updates at key milestones: flight boarding, landing, terminal exit, and final delivery, complete with photo confirmation.',
-        iconName: 'Globe'
-      }
+      { title: 'Rule Check', description: 'Item, packaging, documents, screening, and carrier constraints are reviewed before booking.', iconName: 'Shield' },
+      { title: 'Flight Plan', description: 'Traveler and viable flight options are checked against the requested deadline.', iconName: 'Plane' },
+      { title: 'Handoff Map', description: 'Origin, airport, arrival, and final-recipient handoffs are named in the scope.', iconName: 'MapPin' }
     ],
     capabilities: [
-      'Delicate semiconductor wafers, fab tools, and microelectronics',
-      'Critical legal files, evidence, and time-sensitive signed contracts',
-      'Biological specimens, clinical trial samples, and urgent pharmaceuticals',
-      'High-value jewelry, automotive prototypes, and critical aviation (AOG) components'
+      'Austin-origin domestic accompanied-air requests',
+      'Small time-critical business items eligible for the selected flight',
+      'Airport-to-recipient final mile when included',
+      'Agreed milestone and handoff updates'
     ],
     faq: [
-      {
-        question: 'What is the maximum size and weight for hand carry shipments?',
-        answer: 'Since packages must accompany our courier in the aircraft cabin, they must fit standard airline carry-on or personal item dimensions (typically up to 22" x 14" x 9") and weigh under 40 lbs. Larger items may be shipped via next-flight-out air cargo, which we can also coordinate.'
-      },
-      {
-        question: 'Which airports do you operate out of?',
-        answer: 'We primarily dispatch couriers out of Austin-Bergstrom International Airport (AUS) and Dallas-Fort Worth International Airport (DFW) for domestic and international destinations. We can also coordinate departures from Houston (IAH/HOU) or San Antonio (SAT) depending on the fastest flight availability.'
-      },
-      {
-        question: 'Are your couriers fully vetted and secure?',
-        answer: 'Yes. All on-board couriers are thoroughly vetted, background-checked, and highly experienced in high-security logistics. they carry international travel credentials and operate with the highest level of professionalism.'
-      }
+      { question: 'Is hand carry always the fastest option?', answer: 'Not necessarily. Dispatch compares flight availability, screening, documents, final-mile needs, and ground alternatives before proposing a route.' },
+      { question: 'Can any item travel as carry-on baggage?', answer: 'No. The carrier and applicable authorities control eligibility. Accurate contents, dimensions, weight, packaging, value, and documents are required before review.' },
+      { question: 'Do you offer international hand carry?', answer: 'International requests may be evaluated, but traveler, passport, visa, customs, import or export, screening, airline, and destination requirements must be confirmed. The request may be declined.' }
     ],
-    priceRange: '$$$$'
+    relatedServiceIds: ['airport-recovery-next-flight-out', 'long-distance-intercity-courier', 'high-value-secure-courier'],
+    claimIds: COMMON_CLAIMS,
+    lastReviewed: LAST_REVIEWED,
+    flagship: true
   },
   'high-value-secure-courier': {
     id: 'high-value-secure-courier',
-    name: 'High-Value & Secure Item Courier',
-    title: 'High-Value Secure Courier Austin | Diamonds & Bonds',
-    metaDescription: 'Secure courier for high-value items in Austin, TX. Discreet transport for bearer bonds, diamonds, gold, and irreplaceable assets. 24/7 chain of custody.',
-    keywords: [
-      'secure courier high value items Austin',
-      'diamond courier service Texas',
-      'bearer bond delivery service',
-      'luxury watch courier Austin',
-      'gold bullion transport courier',
-      'secure document transport',
-      'precious items courier'
+    name: 'High-Value & Secure-Item Courier',
+    group: 'Secure and legal',
+    title: 'High-Value & Secure-Item Courier in Austin | Speedy Bat',
+    metaDescription: 'Request Austin secure-item transport. Acceptance, packaging, declared value, vehicle, custody, coverage, access, and receipt method are reviewed per job.',
+    tagline: 'Austin secure-item requests evaluated individually for packaging, risk, custody, and coverage.',
+    overview: 'Items with unusual value, sensitivity, or replacement difficulty need a job-specific risk review before transport. Speedy Bat asks for a non-sensitive item category, value band, dimensions, packaging, pickup and delivery controls, custody requirements, and requested receipt method before deciding whether to quote.',
+    eligibility: [
+      'The sender can establish authority to release the item and the recipient can accept it',
+      'A non-sensitive item category, value band, dimensions, weight, and packaging are disclosed privately through the approved process',
+      'Requested custody, vehicle, access, and receipt controls can be documented'
     ],
-    tagline: 'When the item is worth more than the vehicle carrying it.',
-    overview: 'Some items cannot be risked in the mail — their value far exceeds any insurance claim, and many are simply irreplaceable. Our High-Value & Secure Item Courier service provides discreet, dedicated, direct-drive transport with court-grade chain of custody for financial instruments, precious goods, identity documents, and irreplaceable personal assets. Unmarked vehicles, plain-clothes couriers, tamper-evident packaging, and declared-value cargo coverage ensure your most valuable items arrive exactly as they left.',
+    limits: [
+      'No blanket insurance amount, screening status, vehicle type, concealment method, or custody configuration is promised',
+      'Do not describe account numbers, access credentials, identification data, or detailed valuables through the public form or SMS',
+      'Speedy Bat may decline an item because of value, legality, packaging, risk, destination, or coverage limits'
+    ],
+    process: [
+      'Use the public form only for route, timing, broad cargo category, and approximate size or weight',
+      'Dispatch moves detailed risk review to an appropriate private channel',
+      'The accepted scope records packaging, custody, vehicle, coverage, handoffs, and receipt method',
+      'Any material change requires renewed approval before pickup'
+    ],
+    exceptions: [
+      'Extraordinary value, cash-like instruments, weapons, controlled items, irreplaceable records, and personal identity materials may be declined',
+      'Coverage and liability terms must be confirmed in writing for the specific item and job'
+    ],
     features: [
-      {
-        title: 'Tamper-Evident Chain of Custody',
-        description: 'Sealed packaging with documented seal verification at origin and destination. Every handoff is photographed, timestamped, and logged for court-grade auditability.',
-        iconName: 'Shield'
-      },
-      {
-        title: 'Discreet Transport',
-        description: 'Unmarked vehicles, plain-clothes couriers, and zero external signage. Your shipment travels invisibly — no one knows what is being carried or where.',
-        iconName: 'EyeOff'
-      },
-      {
-        title: 'Declared Value Coverage',
-        description: 'Cargo insurance scaled to your item\'s declared value — not limited to standard carrier caps. Coverage tailored for diamonds, gold, bonds, and irreplaceable originals.',
-        iconName: 'Gem'
-      }
+      { title: 'Private Risk Review', description: 'Sensitive details move off the public form before an acceptance decision.', iconName: 'EyeOff' },
+      { title: 'Defined Controls', description: 'Packaging, custody, vehicle, access, and receipt requirements are written into scope.', iconName: 'Shield' },
+      { title: 'Coverage Confirmation', description: 'Any available coverage and material exclusions are confirmed for the specific job.', iconName: 'FileText' }
     ],
     capabilities: [
-      'Bearer bonds, stock certificates, cashier\'s checks, and financial instruments',
-      'Loose diamonds, luxury watches, gold bullion, rare coins, and rare stamps',
-      'Original legal contracts, signed deeds, and court-admissible evidence',
-      'Passports, visas, work permits, and sensitive identity documents',
-      'Pharmaceutical prototypes, clinical trial samples, and specialized medical specimens',
-      'Family heirlooms, estate items, original architectural blueprints, and small original artwork'
+      'Sensitive business documents and irreplaceable items considered case by case',
+      'Job-specific custody and handoff requirements',
+      'Packaging and vehicle review before acceptance',
+      'Requested receipt method when available and agreed'
     ],
     faq: [
-      {
-        question: 'What insurance coverage do you carry for high-value items?',
-        answer: 'We offer declared-value cargo coverage that scales with your item\'s worth, well beyond standard carrier limits. For items of extraordinary value, we coordinate supplemental coverage and can provide proof of insurance before pickup. Every run is fully insured with documented chain of custody.'
-      },
-      {
-        question: 'Is there a size or weight limit for secure item transport?',
-        answer: 'Our high-value service handles items that fit in a secure lockbox or hard-sided case — typically under 50 lbs and small enough for a single courier to maintain constant physical custody. For larger items, we coordinate dedicated cargo vehicles with enhanced security protocols.'
-      },
-      {
-        question: 'How do you ensure discretion during transport?',
-        answer: 'All high-value runs use unmarked personal vehicles with no company branding. Couriers dress in plain clothes and carry no documentation visible to third parties. Pickup and delivery are coordinated to minimize exposure, and we never disclose cargo contents to anyone outside the chain of custody.'
-      }
+      { question: 'What insurance applies to a high-value item?', answer: 'No universal amount is advertised. Dispatch must review the item category and value, then confirm any available coverage, exclusions, documentation, and approval in writing before pickup.' },
+      { question: 'What details should I put in the public form?', answer: 'Only the route, deadline, broad cargo category, and approximate size or weight. Do not include account numbers, IDs, access codes, detailed descriptions of valuables, or other sensitive data.' },
+      { question: 'Is a special vehicle or custody method included?', answer: 'Only when the accepted scope says so. Vehicle, routing, custody, handoffs, tracking, packaging, and receipt controls are job-specific.' }
     ],
-    priceRange: '$$$$'
+    relatedServiceIds: ['legal-courier-court-filing', 'air-hand-carry-on-board-courier', 'same-day-on-demand-courier'],
+    claimIds: COMMON_CLAIMS,
+    lastReviewed: LAST_REVIEWED,
+    flagship: true
   }
 };
+
+export const serviceList = Object.values(services);

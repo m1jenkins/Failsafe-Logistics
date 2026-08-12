@@ -1,22 +1,24 @@
 import React from 'react';
-import { ArrowRight, Phone } from 'lucide-react';
+import { ArrowRight, Phone, MessageSquare } from 'lucide-react';
 import { QuoteForm } from './QuoteForm';
 import { scrollToElement } from '../utils/scrollHelper';
 
-
 export const Hero: React.FC = () => {
-  return (
-    <section id="hero" className="relative min-h-[auto] lg:min-h-screen flex items-center pt-20 pb-6 lg:pt-24 lg:pb-8 overflow-hidden bg-obsidian">
-      {/* Background Grid Pattern */}
-      <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+  const focusQuoteForm = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    scrollToElement('quick-quote-form');
+    document.getElementById('fullName')?.focus({ preventScroll: true });
+  };
 
-      {/* Hero Image */}
+  return (
+    <section id="hero" className="relative min-h-[auto] lg:min-h-screen flex items-center pt-24 pb-10 lg:py-28 overflow-hidden bg-obsidian">
+      <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:32px_32px]" />
       <div className="absolute right-0 top-0 bottom-0 w-full lg:w-2/3 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-obsidian/40 to-obsidian z-10"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-l from-transparent via-obsidian/40 to-obsidian z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent z-10" />
         <img
           src="/austin-bats.webp"
-          alt="Speedy Bat Couriers - Premier courier service in Austin Texas providing same day delivery and rush logistics"
+          alt="Austin skyline and bats at dusk"
           className="w-full h-full object-cover object-center lg:object-right opacity-30 mix-blend-lighten"
           width="1024"
           height="1024"
@@ -24,71 +26,47 @@ export const Hero: React.FC = () => {
           loading="eager"
         />
       </div>
-
-      {/* Radial Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-obsidian via-obsidian/80 to-transparent z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-obsidian via-obsidian/80 to-transparent z-10" />
 
       <div className="container mx-auto px-6 md:px-8 relative z-20">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-12 items-center">
-          
-          {/* Left Column: Headline and text */}
-          <div className="lg:col-span-7 space-y-3 lg:space-y-4">
-
-            <span className="text-[11px] text-red-500/80 font-bold uppercase tracking-[0.3em] font-display block">
-              Courier Service in Austin, Texas &middot; 24/7 Same-Day &amp; Rush Delivery
-            </span>
-
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-black text-white leading-[1.08] tracking-tight font-display">
-              The Courier <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-700">Austin Calls</span>
-              <br />
-              <span className="hero-emphasis">at 2am</span>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="lg:col-span-7 space-y-5">
+            <p className="text-[11px] text-red-500/80 font-bold uppercase tracking-[0.3em] font-display">
+              Austin-based service-area courier · urgent B2B requests
+            </p>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.03] tracking-tight font-display">
+              Urgent Courier Service <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-700">in Austin, TX</span>
             </h1>
-
-            <div className="hidden sm:block backdrop-blur-md bg-white/[0.02] border border-white/[0.04] rounded-2xl p-4 lg:p-5 shadow-xl shadow-black/30 max-w-2xl">
-              <p className="text-sm md:text-base lg:text-[17px] text-slate-300 font-light leading-relaxed">
-                We specialize in last-minute same-day and overnight courier runs out of <strong className="text-white font-medium">Austin</strong> — <strong className="text-white font-medium">direct-drive</strong> up to 1,000+ miles across Texas and beyond. One dedicated vehicle, one driver, <strong className="text-white font-medium">zero transfers</strong>, non-stop to destination. From bearer bonds to loose diamonds — we move what other carriers won't touch.
+            <p className="text-xl md:text-2xl text-white font-display font-bold">
+              The courier Austin calls <span className="hero-emphasis">at 2am</span>
+            </p>
+            <div className="backdrop-blur-md bg-white/[0.02] border border-white/[0.04] rounded-2xl p-5 shadow-xl shadow-black/30 max-w-2xl space-y-3">
+              <p className="text-sm md:text-base text-slate-300 font-light leading-relaxed">
+                Request same-day, hot shot, line-down, airport recovery, air hand carry, legal-document, secure-item, or recurring courier service originating in the Austin metro.
+              </p>
+              <p className="text-sm text-slate-400 leading-relaxed">
+                Dispatch confirms availability, pickup timing, vehicle, route, handling, custody, access, and any applicable coverage for each accepted job.
               </p>
             </div>
-
-            <div className="flex flex-wrap gap-3 lg:gap-4 pt-1 lg:pt-2">
-              <a 
-                href="#quick-quote-form" 
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToElement('quick-quote-form');
-                  const input = document.getElementById('fullName');
-                  if (input) {
-                    (input as HTMLInputElement).focus({ preventScroll: true });
-                  }
-                }}
-                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 border border-red-500/20 text-white font-bold uppercase tracking-wider text-xs md:text-sm px-4 sm:px-6 py-3 sm:py-4 rounded-full shadow-lg shadow-red-950/30 transition-all inline-flex items-center space-x-2 font-display"
-              >
-                <span>Get Quote in Minutes</span>
-                <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <div className="flex flex-wrap gap-3 pt-1">
+              <a href="#quick-quote-form" onClick={focusQuoteForm} className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 border border-red-500/20 text-white font-bold uppercase tracking-wider text-xs md:text-sm px-5 sm:px-6 py-3.5 rounded-full shadow-lg shadow-red-950/30 transition-all inline-flex items-center gap-2 font-display">
+                Request a job review
+                <ArrowRight className="h-4 w-4" />
               </a>
-              <a href="sms:5129104938" className="bg-white/[0.02] border border-white/[0.04] hover:bg-white/[0.05] text-slate-300 hover:text-white font-bold uppercase tracking-wider text-xs md:text-sm px-4 sm:px-6 py-3 sm:py-4 rounded-full shadow-md transition-all inline-flex items-center space-x-2 font-display">
-                <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-red-500" />
-                <span>Text Dispatch (512) 910-4938</span>
+              <a href="tel:+15129104938" className="bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.05] text-slate-300 hover:text-white font-bold uppercase tracking-wider text-xs md:text-sm px-5 py-3.5 rounded-full inline-flex items-center gap-2 font-display">
+                <Phone className="h-4 w-4 text-red-500" />
+                Call dispatch
+              </a>
+              <a href="sms:+15129104938" className="bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.05] text-slate-300 hover:text-white font-bold uppercase tracking-wider text-xs md:text-sm px-5 py-3.5 rounded-full inline-flex items-center gap-2 font-display">
+                <MessageSquare className="h-4 w-4 text-red-500" />
+                Text dispatch
               </a>
             </div>
-
-
           </div>
 
-          {/* Right Column: Reusable Quote Form */}
           <div className="lg:col-span-5" id="quick-quote-form">
             <QuoteForm sourceName="Austin Main Page" routeId="" pageType="main" />
           </div>
-
-        </div>
-      </div>
-
-      {/* Decorative location indicators */}
-      <div className="absolute bottom-10 right-10 z-10 hidden lg:block">
-        <div className="text-right space-y-1 font-display">
-          <div className="text-[11px] text-slate-500 font-bold tracking-widest">AUSTIN HQ & CENTRAL TX</div>
-          <div className="text-[11px] text-slate-500 font-bold tracking-widest">NATIONWIDE LOGISTICS DEPLOYMENT</div>
         </div>
       </div>
     </section>

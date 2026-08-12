@@ -1,194 +1,81 @@
 import React from 'react';
-import { Clock, Plane, Cpu, FileText, Gem, ShieldAlert, ArrowRight } from 'lucide-react';
-import { Button } from './Button';
-import { scrollToElement } from '../utils/scrollHelper';
+import { ArrowRight, Clock, FileText, Plane, Shield, Truck } from 'lucide-react';
 
-
-interface CargoItem {
-  title: string;
-  description: string;
-  icon: React.ComponentType<{ className?: string }>;
-  routeId: string;
-  ctaText: string;
-  gold?: boolean;
-}
-
-const cargoItems: CargoItem[] = [
+const priorityServices = [
   {
-    title: "Aircraft Parts & AOG",
-    description: "Avionics, grounding parts, and critical aviation components to keep aircraft flying.",
-    icon: Plane,
-    routeId: "airport-recovery-next-flight-out",
-    ctaText: "AOG Dispatch"
+    title: 'Hot Shot & Expedited Freight',
+    description: 'Time-critical Austin-origin ground freight with vehicle, lane, cargo fit, and custody confirmed per job.',
+    href: '/hot-shot-expedited-freight',
+    icon: Truck
   },
   {
-    title: "Manufacturing Samples",
-    description: "Urgent prototypes, pre-production samples, and critical components to keep validation and assembly lines moving.",
-    icon: Cpu,
-    routeId: "manufacturing-line-down-delivery",
-    ctaText: "Line-Down Support"
+    title: 'Airport Recovery / NFO / AOG',
+    description: 'Austin airport recovery or tender requests subject to cargo release, documents, access, and handler rules.',
+    href: '/airport-recovery-next-flight-out',
+    icon: Plane
   },
   {
-    title: "Legal & Secure Documents",
-    description: "Time-sensitive court filings, original deeds, contracts, and secure chain-of-custody runs.",
-    icon: FileText,
-    routeId: "legal-courier-court-filing",
-    ctaText: "Secure Document Run"
+    title: 'Manufacturing Line-Down',
+    description: 'Urgent parts transport planned around cargo dimensions, dock access, site contacts, and the requested handoff.',
+    href: '/manufacturing-line-down-delivery',
+    icon: Clock
   },
   {
-    title: "High-Value & Secure Items",
-    description: "Bearer bonds, loose diamonds, original contracts, passports, and items too valuable for ordinary carriers.",
-    icon: Gem,
-    routeId: "high-value-secure-courier",
-    ctaText: "Secure Transport",
-    gold: true
+    title: 'Air Hand Carry / OBC',
+    description: 'Accompanied air transport evaluated against item, traveler, flight, screening, carrier, and destination rules.',
+    href: '/air-hand-carry-on-board-courier',
+    icon: Plane
+  },
+  {
+    title: 'Legal Document Courier',
+    description: 'Time-sensitive document transport with scope, destination access, authorized contacts, and receipt method agreed first.',
+    href: '/legal-courier-court-filing',
+    icon: FileText
+  },
+  {
+    title: 'High-Value & Secure Items',
+    description: 'Case-by-case review of packaging, value, risk, custody, vehicle, access, coverage, and delivery controls.',
+    href: '/high-value-secure-courier',
+    icon: Shield
   }
 ];
 
-interface FeaturesProps {
-  onNavigate?: (routeId: string) => void;
-}
-
-export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
-  return (
-    <section
-      id="services"
-      className="py-24 border-b border-white/[0.03] relative overflow-hidden bg-obsidian"
-    >
-      {/* Subtle top glow accent */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[1px] bg-gradient-to-r from-transparent via-ember/15 to-transparent" />
-
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
-          {/* Left Column: The overnight/emergency focus statement */}
-          <div className="lg:col-span-6 flex flex-col justify-between glass-panel-elevated p-8 md:p-12 rounded-3xl border border-white/[0.06] relative group overflow-hidden">
-            {/* Liquid shimmer line at top */}
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-red-500/40 to-transparent" />
-            
-            <div className="space-y-8 lg:space-y-10">
-              <div className="space-y-4">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase text-white font-display tracking-tight leading-tight">
-                  For when tomorrow is <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-ember to-molten font-black">
-                    Too Late
-                  </span>
-                </h2>
-
-                <p className="text-slate-300 font-light text-base lg:text-lg leading-relaxed">
-                  Every run is direct-drive: one vehicle, one courier, zero transfers. Your shipment gets a dedicated driver who doesn't stop until the job is done.
-                </p>
-              </div>
-
-              {/* Status details grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t border-white/[0.04] text-xs font-display">
-                <div className="space-y-2">
-                  <div className="text-slate-400 uppercase font-bold tracking-wider text-[11px]">Route status</div>
-                  <div className="text-white font-bold uppercase flex items-center text-xs sm:text-sm md:text-base">
-                    <Clock className="w-5 h-5 text-red-500 mr-2 shrink-0" />
-                    24/7/365 Run
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="text-slate-400 uppercase font-bold tracking-wider text-[11px]">Transit type</div>
-                  <div className="text-white font-bold uppercase flex items-center text-xs sm:text-sm md:text-base">
-                    <ShieldAlert className="w-5 h-5 text-red-500 mr-2 shrink-0" />
-                    Dedicated Drive
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="text-slate-400 uppercase font-bold tracking-wider text-[11px]">Range capability</div>
-                  <div className="text-white font-bold uppercase flex items-center text-xs sm:text-sm md:text-base">
-                    <ArrowRight className="w-5 h-5 text-red-500 mr-2 shrink-0" />
-                    1000+ Miles
-                  </div>
-                </div>
-              </div>
-
-              {/* Trust Line */}
-              <div className="text-slate-400 uppercase font-bold tracking-wider text-[11px] font-display">
-                Fully insured · $100K cargo coverage · Chain of custody on every run
-              </div>
-            </div>
-
-            <div className="pt-8">
-              <Button
-                href="#quick-quote-form"
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToElement('quick-quote-form');
-                  const input = document.getElementById('fullName');
-                  if (input) {
-                    (input as HTMLInputElement).focus({ preventScroll: true });
-                  }
-                }}
-                variant="alert"
-                className="w-full group/link"
-              >
-                <span>Initiate Urgent Dispatch</span>
-                <ArrowRight className="w-4 h-4 ml-2 transform group-hover/link:translate-x-1.5 transition-transform" />
-              </Button>
-            </div>
-          </div>
-
-          {/* Right Column: 2x2 Cargo categories grid */}
-          <div className="lg:col-span-6 flex flex-col justify-center space-y-6">
-            <div>
-              <h2 className="text-2xl md:text-3xl font-extrabold uppercase text-white font-display tracking-wider">
-                What We Transport
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {cargoItems.map((item, index) => (
-                <a
-                  key={index}
-                  href={`/${item.routeId}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (onNavigate) onNavigate(item.routeId);
-                  }}
-                  className={`group relative glass-panel p-6 rounded-2xl flex flex-col justify-between border cursor-pointer transition-all duration-300 no-underline ${
-                    item.gold
-                      ? 'border-amber-500/10 hover:border-amber-500/25'
-                      : 'border-white/[0.04] hover:border-red-500/20'
-                  }`}
-                >
-                  <div>
-                    <div className={`w-10 h-10 flex items-center justify-center mb-4 transition-all duration-300 rounded-xl ${
-                      item.gold
-                        ? 'bg-amber-950/20 border border-amber-500/20 group-hover:border-amber-500/40 group-hover:bg-amber-950/30'
-                        : 'bg-white/[0.02] border border-white/[0.06] group-hover:border-ember/30 group-hover:bg-red-950/20'
-                    }`}>
-                      <item.icon className={`h-4.5 w-4.5 transition-colors duration-300 ${
-                        item.gold
-                          ? 'text-amber-500/70 group-hover:text-amber-400'
-                          : 'text-slate-400 group-hover:text-red-500'
-                      }`} />
-                    </div>
-
-                    <h3 className="text-sm font-bold uppercase text-white mb-2 tracking-wider font-display">
-                      {item.title}
-                    </h3>
-                    <p className="text-slate-400 leading-relaxed text-xs font-light mb-4">
-                      {item.description}
-                    </p>
-                  </div>
-                  <div className="pt-2">
-                    <span className={`text-xs font-bold uppercase tracking-wider font-display flex items-center space-x-1.5 transition-all duration-300 opacity-80 group-hover:opacity-100 ${
-                      item.gold
-                        ? 'text-amber-500 hover:text-amber-400'
-                        : 'text-red-500 hover:text-red-400'
-                    }`}>
-                      <span>{item.ctaText}</span>
-                      <ArrowRight className="h-3 w-3 transform group-hover:translate-x-1 transition-transform" />
-                    </span>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
+export const Features: React.FC = () => (
+  <section id="services" className="py-20 md:py-24 border-b border-white/[0.03] relative overflow-hidden bg-obsidian">
+    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[1px] bg-gradient-to-r from-transparent via-ember/15 to-transparent" />
+    <div className="container mx-auto px-6 relative z-10">
+      <div className="max-w-3xl mb-12 space-y-4">
+        <p className="text-[11px] text-red-500/80 font-bold uppercase tracking-[0.3em] font-display">Priority courier services</p>
+        <h2 className="text-3xl md:text-5xl font-extrabold uppercase text-white font-display tracking-tight leading-tight">
+          Start with the shipment’s real constraint
+        </h2>
+        <p className="text-slate-400 text-base leading-relaxed">
+          Choose the closest service type, then let dispatch qualify the cargo, route, deadline, access, and handoffs. A service page explains what is eligible, what is not assumed, and which details affect acceptance.
+        </p>
       </div>
-    </section>
-  );
-};
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {priorityServices.map(item => (
+          <a key={item.href} href={item.href} className="group glass-panel p-7 rounded-2xl border border-white/[0.04] hover:border-red-500/20 transition-colors">
+            <div className="bg-red-950/20 border border-red-500/20 w-11 h-11 flex items-center justify-center mb-5 rounded-xl">
+              <item.icon className="h-5 w-5 text-red-500" />
+            </div>
+            <h3 className="text-base font-bold uppercase text-white mb-3 tracking-wider font-display">{item.title}</h3>
+            <p className="text-slate-400 text-sm leading-relaxed mb-5">{item.description}</p>
+            <span className="inline-flex items-center gap-2 text-red-500 text-xs font-bold uppercase tracking-wider font-display">
+              Review eligibility and limits
+              <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+            </span>
+          </a>
+        ))}
+      </div>
+
+      <div className="mt-10 flex justify-center">
+        <a href="/services" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-white/[0.08] bg-white/[0.03] text-white hover:border-red-500/30 text-sm font-bold uppercase tracking-wider font-display transition-colors">
+          Compare all services
+          <ArrowRight className="h-4 w-4" />
+        </a>
+      </div>
+    </div>
+  </section>
+);

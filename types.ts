@@ -1,39 +1,14 @@
-import React from 'react';
+export type ClaimStatus = 'verified' | 'qualified' | 'prohibited';
 
-export interface Destination {
-  name: string;
-  miles: number;
-}
-
-export interface TestimonialData {
-  quote: string;
-  role: string;
-  location: string;
-}
-
-export interface FeatureData {
-  title: string;
-  description: string;
-  icon: React.ElementType;
-}
-
-export interface LocationData {
+export interface ClaimRecord {
   id: string;
-  name: string;
-  title: string;
-  metaDescription: string;
-  keywords: string[];
-  coordinates: {
-    latitude: number;
-    longitude: number;
-  };
-  zipCodes: string[];
-  areaServed: string;
-  priceRange?: string;
-  transitInfo: string;
-  localHighlights: string[];
-  localServices: string[];
-  localNarrative: string;
+  approvedWording: string;
+  status: ClaimStatus;
+  evidenceRef: string;
+  applicableRoutes: string[];
+  owner: string;
+  lastVerified: string;
+  reviewDate: string;
 }
 
 export interface ServiceFeature {
@@ -47,17 +22,58 @@ export interface ServiceFAQ {
   answer: string;
 }
 
+export type ServiceGroup =
+  | 'Urgent ground'
+  | 'Air and airport'
+  | 'Secure and legal'
+  | 'Recurring';
+
 export interface ServiceData {
   id: string;
   name: string;
+  group: ServiceGroup;
   title: string;
   metaDescription: string;
-  keywords: string[];
   tagline: string;
   overview: string;
+  eligibility: string[];
+  limits: string[];
+  process: string[];
+  exceptions: string[];
   features: ServiceFeature[];
   capabilities: string[];
   faq: ServiceFAQ[];
+  relatedServiceIds: string[];
+  claimIds: string[];
+  lastReviewed: string;
   flagship?: boolean;
-  priceRange?: string;
+}
+
+export type CoveragePortfolioAction = 'redirect' | 'retain';
+
+export interface CoverageArea {
+  id: string;
+  name: string;
+  kind: 'austin-neighborhood' | 'metro-request' | 'austin-origin-destination';
+  pickupEligibility: string;
+  responseCopy: string;
+  portfolioAction: CoveragePortfolioAction;
+  redirectDestination: string;
+}
+
+export type RouteKind = 'home' | 'hub' | 'service' | 'about' | 'faq' | 'policy';
+
+export interface RouteDefinition {
+  slug: string;
+  kind: RouteKind;
+  label: string;
+  title: string;
+  description: string;
+  serviceId?: string;
+}
+
+export interface RedirectDefinition {
+  source: string;
+  destination: string;
+  permanent: true;
 }

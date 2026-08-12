@@ -6,10 +6,8 @@ import {
   Clock,
   Mail,
   MapPin,
-  Package,
   Phone,
   Scale,
-  ShieldAlert,
   User
 } from 'lucide-react';
 import { Button } from './Button';
@@ -22,17 +20,14 @@ interface QuoteFormProps {
   defaultPickup?: string;
 }
 
-type PreferredContact = 'call' | 'text' | 'email';
-
 interface FormState {
   fullName: string;
-  preferredContact: PreferredContact;
   contactValue: string;
   pickupZip: string;
   destinationZip: string;
   deadline: string;
-  cargoCategory: string;
   sizeWeight: string;
+  additionalDetails: string;
 }
 
 type FormErrors = Partial<Record<keyof FormState, string>>;
@@ -51,22 +46,6 @@ const setFieldError = (
   return next;
 };
 
-const CONTACT_OPTIONS: Array<{ value: PreferredContact; label: string }> = [
-  { value: 'text', label: 'Text' },
-  { value: 'call', label: 'Call' },
-  { value: 'email', label: 'Email' }
-];
-
-const CARGO_OPTIONS = [
-  { value: 'business-documents', label: 'Business or legal documents' },
-  { value: 'manufacturing-parts', label: 'Manufacturing parts or tools' },
-  { value: 'aviation-parts', label: 'Aviation or AOG parts' },
-  { value: 'packaged-goods', label: 'Packaged goods' },
-  { value: 'airport-cargo', label: 'Airport cargo pickup or tender' },
-  { value: 'high-value-item', label: 'High-value item (no details here)' },
-  { value: 'other-review', label: 'Other cargo for dispatch review' }
-];
-
 const SIZE_WEIGHT_OPTIONS = [
   { value: 'envelope-under-2lb', label: 'Envelope or small parcel — under 2 lb' },
   { value: 'small-under-20lb', label: 'Small box — under 20 lb' },
@@ -79,21 +58,18 @@ const requiredFieldOrder: Array<keyof FormState> = [
   'pickupZip',
   'destinationZip',
   'deadline',
-  'cargoCategory',
   'fullName',
-  'preferredContact',
   'contactValue'
 ];
 
 const initialFormState = (defaultPickup: string): FormState => ({
   fullName: '',
-  preferredContact: 'text',
   contactValue: '',
   pickupZip: defaultPickup,
   destinationZip: '',
   deadline: '',
-  cargoCategory: '',
-  sizeWeight: ''
+  sizeWeight: '',
+  additionalDetails: ''
 });
 
 const validateField = (name: keyof FormState, state: FormState): string => {
@@ -104,14 +80,10 @@ const validateField = (name: keyof FormState, state: FormState): string => {
       if (!value) return 'Name or company is required';
       if (value.length > 120) return 'Name or company must be 120 characters or fewer';
       return '';
-    case 'preferredContact':
-      return value ? '' : 'Choose how dispatch should contact you';
     case 'contactValue': {
-      if (!value) return state.preferredContact === 'email'
-        ? 'Email address is required'
-        : 'Phone number is required';
+      if (!value) return 'Phone number or email address is required';
 
-      if (state.preferredContact === 'email') {
+      if (value.includes('@')) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
           ? ''
           : 'Enter a valid email address';
@@ -132,9 +104,8 @@ const validateField = (name: keyof FormState, state: FormState): string => {
         : 'Enter a valid destination ZIP code';
     case 'deadline':
       return value ? '' : 'Delivery deadline is required';
-    case 'cargoCategory':
-      return value ? '' : 'Choose a cargo category';
     case 'sizeWeight':
+    case 'additionalDetails':
       return '';
     default:
       return '';
@@ -168,12 +139,12 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
     setErrors(previous => setFieldError(previous, name, ''));
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const name = event.target.name as keyof FormState;
     setField(name, event.target.value);
   };
 
-  const handleBlur = (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const name = event.target.name as keyof FormState;
     const nextState = { ...formState, [name]: event.target.value };
     setTouched(previous => ({ ...previous, [name]: true }));
@@ -210,17 +181,16 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
 
     const serviceId = pageType === 'service' ? routeId : '';
     const analyticsContext = getAnalyticsContext({ routeId, pageType, serviceId });
-    const isEmail = formState.preferredContact === 'email';
+    const isEmail = formState.contactValue.includes('@');
     const message = [
       'DISPATCH REQUEST',
       `Name/company: ${formState.fullName}`,
-      `Preferred contact: ${formState.preferredContact}`,
       `Contact: ${formState.contactValue}`,
       `Pickup ZIP: ${formState.pickupZip}`,
       `Destination ZIP: ${formState.destinationZip}`,
       `Deadline: ${formState.deadline}`,
-      `Cargo category: ${formState.cargoCategory}`,
-      `Approximate size/weight: ${formState.sizeWeight || 'Not provided'}`
+      `Approximate size/weight: ${formState.sizeWeight || 'Not provided'}`,
+      `Additional details: ${formState.additionalDetails || 'Not provided'}`
     ].join('\n');
 
     try {
@@ -235,15 +205,14 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
           subject: `New Lead - ${sourceName} Quote Request`,
           name: formState.fullName,
           fullName: formState.fullName,
-          preferredContact: formState.preferredContact,
           contactValue: formState.contactValue,
           email: isEmail ? formState.contactValue : 'quick-request@speedybat.com',
           phone: isEmail ? '' : formState.contactValue,
           pickupZip: formState.pickupZip,
           destinationZip: formState.destinationZip,
           deadline: formState.deadline,
-          cargoCategory: formState.cargoCategory,
           sizeWeight: formState.sizeWeight,
+          additionalDetails: formState.additionalDetails,
           message,
           ...analyticsContext
         })
@@ -273,7 +242,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
       : 'border-white/[0.04] focus:border-red-500/50'
   }`;
   const labelClasses = 'block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5 font-display';
-  const contactIsEmail = formState.preferredContact === 'email';
+  const contactIsEmail = formState.contactValue.includes('@');
   const ContactIcon = contactIsEmail ? Mail : Phone;
 
   const inlineError = (field: keyof FormState) => errors[field] && touched[field] ? (
@@ -312,20 +281,6 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
               <h2 className="font-display text-lg font-bold uppercase tracking-wider text-white">Start your request</h2>
               <p className="mt-1 text-xs leading-relaxed text-slate-400">Send the essentials now. Dispatch will follow up to confirm the job.</p>
             </div>
-
-            <details className="group rounded-xl border border-amber-500/30 bg-amber-950/20 text-xs text-amber-100" role="note">
-              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-3 py-2.5 font-bold [&::-webkit-details-marker]:hidden">
-                <span className="flex items-center gap-2">
-                  <ShieldAlert className="h-4 w-4 shrink-0 text-amber-400" />
-                  Privacy first: use broad categories only
-                </span>
-                <ChevronDown className="h-4 w-4 shrink-0 text-amber-400 transition-transform group-open:rotate-180" aria-hidden="true" />
-              </summary>
-              <p className="px-3 pb-3 font-sans leading-relaxed">
-                <strong>Do not submit sensitive information.</strong> Do not include patient information, IDs, financial or account data, access codes, credentials, or detailed descriptions of valuables. Use categories only. See our{' '}
-                <a href="/privacy" className="inline-flex min-h-11 items-center font-bold underline underline-offset-2 hover:text-white">Privacy Notice</a>.
-              </p>
-            </details>
 
             {Object.keys(errors).length > 0 && (
               <div
@@ -402,8 +357,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2">
-              <div>
+            <div>
               <label htmlFor="deadline" className={labelClasses}>Delivery deadline</label>
               <div className="relative group/input">
                 <Clock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
@@ -424,58 +378,9 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
                 Enter your local time. Dispatch confirms all timing and availability.
               </span>
               {inlineError('deadline')}
-              </div>
-
-              <div>
-              <label htmlFor="cargoCategory" className={labelClasses}>Cargo category</label>
-              <div className="relative group/input">
-                <Package className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
-                <select
-                  id="cargoCategory"
-                  name="cargoCategory"
-                  required
-                  className={`${inputClasses(!!errors.cargoCategory)} pl-11 pr-10`}
-                  value={formState.cargoCategory}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  aria-invalid={!!errors.cargoCategory}
-                  aria-describedby={errors.cargoCategory ? 'err-cargoCategory' : undefined}
-                >
-                  <option value="">Select a category</option>
-                  {CARGO_OPTIONS.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
-                </select>
-              </div>
-              {inlineError('cargoCategory')}
-              </div>
             </div>
 
             <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2">
-              <fieldset className="min-[360px]:col-span-2">
-                <legend className={labelClasses}>Preferred contact method</legend>
-                <div className="grid grid-cols-3 gap-2">
-                  {CONTACT_OPTIONS.map(option => (
-                    <label
-                      key={option.value}
-                      className={`flex min-h-11 cursor-pointer items-center justify-center rounded-xl border px-3 py-2 text-center text-xs font-bold uppercase tracking-wider font-display transition-colors ${
-                        formState.preferredContact === option.value
-                          ? 'border-red-500/60 bg-red-950/30 text-white'
-                          : 'border-white/[0.05] bg-white/[0.02] text-slate-400 hover:text-white'
-                      }`}
-                    >
-                      <input
-                        className="mr-2 h-4 w-4 accent-red-600"
-                        type="radio"
-                        name="preferredContact"
-                        value={option.value}
-                        checked={formState.preferredContact === option.value}
-                        onChange={handleChange}
-                      />
-                      {option.label}
-                    </label>
-                  ))}
-                </div>
-              </fieldset>
-
               <div>
                 <label htmlFor="fullName" className={labelClasses}>Name or company</label>
                 <div className="relative group/input">
@@ -501,7 +406,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
 
               <div>
                 <label htmlFor="contactValue" className={labelClasses}>
-                  {contactIsEmail ? 'Email address' : 'Phone number'}
+                  Phone number or email address
                 </label>
                 <div className="relative group/input">
                   <ContactIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
@@ -547,6 +452,23 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
                 </div>
               </div>
             </details>
+
+            <div>
+              <label htmlFor="additionalDetails" className={labelClasses}>
+                Additional details <span className="font-sans font-normal normal-case tracking-normal text-slate-400">(optional)</span>
+              </label>
+              <textarea
+                id="additionalDetails"
+                name="additionalDetails"
+                rows={4}
+                maxLength={2000}
+                className={`${inputClasses(false)} resize-y`}
+                placeholder="Anything dispatch should know about the request?"
+                value={formState.additionalDetails}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </div>
 
             <div className="pt-1">
               <Button

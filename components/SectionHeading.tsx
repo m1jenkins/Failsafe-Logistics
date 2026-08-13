@@ -4,12 +4,13 @@ interface SectionHeadingProps {
   title: string;
   subtitle?: string;
   align?: 'left' | 'center';
+  headingId?: string;
 }
 
-export const SectionHeading: React.FC<SectionHeadingProps> = ({ title, subtitle, align = 'left' }) => {
+export const SectionHeading: React.FC<SectionHeadingProps> = ({ title, subtitle, align = 'left', headingId }) => {
   return (
     <div className={`mb-8 ${align === 'center' ? 'text-center' : 'text-left'}`}>
-      <h2 className="text-3xl md:text-4xl font-black tracking-tight text-white mb-4 font-display">
+      <h2 id={headingId} className="text-3xl md:text-4xl font-black tracking-tight text-white mb-4 font-display">
         {title}
       </h2>
       <div className={`h-[1px] w-32 mb-4 ${

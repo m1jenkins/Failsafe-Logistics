@@ -65,9 +65,6 @@ export const ServiceLandingPage: React.FC<ServiceLandingPageProps> = ({ service 
               All courier services
             </a>
             <div className="space-y-4">
-              <p className="text-[11px] text-red-500/80 font-bold uppercase tracking-[0.3em] font-display">
-                {service.group} · Austin origin
-              </p>
               <h1 id="service-heading" className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.08] tracking-tight font-display">
                 {service.name}
               </h1>

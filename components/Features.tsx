@@ -33,12 +33,11 @@ export const Features: React.FC = () => (
     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[1px] bg-gradient-to-r from-transparent via-ember/15 to-transparent" />
     <div className="container mx-auto px-6 relative z-10">
       <div className="mb-8 max-w-3xl space-y-4 md:mb-12">
-        <p className="text-[11px] text-red-500/80 font-bold uppercase tracking-[0.3em] font-display">Priority courier services</p>
         <h2 className="text-3xl md:text-5xl font-extrabold uppercase text-white font-display tracking-tight leading-tight">
-          Start with the shipment’s real constraint
+          Services Provided
         </h2>
         <p className="text-slate-400 text-base leading-relaxed">
-          Choose the closest service type, then let dispatch qualify the cargo, route, deadline, access, and handoffs. A service page explains what is eligible, what is not assumed, and which details affect acceptance.
+          Speedy Bat provides time-critical courier and freight solutions for urgent ground, airport, and manufacturing needs. Explore the services we offer and contact dispatch to discuss your shipment.
         </p>
       </div>
 
@@ -51,7 +50,7 @@ export const Features: React.FC = () => (
             <h3 className="text-base font-bold uppercase text-white mb-3 tracking-wider font-display">{item.title}</h3>
             <p className="text-slate-400 text-sm leading-relaxed mb-5">{item.description}</p>
             <span className="inline-flex items-center gap-2 text-red-500 text-xs font-bold uppercase tracking-wider font-display">
-              Review eligibility and limits
+              Learn more
               <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
             </span>
           </a>

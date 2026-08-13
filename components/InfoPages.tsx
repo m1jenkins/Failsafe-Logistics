@@ -76,16 +76,12 @@ const JOB_SPECIFIC_DETAILS = [
 ] as const;
 
 interface PageHeaderProps {
-  eyebrow: string;
   title: string;
   description: string;
 }
 
-const PageHeader: React.FC<PageHeaderProps> = ({ eyebrow, title, description }) => (
+const PageHeader: React.FC<PageHeaderProps> = ({ title, description }) => (
   <header className="text-center mb-14 space-y-4">
-    <span className="text-[11px] text-red-500/80 font-bold uppercase tracking-[0.3em] font-display block">
-      {eyebrow}
-    </span>
     <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase text-white font-display tracking-tight">
       {title}
     </h1>
@@ -154,7 +150,6 @@ export const ServicesPage: React.FC = () => {
     <main className="pt-24 pb-20 bg-obsidian min-h-screen">
       <div className="container mx-auto px-6 max-w-6xl">
         <PageHeader
-          eyebrow="Courier Services"
           title="Courier Options from Austin"
           description="Speedy Bat evaluates urgent business delivery requests that originate in the Austin metro. Each service page explains who the option may fit, what dispatch needs, material limits, and what must be confirmed before acceptance."
         />
@@ -233,7 +228,6 @@ export const ServiceAreasPage: React.FC = () => {
     <main className="pt-24 pb-20 bg-obsidian min-h-screen">
       <div className="container mx-auto px-6 max-w-5xl">
         <PageHeader
-          eyebrow="Service Areas"
           title="Austin Pickup and Destinations"
           description="Speedy Bat is one Austin-based service-area business. Routine pickup is limited to the Austin metro and remains subject to dispatch confirmation. Area names do not represent separate offices, local fleets, or guaranteed response times."
         />
@@ -314,7 +308,6 @@ export const HowItWorksPage: React.FC = () => {
     <main className="pt-24 pb-20 bg-obsidian min-h-screen">
       <div className="container mx-auto px-6 max-w-5xl">
         <PageHeader
-          eyebrow="How It Works"
           title="From Request to Confirmed Delivery"
           description="A public quote request starts a dispatch review; it does not book a courier by itself. Speedy Bat confirms whether the route, cargo, deadline, vehicle, access, and handling requirements can be accepted."
         />
@@ -405,7 +398,6 @@ export const PrivacyPage: React.FC = () => {
     <main className="pt-24 pb-20 bg-obsidian min-h-screen">
       <div className="container mx-auto px-6 max-w-4xl">
         <PageHeader
-          eyebrow="Privacy Notice"
           title="Website and Quote-Request Privacy"
           description="This notice describes the data flow visible in the Speedy Bat website source as reviewed on August 12, 2026. It covers the public quote form, Web3Forms submission processing, and the Google Analytics tag."
         />
@@ -466,7 +458,6 @@ export const TermsPage: React.FC = () => {
     <main className="pt-24 pb-20 bg-obsidian min-h-screen">
       <div className="container mx-auto px-6 max-w-4xl">
         <PageHeader
-          eyebrow="Service Request Terms"
           title="Public Quote and Dispatch Terms"
           description="These terms govern use of the public quote and dispatch-request paths. They explain what a submission means, what the sender must disclose, and which details remain job-specific."
         />

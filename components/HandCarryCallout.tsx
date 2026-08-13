@@ -29,7 +29,6 @@ export const HandCarryCallout: React.FC = () => (
   <section className="border-b border-white/[0.03] bg-deep-space py-14 md:py-20" aria-labelledby="route-choice-heading">
     <div className="container mx-auto px-6">
       <div className="max-w-3xl mx-auto text-center space-y-4 mb-12">
-        <p className="text-[11px] text-red-500/80 font-bold uppercase tracking-[0.3em] font-display">Ground or air?</p>
         <h2 id="route-choice-heading" className="text-3xl md:text-5xl font-extrabold uppercase text-white font-display tracking-tight">
           Choose the route from the deadline backward
         </h2>

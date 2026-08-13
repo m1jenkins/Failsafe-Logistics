@@ -31,9 +31,6 @@ export const Hero: React.FC = () => {
       <div className="container mx-auto px-6 md:px-8 relative z-20">
         <div className="grid grid-cols-1 items-center gap-7 lg:grid-cols-12 lg:gap-10 xl:gap-14">
           <div className="space-y-4 lg:col-span-7 lg:space-y-5">
-            <p className="text-[11px] text-red-500/80 font-bold uppercase tracking-[0.3em] font-display">
-              Austin-based courier for businesses and individuals
-            </p>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.03] tracking-tight font-display">
               Urgent Courier Service <span className="text-red-500">in Austin, TX</span>
             </h1>

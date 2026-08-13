@@ -15,7 +15,6 @@ import {
 } from './InfoPages';
 import { ServiceArea } from './ServiceArea';
 import { ServiceLandingPage } from './ServiceLandingPage';
-import { TrustSection } from './TrustSection';
 
 export const RouteContent: React.FC<{ route: RouteDefinition }> = ({ route }) => {
   if (route.kind === 'home') {
@@ -23,7 +22,6 @@ export const RouteContent: React.FC<{ route: RouteDefinition }> = ({ route }) =>
       <main>
         <Hero />
         <Features />
-        <TrustSection />
         <HandCarryCallout />
         <ServiceArea />
       </main>

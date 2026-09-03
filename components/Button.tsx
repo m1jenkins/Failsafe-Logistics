@@ -1,7 +1,7 @@
 import React from 'react';
 
 type BaseButtonProps = {
-  variant?: 'primary' | 'secondary' | 'alert';
+  variant?: 'primary' | 'secondary' | 'ghost';
   children: React.ReactNode;
   className?: string;
 };
@@ -17,12 +17,16 @@ type ButtonNodeProps = BaseButtonProps & {
 export type ButtonProps = AnchorProps | ButtonNodeProps;
 
 export const Button = ({ variant = 'primary', children, className = '', ...props }: ButtonProps) => {
-  const baseStyles = "px-6 py-3.5 font-bold uppercase tracking-wider transition-all duration-300 inline-flex items-center justify-center font-display rounded-full cursor-pointer text-xs md:text-sm";
+  const baseStyles =
+    'px-6 py-3.5 font-bold tracking-wide transition-all duration-300 inline-flex items-center justify-center font-display rounded-full cursor-pointer text-xs md:text-sm min-h-11 active:translate-y-[1px]';
 
   const variants = {
-    primary: "bg-white/[0.04] border border-white/[0.06] text-white hover:bg-white/[0.08] hover:border-white/[0.15] shadow-lg shadow-black/40 backdrop-blur-sm",
-    secondary: "bg-transparent border border-white/[0.06] text-slate-300 hover:border-white/[0.12] hover:text-white hover:bg-white/[0.04] shadow-md shadow-black/30",
-    alert: "bg-gradient-to-r from-red-600 to-red-700 border border-red-500/20 text-white hover:from-red-500 hover:to-red-600 hover:border-red-400/30 shadow-lg shadow-red-950/30 active:translate-y-[1px]"
+    primary:
+      'bg-signal text-white shadow-[0_14px_28px_-12px_rgba(232,73,15,0.55)] hover:bg-signal-strong hover:shadow-[0_18px_34px_-12px_rgba(201,59,8,0.6)] hover:-translate-y-px',
+    secondary:
+      'bg-ink text-paper hover:bg-ink-deep shadow-[0_14px_28px_-16px_rgba(22,24,29,0.5)] hover:-translate-y-px',
+    ghost:
+      'bg-white/70 border border-ink/12 text-ink hover:border-signal/50 hover:text-signal-strong hover:bg-white'
   };
 
   const combinedClasses = `${baseStyles} ${variants[variant]} ${className}`;

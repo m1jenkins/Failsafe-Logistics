@@ -1,4 +1,5 @@
 import React from 'react';
+import { ArrowUpRight, MessageSquare, Phone } from 'lucide-react';
 
 const serviceLinks = [
   ['Hot Shot & Expedited', '/hot-shot-expedited-freight'],
@@ -19,51 +20,98 @@ const companyLinks = [
 ] as const;
 
 export const Footer: React.FC = () => (
-  <footer role="contentinfo" className="bg-obsidian pt-16 pb-0 border-t border-white/[0.03] relative overflow-hidden">
-    <div className="container mx-auto px-6 relative z-10 pb-36 md:pb-20">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start">
-        <div className="md:col-span-5 text-center md:text-left">
-          <a href="/" className="mb-2 inline-flex min-h-11 items-center text-xl font-black uppercase tracking-tighter text-white font-display md:min-h-0 md:text-2xl">Speedy Bat Couriers</a>
-          <p className="text-slate-400 text-xs md:text-sm mb-4 font-medium font-display tracking-wider uppercase">Austin-based service-area courier</p>
-          <p className="text-slate-400 text-xs max-w-sm leading-relaxed mx-auto md:mx-0">
-            Urgent courier requests for businesses and individuals originating in the Austin metro. Dispatch confirms availability, timing, vehicle, routing, handling, custody, access, and applicable coverage for each accepted job.
+  <footer role="contentinfo" className="relative overflow-hidden bg-ink text-paper">
+    <div className="absolute inset-0 ink-grid pointer-events-none" aria-hidden="true" />
+    <div className="absolute -top-40 left-1/2 -translate-x-1/2 h-80 w-[42rem] max-w-full rounded-full bg-signal/10 blur-[120px] pointer-events-none" aria-hidden="true" />
+
+    {/* Contact strip */}
+    <div className="relative border-b border-paper/10">
+      <div className="container mx-auto px-6 py-12 md:py-16 flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+        <div className="max-w-xl space-y-4">
+          <p className="inline-flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.24em] text-paper/55 font-display">
+            <span className="h-[6px] w-[6px] rounded-full bg-signal" aria-hidden="true" />
+            Dispatch is reviewing requests now
           </p>
-          <div className="mt-6 flex flex-wrap justify-center md:justify-start gap-3">
-            <a href="tel:+15129104938" className="inline-flex min-h-11 items-center text-red-500 hover:text-red-400 font-bold text-sm font-display md:min-h-0">Call (512) 910-4938</a>
-            <span className="text-slate-700" aria-hidden="true">·</span>
-            <a href="sms:+15129104938" className="inline-flex min-h-11 items-center text-red-500 hover:text-red-400 font-bold text-sm font-display md:min-h-0">Text dispatch</a>
-          </div>
-          <p className="mt-5 text-[11px] text-slate-500 leading-relaxed max-w-md mx-auto md:mx-0">
+          <h2 className="text-[clamp(1.9rem,4.5vw,3.2rem)] leading-[1.04] font-extrabold tracking-tight font-display text-paper">
+            Have an urgent job that starts in Austin?
+          </h2>
+        </div>
+        <div className="flex flex-wrap gap-3">
+          <a
+            href="/#quick-quote-form"
+            className="inline-flex min-h-12 items-center gap-2 bg-signal hover:bg-signal-strong text-white px-7 py-3.5 text-sm font-bold uppercase tracking-wider rounded-full transition-all duration-300 hover:-translate-y-px shadow-[0_16px_32px_-14px_rgba(232,73,15,0.65)]"
+          >
+            Request a review
+            <ArrowUpRight className="h-4 w-4" />
+          </a>
+          <a
+            href="tel:+15129104938"
+            className="inline-flex min-h-12 items-center gap-2 border border-paper/15 hover:border-paper/40 text-paper px-6 py-3.5 text-sm font-bold uppercase tracking-wider rounded-full transition-colors"
+          >
+            <Phone className="h-4 w-4 text-signal" />
+            Call
+          </a>
+          <a
+            href="sms:+15129104938"
+            className="inline-flex min-h-12 items-center gap-2 border border-paper/15 hover:border-paper/40 text-paper px-6 py-3.5 text-sm font-bold uppercase tracking-wider rounded-full transition-colors"
+          >
+            <MessageSquare className="h-4 w-4 text-signal" />
+            Text
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div className="container mx-auto px-6 relative z-10 pt-14 pb-8">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-start pb-28 md:pb-16">
+        <div className="md:col-span-5 space-y-5">
+          <p className="text-xs font-bold uppercase tracking-[0.24em] text-paper/50 font-display">Speedy Bat Couriers</p>
+          <p className="text-paper/70 text-sm leading-relaxed max-w-sm">
+            Urgent courier requests for businesses and individuals originating in the Austin metro. Dispatch confirms availability, timing, vehicle, route, handling, custody, access, and applicable coverage for each accepted job.
+          </p>
+          <p className="text-[11px] leading-relaxed text-paper/45 max-w-md border-l-2 border-signal/50 pl-3">
             Do not submit health information, patient names, IDs, financial account data, access credentials, or detailed descriptions of valuables through the public form or SMS.
           </p>
         </div>
 
-        <div className="md:col-span-4 text-center md:text-left">
-          <h2 className="text-sm font-bold text-white uppercase tracking-wider font-display mb-5">Priority services</h2>
-          <ul className="space-y-3 text-xs">
+        <nav className="md:col-span-4" aria-label="Priority services">
+          <h2 className="text-xs font-bold uppercase tracking-[0.24em] text-paper/50 font-display mb-5">Priority services</h2>
+          <ul className="space-y-1">
             {serviceLinks.map(([label, href]) => (
-              <li key={href}><a href={href} className="inline-flex min-h-11 min-w-11 items-center justify-center text-slate-400 hover:text-red-500 transition-colors md:min-h-0 md:min-w-0 md:justify-start">{label}</a></li>
+              <li key={href}>
+                <a href={href} className="group inline-flex min-h-11 items-center gap-1.5 text-sm text-paper/75 hover:text-paper transition-colors md:min-h-0 md:py-1.5">
+                  {label}
+                  <ArrowUpRight className="h-3.5 w-3.5 text-signal opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300" />
+                </a>
+              </li>
             ))}
           </ul>
-        </div>
+        </nav>
 
-        <div className="md:col-span-3 text-center md:text-left">
-          <h2 className="text-sm font-bold text-white uppercase tracking-wider font-display mb-5">Company & policies</h2>
-          <ul className="space-y-3 text-xs">
+        <nav className="md:col-span-3" aria-label="Company and policies">
+          <h2 className="text-xs font-bold uppercase tracking-[0.24em] text-paper/50 font-display mb-5">Company &amp; policies</h2>
+          <ul className="space-y-1">
             {companyLinks.map(([label, href]) => (
-              <li key={href}><a href={href} className="inline-flex min-h-11 min-w-11 items-center justify-center text-slate-400 hover:text-red-500 transition-colors md:min-h-0 md:min-w-0 md:justify-start">{label}</a></li>
+              <li key={href}>
+                <a href={href} className="group inline-flex min-h-11 items-center gap-1.5 text-sm text-paper/75 hover:text-paper transition-colors md:min-h-0 md:py-1.5">
+                  {label}
+                  <ArrowUpRight className="h-3.5 w-3.5 text-signal opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300" />
+                </a>
+              </li>
             ))}
           </ul>
-        </div>
+        </nav>
       </div>
 
-      <div className="mt-12 pt-6 border-t border-white/[0.04] text-center md:text-left text-slate-500 text-[11px] font-mono tracking-widest uppercase" suppressHydrationWarning>
-        &copy; {new Date().getFullYear()} Speedy Bat Couriers · Austin, TX · All rights reserved.
+      <div className="pt-6 border-t border-paper/10 flex flex-col sm:flex-row justify-between gap-3 text-paper/40 text-[11px] tracking-widest uppercase font-mono" suppressHydrationWarning>
+        <span>&copy; {new Date().getFullYear()} Speedy Bat Couriers · Austin, TX · All rights reserved.</span>
+        <span>speedybat.com</span>
       </div>
     </div>
 
-    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 md:left-auto md:right-4 md:translate-x-0 lg:right-12 max-w-[240px] sm:max-w-[280px] md:max-w-[360px] lg:max-w-[420px] w-full z-10 transition-transform duration-500 ease-out hover:-translate-y-2">
-      <img src="/speedybat-crossover.webp" alt="Speedy Bat courier vehicle" width="1666" height="944" className="w-full h-auto object-contain block opacity-85 hover:opacity-100 transition-opacity duration-500" loading="lazy" />
+    {/* Courier vehicle */}
+    <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 md:left-auto md:right-6 md:translate-x-0 w-full max-w-[260px] sm:max-w-[320px] md:max-w-[420px] z-0 opacity-90 transition-transform duration-500 ease-out hover:-translate-y-2">
+      <img src="/speedybat-crossover.webp" alt="" width="1666" height="944" className="w-full h-auto object-contain block mix-blend-screen" loading="lazy" aria-hidden="true" />
     </div>
   </footer>
 );

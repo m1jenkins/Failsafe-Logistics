@@ -10,7 +10,6 @@ import {
   Scale,
   User
 } from 'lucide-react';
-import { Button } from './Button';
 import { getAnalyticsContext, trackGenerateLead } from '../utils/analytics';
 
 interface QuoteFormProps {
@@ -236,57 +235,56 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
     }
   };
 
-  const inputClasses = (hasError: boolean) => `w-full min-h-11 glass-input text-slate-200 px-4 py-2.5 rounded-xl outline-none placeholder:text-slate-500 text-sm md:text-base border transition-all duration-300 font-sans ${
-    hasError
-      ? 'border-red-500 bg-red-950/10 focus:border-red-400 focus:shadow-[0_0_12px_rgba(239,68,68,0.15)]'
-      : 'border-white/[0.04] focus:border-red-500/50'
+  const inputClasses = (hasError: boolean) => `w-full min-h-11 field-input text-ink px-4 py-2.5 rounded-xl placeholder:text-ink/35 text-sm md:text-base font-sans ${
+    hasError ? '[&+*]:text-red-600' : ''
   }`;
-  const labelClasses = 'block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5 font-display';
+  const labelClasses = 'block text-[11px] font-bold uppercase tracking-[0.14em] text-ink-soft mb-1.5 font-display';
   const contactIsEmail = formState.contactValue.includes('@');
   const ContactIcon = contactIsEmail ? Mail : Phone;
 
   const inlineError = (field: keyof FormState) => errors[field] && touched[field] ? (
-    <span id={`err-${field}`} className="text-red-400 text-xs mt-1 block font-sans" aria-live="polite">
+    <span id={`err-${field}`} className="text-red-600 text-xs mt-1 block font-sans" aria-live="polite">
       {errors[field]}
     </span>
   ) : null;
 
   return (
-    <div className="form-premium-glow relative rounded-3xl group/form">
-      <div className="form-glow-backdrop" />
-      <div className="glass-panel-elevated relative z-10 rounded-3xl border border-white/[0.05] p-4 shadow-2xl sm:p-5 lg:p-6">
-        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
-
+    <div className="quote-card rounded-3xl group/form">
+      <div className="relative z-10 p-5 sm:p-6 lg:p-7">
         {isSubmitted ? (
-          <div className="text-center py-10 space-y-4 font-sans" role="status" aria-live="polite">
-            <div className="w-16 h-16 bg-red-950/20 border border-red-500/30 text-red-500 rounded-full flex items-center justify-center mx-auto shadow-md">
+          <div className="text-center py-12 space-y-4 font-sans" role="status" aria-live="polite">
+            <div className="w-16 h-16 bg-moss/10 border border-moss/25 text-moss rounded-full flex items-center justify-center mx-auto shadow-sm">
               <Check className="h-8 w-8 animate-[scaleUp_0.3s_ease]" />
             </div>
-            <h3 className="text-lg font-bold text-white uppercase font-display tracking-wider">Request received</h3>
-            <p className="text-slate-400 text-sm leading-relaxed max-w-xs mx-auto">
+            <h3 className="text-xl font-bold text-ink font-display tracking-tight">Request received</h3>
+            <p className="text-ink-soft text-sm leading-relaxed max-w-xs mx-auto">
               Dispatch will review the job details and confirm availability. For urgent follow-up,{' '}
-              <a href="sms:+15129104938" className="text-red-500 hover:text-red-400 font-bold underline transition-colors">
+              <a href="sms:+15129104938" className="text-signal hover:text-signal-strong font-bold underline underline-offset-2 transition-colors">
                 text (512) 910-4938
               </a>.
             </p>
-            <Button variant="secondary" onClick={() => setIsSubmitted(false)} className="mt-6">
-              Send Another Request
-            </Button>
+            <button
+              type="button"
+              onClick={() => setIsSubmitted(false)}
+              className="mt-6 inline-flex min-h-11 items-center justify-center px-6 py-3 text-xs font-bold uppercase tracking-wider rounded-full border border-ink/12 bg-white hover:border-ink/30 transition-colors font-display"
+            >
+              Send another request
+            </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-3" noValidate>
+          <form onSubmit={handleSubmit} className="space-y-3.5" noValidate>
             <input type="hidden" name="access_key" value="4d84c98a-eb94-4f22-8a55-a7e4a80855ec" />
 
-            <div>
-              <h2 className="font-display text-lg font-bold uppercase tracking-wider text-white">Start your request</h2>
-              <p className="mt-1 text-xs leading-relaxed text-slate-400">Send the essentials now. Dispatch will follow up to confirm the job.</p>
+            <div className="pb-1">
+              <h2 className="font-display text-xl font-extrabold tracking-tight text-ink">Start your request</h2>
+              <p className="mt-1 text-xs leading-relaxed text-ink-soft">Send the essentials now. Dispatch will follow up to confirm the job.</p>
             </div>
 
             {Object.keys(errors).length > 0 && (
               <div
                 ref={errorSummaryRef}
                 tabIndex={-1}
-                className="p-4 bg-red-950/20 border border-red-500/20 rounded-xl text-xs text-red-400 space-y-1 focus:outline-none focus:border-red-400"
+                className="p-4 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700 space-y-1 focus:outline-none focus:border-red-400"
                 role="alert"
                 aria-labelledby="err-summary-title"
               >
@@ -301,17 +299,17 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
             )}
 
             {submitError && (
-              <div className="p-4 bg-red-950/40 border border-red-500/40 rounded-xl text-xs text-red-300 flex items-start space-x-2" role="alert">
-                <AlertCircle className="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
+              <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700 flex items-start space-x-2" role="alert">
+                <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
                 <span className="font-sans leading-relaxed">{submitError}</span>
               </div>
             )}
 
-            <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3.5 min-[360px]:grid-cols-2">
               <div>
                 <label htmlFor="pickupZip" className={labelClasses}>Pickup ZIP</label>
                 <div className="relative group/input">
-                  <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
+                  <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-ink/35 pointer-events-none group-focus-within/input:text-signal transition-colors" />
                   <input
                     id="pickupZip"
                     name="pickupZip"
@@ -335,7 +333,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
               <div>
                 <label htmlFor="destinationZip" className={labelClasses}>Destination ZIP</label>
                 <div className="relative group/input">
-                  <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
+                  <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-ink/35 pointer-events-none group-focus-within/input:text-signal transition-colors" />
                   <input
                     id="destinationZip"
                     name="destinationZip"
@@ -360,7 +358,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
             <div>
               <label htmlFor="deadline" className={labelClasses}>Delivery deadline</label>
               <div className="relative group/input">
-                <Clock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
+                <Clock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-ink/35 pointer-events-none group-focus-within/input:text-signal transition-colors" />
                 <input
                   id="deadline"
                   name="deadline"
@@ -374,17 +372,17 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
                   aria-describedby={errors.deadline ? 'err-deadline deadline-help' : 'deadline-help'}
                 />
               </div>
-              <span id="deadline-help" className="text-slate-500 text-[11px] mt-1 block font-sans">
+              <span id="deadline-help" className="text-ink-soft/70 text-[11px] mt-1 block font-sans">
                 Enter your local time. Dispatch confirms all timing and availability.
               </span>
               {inlineError('deadline')}
             </div>
 
-            <div className="grid grid-cols-1 gap-3 min-[360px]:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3.5 min-[360px]:grid-cols-2">
               <div>
                 <label htmlFor="fullName" className={labelClasses}>Name or company</label>
                 <div className="relative group/input">
-                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
+                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-ink/35 pointer-events-none group-focus-within/input:text-signal transition-colors" />
                   <input
                     id="fullName"
                     name="fullName"
@@ -409,7 +407,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
                   Phone number or email address
                 </label>
                 <div className="relative group/input">
-                  <ContactIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
+                  <ContactIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-ink/35 pointer-events-none group-focus-within/input:text-signal transition-colors" />
                   <input
                     id="contactValue"
                     name="contactValue"
@@ -430,15 +428,15 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
               </div>
             </div>
 
-            <details className="group rounded-xl border border-white/[0.05] bg-white/[0.02]">
-              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-slate-300 font-display [&::-webkit-details-marker]:hidden">
-                <span>Size &amp; weight <span className="font-sans font-normal normal-case tracking-normal text-slate-400">(optional)</span></span>
-                <ChevronDown className="h-4 w-4 text-red-500 transition-transform group-open:rotate-180" aria-hidden="true" />
+            <details className="group rounded-xl border border-ink/10 bg-paper/60 open:bg-white transition-colors">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.14em] text-ink font-display [&::-webkit-details-marker]:hidden">
+                <span>Size &amp; weight <span className="font-sans font-normal normal-case tracking-normal text-ink-soft">(optional)</span></span>
+                <ChevronDown className="h-4 w-4 text-signal transition-transform duration-300 group-open:rotate-180" aria-hidden="true" />
               </summary>
               <div className="px-4 pb-4 pt-1">
                 <label htmlFor="sizeWeight" className={labelClasses}>Approximate size and weight</label>
                 <div className="relative group/input">
-                  <Scale className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500 pointer-events-none group-focus-within/input:text-red-500" />
+                  <Scale className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-ink/35 pointer-events-none group-focus-within/input:text-signal transition-colors" />
                   <select
                     id="sizeWeight"
                     name="sizeWeight"
@@ -455,7 +453,7 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
 
             <div>
               <label htmlFor="additionalDetails" className={labelClasses}>
-                Additional details <span className="font-sans font-normal normal-case tracking-normal text-slate-400">(optional)</span>
+                Additional details <span className="font-sans font-normal normal-case tracking-normal text-ink-soft">(optional)</span>
               </label>
               <textarea
                 id="additionalDetails"
@@ -470,20 +468,24 @@ export const QuoteForm: React.FC<QuoteFormProps> = ({
               />
             </div>
 
-            <div className="pt-1">
-              <Button
-                variant="alert"
+            <div className="pt-1.5">
+              <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full flex items-center justify-center space-x-3 py-3 text-base rounded-full shadow-lg hover:shadow-red-900/10 transition-all cursor-pointer font-display font-bold uppercase tracking-wider disabled:cursor-wait disabled:opacity-60"
+                className="group/btn relative w-full inline-flex min-h-12 items-center justify-center overflow-hidden rounded-full bg-signal py-3.5 text-base font-bold uppercase tracking-wider text-white font-display shadow-[0_18px_34px_-14px_rgba(232,73,15,0.65)] transition-all duration-300 hover:bg-signal-strong hover:-translate-y-px disabled:cursor-wait disabled:opacity-60 cursor-pointer"
               >
-                <span>{isSubmitting ? 'PROCESSING REQUEST...' : 'DISPATCH REQUEST →'}</span>
-              </Button>
-              <p className="mt-3 text-center text-xs leading-relaxed text-slate-400">
+                {/* Shimmer sweep */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 ease-out group-hover/btn:translate-x-full motion-reduce:hidden"
+                />
+                <span>{isSubmitting ? 'Processing request…' : 'Dispatch request →'}</span>
+              </button>
+              <p className="mt-3 text-center text-xs leading-relaxed text-ink-soft">
                 By submitting, you agree to the{' '}
-                <a href="/terms" className="inline-flex min-h-11 items-center font-bold underline underline-offset-2 hover:text-slate-300">Service Terms</a>{' '}
+                <a href="/terms" className="inline-flex min-h-11 items-center font-bold underline underline-offset-2 hover:text-signal md:min-h-0">Service Terms</a>{' '}
                 and acknowledge the{' '}
-                <a href="/privacy" className="inline-flex min-h-11 items-center font-bold underline underline-offset-2 hover:text-slate-300">Privacy Notice</a>.
+                <a href="/privacy" className="inline-flex min-h-11 items-center font-bold underline underline-offset-2 hover:text-signal md:min-h-0">Privacy Notice</a>.
                 Availability and job details require dispatch confirmation.
               </p>
             </div>

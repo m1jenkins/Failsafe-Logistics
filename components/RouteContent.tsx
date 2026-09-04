@@ -19,11 +19,11 @@ import { ServiceLandingPage } from './ServiceLandingPage';
 export const RouteContent: React.FC<{ route: RouteDefinition }> = ({ route }) => {
   if (route.kind === 'home') {
     return (
-      <main>
+      <main className="flex flex-col">
         <Hero />
-        <Features />
-        <HandCarryCallout />
-        <ServiceArea />
+        <div className="order-3 lg:order-2"><Features /></div>
+        <div className="order-2 lg:order-3"><HandCarryCallout /></div>
+        <div className="order-4"><ServiceArea /></div>
       </main>
     );
   }

@@ -18,9 +18,9 @@ const App: React.FC = () => {
   if (redirect) {
     return (
       <SiteShell>
-        <main className="pt-32 pb-24 min-h-screen bg-obsidian text-center px-6">
-          <p className="text-slate-300">
-            This page has moved. <a href={redirect.destination} className="text-red-500 underline">Continue to the service-area guide</a>.
+        <main className="mt-[76px] flex min-h-[60svh] items-center justify-center bg-ink px-6 py-24 text-center text-white lg:mt-[84px]">
+          <p className="text-[18px] text-white/75">
+            This page has moved. <a href={redirect.destination} className="font-bold text-white underline underline-offset-4">Continue to the service-area guide</a>.
           </p>
         </main>
       </SiteShell>

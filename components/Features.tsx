@@ -1,96 +1,61 @@
 import React from 'react';
-import { ArrowRight, Clock, Plane, Truck } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
+import { services } from '../data/services';
 import { Reveal } from './Reveal';
-import { SectionHeading } from './SectionHeading';
 
-const priorityServices = [
-  {
-    title: 'Hot Shot & Expedited Freight',
-    description: 'Time-critical Austin-origin ground freight with vehicle, lane, cargo fit, and custody confirmed per job.',
-    href: '/hot-shot-expedited-freight',
-    icon: Truck,
-    tag: 'Urgent ground'
-  },
-  {
-    title: 'Airport Recovery / NFO / AOG',
-    description: 'Austin airport recovery or tender requests subject to cargo release, documents, access, and handler rules.',
-    href: '/airport-recovery-next-flight-out',
-    icon: Plane,
-    tag: 'Air and airport'
-  },
-  {
-    title: 'Manufacturing Line-Down',
-    description: 'Urgent parts transport planned around cargo dimensions, dock access, site contacts, and the requested handoff.',
-    href: '/manufacturing-line-down-delivery',
-    icon: Clock,
-    tag: 'Urgent ground'
-  }
-];
-
-const additionalServices = [
-  ['Air hand carry / OBC', '/air-hand-carry-on-board-courier'],
-  ['Legal document courier', '/legal-courier-court-filing'],
-  ['High-value & secure items', '/high-value-secure-courier']
+const serviceModules = [
+  { id: 'same-day-on-demand-courier', link: 'View same-day service', span: 'md:col-span-7', aspect: 'aspect-[16/9]' },
+  { id: 'hot-shot-expedited-freight', link: 'View expedited freight', span: 'md:col-span-5', aspect: 'aspect-[5/4]' },
+  { id: 'long-distance-intercity-courier', link: 'View long-distance service', span: 'md:col-span-5', aspect: 'aspect-[4/3]' },
+  { id: 'airport-recovery-next-flight-out', link: 'View airport service', span: 'md:col-span-7', aspect: 'aspect-[16/9]' },
+  { id: 'manufacturing-line-down-delivery', link: 'View line-down service', span: 'md:col-span-4', aspect: 'aspect-square' },
+  { id: 'scheduled-dedicated-routes', link: 'View scheduled routes', span: 'md:col-span-8', aspect: 'aspect-[16/9]' },
+  { id: 'air-hand-carry-on-board-courier', link: 'View hand-carry service', span: 'md:col-span-5', aspect: 'aspect-[5/4]' },
+  { id: 'legal-courier-court-filing', link: 'View document service', span: 'md:col-span-3', aspect: 'aspect-[3/4]' },
+  { id: 'high-value-secure-courier', link: 'View secure-item service', span: 'md:col-span-4', aspect: 'aspect-square' }
 ] as const;
 
 export const Features: React.FC = () => (
-  <section id="services" className="relative overflow-hidden bg-paper py-16 md:py-24">
-    <div className="container mx-auto px-5 sm:px-6 relative z-10">
-      <SectionHeading
-        eyebrow="Services provided"
-        title="Courier options built around the deadline"
-        subtitle="Speedy Bat provides time-critical courier and freight solutions for urgent ground, airport, and manufacturing needs. Explore the services we offer and contact dispatch to discuss your shipment."
-      />
-
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-        {priorityServices.map((item, index) => (
-          <Reveal key={item.href} delay={index * 110}>
-            <a
-              href={item.href}
-              className="card-lift group flex h-full flex-col rounded-2xl border border-ink/10 bg-white p-6 md:p-7 shadow-[0_14px_34px_-22px_rgba(22,24,29,0.25)]"
-            >
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-signal-tint border border-signal/20 transition-colors duration-300 group-hover:bg-signal group-hover:border-signal">
-                  <item.icon className="h-5 w-5 text-signal transition-colors duration-300 group-hover:text-white" />
-                </div>
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink-soft/70 font-display">
-                  {item.tag}
-                </span>
-              </div>
-              <h3 className="text-lg font-bold text-ink mb-2.5 tracking-tight font-display leading-snug">{item.title}</h3>
-              <p className="text-ink-soft text-sm leading-relaxed mb-6 flex-1">{item.description}</p>
-              <span className="inline-flex items-center gap-2 text-signal-strong text-xs font-bold uppercase tracking-[0.14em] font-display">
-                Learn more
-                <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1.5" />
-              </span>
-            </a>
-          </Reveal>
-        ))}
+  <section id="services" className="bg-white pb-20 pt-12 md:pb-28 md:pt-16" aria-labelledby="services-heading">
+    <div className="mx-auto max-w-[1536px] px-5 sm:px-8 lg:px-10">
+      <div className="grid grid-cols-1 gap-5 border-b border-ink/20 pb-10 md:grid-cols-12 md:items-end md:gap-6 md:pb-14">
+        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-signal md:col-span-3 md:self-start md:pt-2">Our services</p>
+        <h2 id="services-heading" className="display-face text-[clamp(2.8rem,6vw,5.5rem)] uppercase leading-[0.88] text-ink md:col-span-6">
+          What do you<br />need to move?
+        </h2>
+        <p className="max-w-xs text-[17px] leading-relaxed text-ink-soft md:col-span-3 md:justify-self-end">
+          From documents and parcels to urgent parts and freight.
+        </p>
       </div>
 
-      <Reveal delay={200}>
-        <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3 rounded-2xl border border-dashed border-ink/15 bg-white/50 px-6 py-4">
-          <span className="text-xs font-bold uppercase tracking-[0.18em] text-ink-soft font-display">Also available</span>
-          {additionalServices.map(([label, href]) => (
-            <a
-              key={href}
-              href={href}
-              className="group inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-ink transition-colors hover:text-signal-strong md:min-h-0"
-            >
-              {label}
-              <ArrowRight className="h-3.5 w-3.5 opacity-0 -translate-x-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0" />
-            </a>
-          ))}
-        </div>
-      </Reveal>
+      <div className="mt-12 grid grid-cols-1 gap-x-5 gap-y-14 md:grid-cols-12 md:gap-y-20">
+        {serviceModules.map((item, index) => {
+          const service = services[item.id];
+          return (
+            <Reveal key={service.id} delay={(index % 3) * 70} as="article" className={item.span}>
+              <a href={`/${service.id}`} className="group block h-full text-ink">
+                <div className={`image-frame ${item.aspect}`}>
+                  <img src={service.image} alt="" width="1536" height="1024" loading="lazy" className="h-full w-full object-cover" />
+                  <span className="absolute bottom-3 right-3 bg-ink/75 px-2 py-1 text-[9px] uppercase tracking-[0.14em] text-white">Illustrative image</span>
+                </div>
+                <div className="mt-5 border-t border-ink/25 pt-4">
+                  <h3 className="display-face max-w-2xl text-[clamp(1.4rem,2.4vw,2.25rem)] uppercase leading-[0.95] transition-colors group-hover:text-signal">{service.name}</h3>
+                  <p className="mt-3 max-w-xl text-[16px] leading-relaxed text-ink-soft">{service.summary}</p>
+                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-ink underline decoration-ink/30 underline-offset-4 group-hover:text-signal">
+                    {item.link}
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                </div>
+              </a>
+            </Reveal>
+          );
+        })}
+      </div>
 
-      <Reveal delay={280} className="mt-8 flex justify-start">
-        <a
-          href="/services"
-          className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-ink px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-paper transition-all duration-300 hover:-translate-y-px hover:bg-ink-deep"
-        >
-          Compare all services
-          <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+      <Reveal className="mt-16 border-t border-ink/20 pt-8 md:mt-24">
+        <a href="/services" className="inline-flex min-h-12 items-center gap-2 rounded-[5px] bg-ink px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-signal">
+          See all services
+          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
         </a>
       </Reveal>
     </div>

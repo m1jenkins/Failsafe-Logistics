@@ -1,152 +1,51 @@
-import React, { useEffect, useState } from 'react';
-import { ArrowRight, MessageSquare, Phone } from 'lucide-react';
-import { QuoteForm } from './QuoteForm';
-import { Reveal } from './Reveal';
+import React from 'react';
+import { ArrowRight } from 'lucide-react';
 import { scrollToElement } from '../utils/scrollHelper';
 
-const ROUTE_PATH = 'M 24 64 C 130 10, 250 118, 360 58 S 480 22, 496 40';
-
 export const Hero: React.FC = () => {
-  const [motionAllowed, setMotionAllowed] = useState(true);
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setMotionAllowed(false);
-    }
-  }, []);
-
   const focusQuoteForm = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     scrollToElement('quick-quote-form');
-    document.getElementById('pickupZip')?.focus({ preventScroll: true });
+    window.setTimeout(() => document.getElementById('pickupZip')?.focus({ preventScroll: true }), 350);
   };
 
   return (
-    <section id="hero" className="relative overflow-hidden bg-paper">
-      {/* Backdrops */}
-      <div className="absolute inset-0 paper-grid pointer-events-none" aria-hidden="true" />
-      <div
-        className="absolute -top-32 right-[-10%] h-[34rem] w-[52rem] max-w-full rounded-full bg-signal/[0.07] blur-[110px] pointer-events-none"
-        aria-hidden="true"
-      />
+    <section id="hero" className="relative mt-[76px] h-[68svh] min-h-[620px] overflow-hidden bg-ink lg:mt-[84px] lg:h-[75svh] lg:min-h-[650px] lg:max-h-[780px]" aria-labelledby="hero-heading">
       <img
-        src="/austin-bats.webp"
-        alt=""
-        width="1717"
-        height="916"
-        className="halftone-fade pointer-events-none absolute bottom-0 left-1/2 w-full min-w-[64rem] -translate-x-1/2 opacity-[0.16] mix-blend-multiply"
-        aria-hidden="true"
+        src="/courier-road-illustrative.webp"
+        alt="A compact white courier van traveling on a Central Texas road."
+        width="1536"
+        height="1024"
+        className="hero-photo absolute inset-0 h-full w-full object-cover object-[85%_center] sm:object-[72%_center] lg:object-center"
         loading="eager"
-        fetchPriority="low"
+        fetchPriority="high"
       />
 
-      <div className="container mx-auto px-5 sm:px-6 relative z-10 pt-28 sm:pt-32 lg:pt-36 pb-14 lg:pb-20">
-        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-10 xl:gap-14">
-          {/* Copy column */}
-          <div className="space-y-7 lg:col-span-7 lg:pt-4">
-            <Reveal>
-              <p className="inline-flex items-center gap-2.5 rounded-full border border-ink/10 bg-white/70 py-1.5 pl-3 pr-4 shadow-sm">
-                <span className="relative flex h-2 w-2" aria-hidden="true">
-                  <span className="pulse-ring absolute inline-flex h-full w-full rounded-full bg-signal" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-signal" />
-                </span>
-                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-ink-soft font-display">
-                  Austin, TX · Service-area courier
-                </span>
-              </p>
-            </Reveal>
-
-            <Reveal delay={80}>
-              <h1 className="text-[clamp(2.6rem,6.2vw,4.9rem)] leading-[0.98] tracking-tight font-extrabold font-display text-ink">
-                Urgent courier service{' '}
-                <span className="relative whitespace-nowrap text-signal">
-                  in Austin, TX
-                  {/* Hand-drawn underline */}
-                  <svg
-                    viewBox="0 0 220 12"
-                    preserveAspectRatio="none"
-                    className="absolute -bottom-2 left-0 h-2.5 w-full text-signal/45"
-                    aria-hidden="true"
-                  >
-                    <path d="M3 9 C 60 2, 150 2, 217 7" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-                  </svg>
-                </span>
-              </h1>
-            </Reveal>
-
-            <Reveal delay={160}>
-              <p className="max-w-xl text-lg md:text-xl leading-relaxed text-ink-soft">
-                Quick dispatch review when timing matters.
-              </p>
-              <p className="mt-3 max-w-xl text-sm md:text-base leading-relaxed text-ink-soft/85">
-                Request same-day, hot shot, line-down, airport recovery, air hand carry, legal-document, secure-item, or recurring courier service originating in the Austin metro. Dispatch confirms availability, pickup timing, vehicle, route, handling, custody, access, and any applicable coverage for each accepted job.
-              </p>
-            </Reveal>
-
-            <Reveal delay={240} className="flex flex-wrap gap-3 pt-1">
-              <a
-                href="#quick-quote-form"
-                onClick={focusQuoteForm}
-                className="group inline-flex min-h-12 items-center gap-2 bg-signal hover:bg-signal-strong text-white font-bold uppercase tracking-wider text-xs md:text-sm px-7 py-3.5 rounded-full transition-all duration-300 hover:-translate-y-px shadow-[0_18px_34px_-14px_rgba(232,73,15,0.6)]"
-              >
-                Request a job review
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </a>
-              <a
-                href="tel:+15129104938"
-                className="group inline-flex min-h-12 items-center gap-2 bg-white/80 border border-ink/12 hover:border-ink/30 text-ink font-bold uppercase tracking-wider text-xs md:text-sm px-6 py-3.5 rounded-full transition-all duration-300"
-              >
-                <Phone className="h-4 w-4 text-signal" />
-                Call dispatch
-              </a>
-              <a
-                href="sms:+15129104938"
-                className="group inline-flex min-h-12 items-center gap-2 bg-white/80 border border-ink/12 hover:border-ink/30 text-ink font-bold uppercase tracking-wider text-xs md:text-sm px-6 py-3.5 rounded-full transition-all duration-300"
-              >
-                <MessageSquare className="h-4 w-4 text-signal" />
-                Text dispatch
-              </a>
-            </Reveal>
-
-            {/* Animated route diagram */}
-            <Reveal delay={320} className="hidden sm:block max-w-xl pt-4" aria-hidden="true">
-              <div className="relative">
-                <svg viewBox="0 0 520 96" className="w-full" fill="none">
-                  {/* Pickup node */}
-                  <circle cx="24" cy="64" r="14" fill="#E8490F" opacity="0.14" />
-                  <circle cx="24" cy="64" r="6" fill="#E8490F" />
-                  {motionAllowed && (
-                    <circle cx="24" cy="64" r="6" fill="#E8490F" className="pulse-ring" style={{ transformBox: 'fill-box' }} />
-                  )}
-                  {/* Route */}
-                  <path d={ROUTE_PATH} stroke="#16181D" strokeOpacity="0.16" strokeWidth="2.5" strokeLinecap="round" />
-                  <path d={ROUTE_PATH} stroke="#E8490F" strokeWidth="2.5" strokeLinecap="round" className="route-dash" />
-                  {/* Destination node */}
-                  <rect x="488" y="32" width="17" height="17" rx="4" fill="#16181D" />
-                  <rect x="493" y="37" width="7" height="7" rx="1.5" fill="#FAF6EE" />
-                  {/* Traveling courier dot */}
-                  {motionAllowed && (
-                    <circle r="5" fill="#16181D" stroke="#FAF6EE" strokeWidth="2">
-                      <animateMotion dur="7s" repeatCount="indefinite" rotate="auto" path={ROUTE_PATH} />
-                    </circle>
-                  )}
-                </svg>
-                <div className="mt-1 flex justify-between text-[10px] font-bold uppercase tracking-[0.2em] font-display text-ink-soft/75">
-                  <span>Pickup · Austin metro</span>
-                  <span>Destination · confirmed per job</span>
-                </div>
-              </div>
-            </Reveal>
-          </div>
-
-          {/* Form column */}
-          <Reveal delay={200} className="lg:col-span-5">
-            <div id="quick-quote-form" className="scroll-mt-28">
-              <QuoteForm sourceName="Austin Main Page" routeId="" pageType="main" />
+      <div className="relative z-10 mx-auto flex h-full max-w-[1536px] items-end px-5 pb-10 sm:px-8 sm:pb-12 lg:items-center lg:px-10 lg:pb-0">
+        <div className="hero-copy max-w-[760px] text-white">
+          <h1 id="hero-heading" className="display-face text-[clamp(3.2rem,7vw,6rem)] uppercase leading-[0.82] text-white">
+            <span className="block">Courier</span>
+            <span className="block">service.</span>
+            <span className="block">Austin &amp;</span>
+            <span className="block">beyond.</span>
+          </h1>
+          <p className="mt-6 max-w-[470px] text-[17px] font-medium leading-[1.45] text-white sm:text-[19px]">
+            Same-day delivery, expedited freight, and scheduled routes from Austin.
+          </p>
+          <div className="mt-6 flex flex-wrap items-center gap-5">
+            <a href="#quick-quote-form" onClick={focusQuoteForm} className="inline-flex min-h-12 items-center gap-2 rounded-[5px] bg-white px-6 py-3 text-sm font-bold text-ink transition-colors hover:bg-signal hover:text-white">
+              Get a quote
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+            <div className="hidden items-center gap-5 lg:flex" aria-label="Call or text Speedy Bat Couriers">
+              <a href="tel:+15129104938" className="inline-flex min-h-12 items-center border-b border-white/70 text-sm font-bold text-white hover:border-white">Call us</a>
+              <a href="sms:+15129104938" className="inline-flex min-h-12 items-center border-b border-white/70 text-sm font-bold text-white hover:border-white">Text us</a>
             </div>
-          </Reveal>
+          </div>
         </div>
       </div>
+
+      <span className="absolute bottom-3 right-4 z-10 bg-ink/85 px-2 py-1 text-[10px] font-medium tracking-wide text-white">Illustrative image</span>
     </section>
   );
 };

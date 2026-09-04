@@ -1,0 +1,16 @@
+# Speedy Bat homepage concept prompt
+
+This concept was generated with the built-in image generation tool. It is a design reference with illustrative imagery, not a production website screenshot.
+
+```text
+Use case: ui-mockup
+Create a polished, high fidelity desktop website design concept for Speedy Bat Couriers, an Austin-based courier business. This is a NEW original design concept inspired by the visual language of United Carriers: monumental dense geometric uppercase grotesk typography, cinematic full-bleed transport imagery, black and white sections, cobalt blue small accents, confident spacious asymmetric composition. The user explicitly selected United Carriers as visual direction.
+Create one landscape image, approximately 1536 x 1024, showing a desktop website top viewport and beginning of the next section, flat straight-on screenshot with no browser chrome, no laptop, no perspective.
+Composition: slim white navigation bar at top 85px, bold small black wordmark 'SPEEDY BAT' with smaller 'COURIERS' below at left. Nav at right reads 'Services' 'Service area' 'About', then '(512) 910-4938' and compact black button 'Get a quote'.
+Large 650px-tall full-bleed photographic hero: a dramatic overhead oblique photograph of a single ordinary unbranded white compact delivery van on a real-looking central Texas paved road, dry limestone shoulders and live oak trees, late afternoon sun, natural textured asphalt. This is courier-scale ground transport, not a semitrailer, ocean ship, warehouse fleet or aircraft. Van at right third, left third road and landscape dark enough for clear text. The photography must be cinematic and memorable and cover the whole hero. Do not draw a route UI or add fake tracking.
+Very large tightly set block geometric sans-serif type in white occupying left half, with exact wording on four lines: 'COURIER' 'SERVICE.' 'AUSTIN &' 'BEYOND.' Weight 800, broad squared letterforms, not italic, no rounded playful type. Small copy below the headline: 'Same-day delivery, expedited freight and scheduled routes from Austin.' Compact white filled button 'Get a quote' followed by plain white text 'Call or text us'. No enormous form covering photo.
+Below hero a white spacious section: small eyebrow at far left 'OUR SERVICES'. Large black two-line heading offset toward center 'WHAT DO YOU' 'NEED TO MOVE?' Small black right-side line 'From documents and parcels to urgent parts and freight.' Show only a glimpse of clean photographic service columns at bottom, not icon bubbles.
+Palette white #FFFFFF, almost black #101116, cobalt #244CE8 as small accents. Typography and exact layout carry polish. Buttons modest rounded 4px corners except no giant pills. Clean crisp editorial grid. Do not recreate any United Carriers logo, text, images, or branded vehicles. No fake claims, statistics, testimonials, tracking portal, guaranteed timing, 24/7 availability, or made-up offices. Do not include decorative gradients, cards everywhere, warm cream, orange, hand-drawn underlines, glowing objects, or playful clipart.
+Place a tiny unobtrusive note at bottom edge 'Design concept · Illustrative imagery' so synthetic photography cannot be mistaken for actual company photography. All exact text must be legible and correctly spelled.
+```
+

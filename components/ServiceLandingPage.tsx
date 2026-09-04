@@ -1,277 +1,133 @@
 import React, { useState } from 'react';
-import {
-  Activity,
-  ArrowRight,
-  Briefcase,
-  Calendar,
-  CheckCircle,
-  Clock,
-  Cpu,
-  EyeOff,
-  FileText,
-  Globe,
-  MapPin,
-  Minus,
-  Plane,
-  Plus,
-  Shield,
-  Truck
-} from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Minus, Plus } from 'lucide-react';
 import { ServiceData } from '../types';
 import { services } from '../data/services';
 import { QuoteForm } from './QuoteForm';
+import { Reveal } from './Reveal';
 import { scrollToElement } from '../utils/scrollHelper';
 
 interface ServiceLandingPageProps {
   service: ServiceData;
 }
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  Activity,
-  Briefcase,
-  Calendar,
-  Clock,
-  Cpu,
-  EyeOff,
-  FileText,
-  Globe,
-  MapPin,
-  Plane,
-  Shield,
-  Truck
-};
-
 export const ServiceLandingPage: React.FC<ServiceLandingPageProps> = ({ service }) => {
-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
-  const relatedServices = service.relatedServiceIds
-    .map(id => services[id])
-    .filter((related): related is ServiceData => Boolean(related));
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const relatedServices = service.relatedServiceIds.map(id => services[id]).filter(Boolean);
 
   const focusQuoteForm = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
-    scrollToElement('quick-quote-form');
-    document.getElementById('fullName')?.focus({ preventScroll: true });
+    scrollToElement('service-quote');
+    window.setTimeout(() => document.getElementById('pickupZip')?.focus({ preventScroll: true }), 350);
   };
 
   return (
-    <main className="relative pt-24 pb-16 min-h-screen bg-obsidian">
-      <div className="absolute inset-0 opacity-[0.02] bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
-
-      <div className="container mx-auto px-6 relative z-10">
-        <section className="py-8 lg:py-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start" aria-labelledby="service-heading">
-          <div className="lg:col-span-7 space-y-6">
-            <a href="/services" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-red-500 hover:text-red-400 font-display">
-              <span aria-hidden="true">&larr;</span>
-              All courier services
-            </a>
-            <div className="space-y-4">
-              <h1 id="service-heading" className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.08] tracking-tight font-display">
-                {service.name}
-              </h1>
-              <p className="text-slate-300 text-xl sm:text-2xl font-light leading-relaxed">
-                {service.tagline}
-              </p>
-            </div>
-
-            <div className="glass-panel p-6 rounded-2xl border border-white/[0.04] max-w-2xl space-y-4">
-              <p className="text-slate-300 font-light leading-relaxed text-sm md:text-base">
-                {service.overview}
-              </p>
-              <p className="text-slate-400 text-sm leading-relaxed border-l-2 border-red-500/60 pl-4">
-                Availability, pickup timing, vehicle, route, handling, custody documentation, airport or facility access, and any applicable coverage are confirmed by dispatch for each job.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-3">
-              <a
-                href="#quick-quote-form"
-                onClick={focusQuoteForm}
-                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 border border-red-500/20 text-white font-bold uppercase tracking-wider text-xs md:text-sm px-6 py-4 rounded-full shadow-lg shadow-red-950/30 transition-all inline-flex items-center gap-2 font-display"
-              >
-                Request dispatch review
-                <ArrowRight className="h-4 w-4" />
-              </a>
-              <a href="tel:+15129104938" className="bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.05] text-slate-200 font-bold uppercase tracking-wider text-xs md:text-sm px-6 py-4 rounded-full transition-colors font-display">
-                Call (512) 910-4938
-              </a>
-              <a href="sms:+15129104938" className="bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.05] text-slate-200 font-bold uppercase tracking-wider text-xs md:text-sm px-6 py-4 rounded-full transition-colors font-display">
-                Text dispatch
-              </a>
-            </div>
+    <main className="mt-[76px] bg-white lg:mt-[84px]">
+      <section className="bg-ink py-16 text-white md:py-24" aria-labelledby="service-heading">
+        <div className="mx-auto grid max-w-[1536px] gap-10 px-5 sm:px-8 md:grid-cols-12 md:items-end lg:px-10">
+          <div className="md:col-span-8">
+            <a href="/services" className="inline-flex min-h-11 items-center text-sm font-bold text-white/65 underline decoration-white/30 underline-offset-4 hover:text-white">All services</a>
+            <h1 id="service-heading" className="display-face mt-5 max-w-5xl text-[clamp(3.2rem,7.2vw,6rem)] uppercase leading-[0.84] text-white">{service.headline}</h1>
           </div>
+          <div className="md:col-span-4">
+            <p className="max-w-lg text-[18px] leading-relaxed text-white/75">{service.summary}</p>
+            <a href="#service-quote" onClick={focusQuoteForm} className="mt-7 inline-flex min-h-12 items-center gap-2 rounded-[5px] bg-signal px-6 py-3 text-sm font-bold text-white hover:bg-white hover:text-ink">
+              {service.cta}
+              <ArrowDown className="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+      </section>
 
-          <div className="lg:col-span-5" id="quick-quote-form">
+      <section className="py-16 md:py-24" aria-labelledby="good-for-heading">
+        <div className="mx-auto grid max-w-[1536px] gap-10 px-5 sm:px-8 md:grid-cols-12 lg:px-10">
+          <h2 id="good-for-heading" className="display-face text-4xl uppercase leading-none text-ink md:col-span-4 md:text-6xl">Good for</h2>
+          <ul className="divide-y divide-ink/20 border-y border-ink/20 md:col-span-7 md:col-start-6">
+            {service.goodFor.map((item, index) => (
+              <li key={item} className="grid grid-cols-[2rem_1fr] gap-4 py-5 text-[18px] font-semibold leading-snug text-ink">
+                <span className="text-sm font-bold text-signal">{index + 1}</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <figure className="image-frame m-0 h-[52svh] min-h-[380px] max-h-[720px]">
+        <img src={service.image} alt={service.imageAlt} width="1536" height="1024" loading="lazy" decoding="async" className="h-full w-full object-cover" />
+        <figcaption className="absolute bottom-4 right-5 bg-ink/75 px-2 py-1 text-[9px] uppercase tracking-[0.14em] text-white">Illustrative image</figcaption>
+      </figure>
+
+      <section className="bg-cream py-20 md:py-28" aria-labelledby="service-process-heading">
+        <div className="mx-auto grid max-w-[1536px] gap-10 px-5 sm:px-8 md:grid-cols-12 md:items-start lg:px-10">
+          <h2 id="service-process-heading" className="display-face max-w-4xl text-[clamp(3rem,6vw,5.5rem)] uppercase leading-[0.87] text-ink md:col-span-5">How it works</h2>
+          <Reveal className="border-t border-ink/30 pt-6 md:col-span-6 md:col-start-7">
+            <p className="max-w-2xl text-[clamp(1.25rem,2.1vw,1.75rem)] font-semibold leading-relaxed text-ink">{service.howItWorks}</p>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="bg-white py-20 md:py-28">
+        <div className="mx-auto grid max-w-[1536px] gap-12 px-5 sm:px-8 md:grid-cols-12 lg:px-10">
+          <div className="border-t border-ink/25 pt-5 md:col-span-5">
+            <h2 className="display-face text-4xl uppercase leading-none text-ink">What to send</h2>
+            <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-ink-soft">{service.whatToSend}</p>
+          </div>
+          <div className="border-t border-ink/25 pt-5 md:col-span-5 md:col-start-8">
+            <h2 className="display-face text-4xl uppercase leading-none text-ink">Before you book</h2>
+            <p className="mt-5 max-w-xl text-[17px] leading-relaxed text-ink-soft">{service.beforeYouBook}</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-ink py-20 text-white md:py-28" aria-labelledby="service-faq-heading">
+        <div className="mx-auto grid max-w-[1536px] gap-10 px-5 sm:px-8 md:grid-cols-12 lg:px-10">
+          <h2 id="service-faq-heading" className="display-face text-[clamp(3rem,6vw,5.5rem)] uppercase leading-[0.87] text-white md:col-span-5">Service questions</h2>
+          <div className="border-t border-white/25 md:col-span-6 md:col-start-7">
+            {service.faq.map((item, index) => {
+              const isOpen = openFaqIndex === index;
+              return (
+                <article key={item.question} className="border-b border-white/25">
+                  <h3>
+                    <button id={`service-faq-button-${index}`} type="button" onClick={() => setOpenFaqIndex(isOpen ? null : index)} className="flex min-h-20 w-full items-center justify-between gap-5 py-5 text-left text-[17px] font-bold text-white hover:text-signal" aria-expanded={isOpen} aria-controls={`service-faq-panel-${index}`}>
+                      <span>{item.question}</span>
+                      {isOpen ? <Minus className="h-5 w-5 shrink-0" aria-hidden="true" /> : <Plus className="h-5 w-5 shrink-0" aria-hidden="true" />}
+                    </button>
+                  </h3>
+                  <div id={`service-faq-panel-${index}`} className={`accordion-panel ${isOpen ? 'open' : ''}`} role="region" aria-labelledby={`service-faq-button-${index}`} hidden={!isOpen}>
+                    <div><p className="max-w-2xl pb-6 text-[16px] leading-relaxed text-white/70">{item.answer}</p></div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-16 md:py-20" aria-labelledby="related-services-heading">
+        <div className="mx-auto max-w-[1536px] px-5 sm:px-8 lg:px-10">
+          <h2 id="related-services-heading" className="text-sm font-bold uppercase tracking-[0.16em] text-ink-soft">Related services</h2>
+          <div className="mt-5 grid border-t border-ink/20 md:grid-cols-3">
+            {relatedServices.map(related => (
+              <a key={related.id} href={`/${related.id}`} className="group flex min-h-28 items-center justify-between gap-5 border-b border-ink/20 py-5 text-ink md:border-r md:px-5 md:first:pl-0 md:last:border-r-0">
+                <span className="display-face text-xl uppercase leading-none group-hover:text-signal">{related.name}</span>
+                <ArrowUpRight className="h-5 w-5 shrink-0" />
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="service-quote" className="scroll-mt-24 bg-signal py-16 md:py-24" aria-labelledby="service-quote-heading">
+        <div className="mx-auto grid max-w-[1536px] gap-10 px-5 sm:px-8 lg:grid-cols-12 lg:px-10">
+          <div className="text-white lg:col-span-5 lg:pt-3">
+            <h2 id="service-quote-heading" className="display-face text-[clamp(3rem,6vw,5.5rem)] uppercase leading-[0.87] text-white">{service.cta}</h2>
+            <p className="mt-6 max-w-lg text-[18px] leading-relaxed text-white/85">Share the route, deadline, and item size. We’ll follow up with availability and price.</p>
+          </div>
+          <div className="lg:col-span-7">
             <QuoteForm sourceName={service.name} routeId={service.id} pageType="service" />
           </div>
-        </section>
-
-        <section className="py-16 border-t border-white/[0.04]" aria-labelledby="eligibility-heading">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <div className="glass-panel p-7 rounded-2xl">
-              <h2 id="eligibility-heading" className="text-xl font-extrabold text-white uppercase tracking-wider font-display mb-5">
-                Eligibility
-              </h2>
-              <ul className="space-y-4">
-                {service.eligibility.map(item => (
-                  <li key={item} className="flex items-start gap-3 text-slate-300 text-sm leading-relaxed">
-                    <CheckCircle className="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="glass-panel p-7 rounded-2xl">
-              <h2 className="text-xl font-extrabold text-white uppercase tracking-wider font-display mb-5">
-                Limits to know first
-              </h2>
-              <ul className="space-y-4">
-                {service.limits.map(item => (
-                  <li key={item} className="flex items-start gap-3 text-slate-300 text-sm leading-relaxed">
-                    <span className="text-red-500 font-bold" aria-hidden="true">—</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16 border-t border-white/[0.04]" aria-labelledby="process-heading">
-          <div className="max-w-5xl mx-auto space-y-10">
-            <div className="text-center space-y-3">
-              <h2 id="process-heading" className="text-2xl sm:text-4xl font-extrabold text-white uppercase tracking-wider font-display">
-                How this service works
-              </h2>
-              <p className="text-slate-400 text-sm max-w-2xl mx-auto leading-relaxed">
-                The exact job configuration is decided from the request—not inferred from a generic service label.
-              </p>
-            </div>
-            <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {service.process.map((step, index) => (
-                <li key={step} className="glass-panel p-6 rounded-2xl">
-                  <div className="text-red-500 text-sm font-black font-display mb-3">0{index + 1}</div>
-                  <p className="text-slate-300 text-sm leading-relaxed">{step}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-
-        <section className="py-16 border-t border-white/[0.04]" aria-labelledby="capabilities-heading">
-          <div className="max-w-5xl mx-auto space-y-10">
-            <div className="text-center space-y-3">
-              <h2 id="capabilities-heading" className="text-2xl sm:text-4xl font-extrabold text-white uppercase tracking-wider font-display">
-                Request scope
-              </h2>
-              <p className="text-slate-400 text-sm max-w-2xl mx-auto leading-relaxed">
-                These are requests dispatch can evaluate. They are not blanket promises of availability or acceptance.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {service.features.map(feature => {
-                const Icon = iconMap[feature.iconName] || Shield;
-                return (
-                  <article key={feature.title} className="glass-panel p-7 rounded-2xl">
-                    <div className="bg-red-950/20 border border-red-500/20 w-11 h-11 flex items-center justify-center mb-5 rounded-xl">
-                      <Icon className="text-red-500 h-5 w-5" />
-                    </div>
-                    <h3 className="text-base font-bold text-white uppercase mb-2 tracking-wider font-display">{feature.title}</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed">{feature.description}</p>
-                  </article>
-                );
-              })}
-            </div>
-            <div className="glass-panel p-7 rounded-2xl max-w-4xl mx-auto">
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {service.capabilities.map(capability => (
-                  <li key={capability} className="flex items-start gap-3 text-slate-300 text-sm leading-relaxed">
-                    <CheckCircle className="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
-                    <span>{capability}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16 border-t border-white/[0.04]" aria-labelledby="exceptions-heading">
-          <div className="max-w-4xl mx-auto glass-panel p-7 md:p-9 rounded-2xl">
-            <h2 id="exceptions-heading" className="text-xl sm:text-2xl font-extrabold text-white uppercase tracking-wider font-display mb-5">
-              Exceptions and decision points
-            </h2>
-            <ul className="space-y-4">
-              {service.exceptions.map(item => (
-                <li key={item} className="flex items-start gap-3 text-slate-300 text-sm leading-relaxed">
-                  <span className="text-red-500 font-bold" aria-hidden="true">—</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        <section className="py-16 border-t border-white/[0.04]" aria-labelledby="service-faq-heading">
-          <div className="max-w-3xl mx-auto space-y-8">
-            <div className="text-center space-y-3">
-              <h2 id="service-faq-heading" className="text-2xl sm:text-4xl font-extrabold text-white uppercase tracking-wider font-display">
-                Service questions
-              </h2>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                Answers state the conditions that matter before dispatch can accept a job.
-              </p>
-            </div>
-            <div className="space-y-3">
-              {service.faq.map((item, index) => {
-                const isOpen = openFaqIndex === index;
-                return (
-                  <article key={item.question} className="glass-panel rounded-2xl overflow-hidden">
-                    <h3>
-                      <button
-                        type="button"
-                        onClick={() => setOpenFaqIndex(isOpen ? null : index)}
-                        className="w-full px-6 py-5 flex justify-between items-center text-left text-white hover:text-red-400 font-display font-bold uppercase text-xs sm:text-sm tracking-wider cursor-pointer"
-                        aria-expanded={isOpen}
-                      >
-                        <span>{item.question}</span>
-                        {isOpen ? <Minus className="h-4 w-4 text-red-500 shrink-0 ml-4" /> : <Plus className="h-4 w-4 text-red-500 shrink-0 ml-4" />}
-                      </button>
-                    </h3>
-                    <div className={isOpen ? 'border-t border-white/[0.04]' : 'hidden'}>
-                      <p className="p-6 text-slate-400 text-sm leading-relaxed">{item.answer}</p>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16 border-t border-white/[0.04]" aria-labelledby="related-services-heading">
-          <div className="max-w-5xl mx-auto space-y-8">
-            <div className="text-center space-y-3">
-              <h2 id="related-services-heading" className="text-2xl font-extrabold text-white uppercase tracking-wider font-display">
-                Related decisions
-              </h2>
-              <p className="text-slate-400 text-sm">Compare adjacent service types or check Austin pickup coverage.</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {relatedServices.map(related => (
-                <a key={related.id} href={`/${related.id}`} className="glass-panel p-5 rounded-xl text-slate-300 hover:text-white border border-white/[0.04] hover:border-red-500/20 transition-colors">
-                  <span className="block text-sm font-bold uppercase tracking-wider font-display mb-2">{related.name}</span>
-                  <span className="text-xs text-slate-500">Review eligibility and limits <span aria-hidden="true">→</span></span>
-                </a>
-              ))}
-              <a href="/service-areas" className="glass-panel p-5 rounded-xl text-slate-300 hover:text-white border border-white/[0.04] hover:border-red-500/20 transition-colors">
-                <span className="block text-sm font-bold uppercase tracking-wider font-display mb-2">Austin service areas</span>
-                <span className="text-xs text-slate-500">Pickup versus destination coverage <span aria-hidden="true">→</span></span>
-              </a>
-            </div>
-            <p className="text-center text-xs text-slate-500">
-              Reviewed by Speedy Bat Operations · <time dateTime={service.lastReviewed}>August 12, 2026</time>
-            </p>
-          </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </main>
   );
 };

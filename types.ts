@@ -23,10 +23,9 @@ export interface ServiceFAQ {
 }
 
 export type ServiceGroup =
-  | 'Urgent ground'
-  | 'Air and airport'
-  | 'Secure and legal'
-  | 'Recurring';
+  | 'Local & direct'
+  | 'Urgent freight'
+  | 'Airport & specialty';
 
 export interface ServiceData {
   id: string;
@@ -34,19 +33,17 @@ export interface ServiceData {
   group: ServiceGroup;
   title: string;
   metaDescription: string;
-  tagline: string;
-  overview: string;
-  eligibility: string[];
-  limits: string[];
-  process: string[];
-  exceptions: string[];
-  features: ServiceFeature[];
-  capabilities: string[];
+  headline: string;
+  summary: string;
+  goodFor: string[];
+  howItWorks: string;
+  whatToSend: string;
+  beforeYouBook: string;
+  cta: string;
+  image: string;
+  imageAlt: string;
   faq: ServiceFAQ[];
   relatedServiceIds: string[];
-  claimIds: string[];
-  lastReviewed: string;
-  flagship?: boolean;
 }
 
 export type CoveragePortfolioAction = 'redirect' | 'retain';

@@ -1,10 +1,5 @@
 @import "tailwindcss";
 
-/* ──────────────────────────────────────────────
-   SELF-HOSTED FONTS
-   Variable fonts covering their full weight range from one file each.
-   ────────────────────────────────────────────── */
-
 @font-face {
   font-family: 'DM Sans';
   font-style: normal;
@@ -14,212 +9,115 @@
 }
 
 @font-face {
-  font-family: 'Outfit';
+  font-family: 'Archivo';
   font-style: normal;
-  font-weight: 300 900;
+  font-weight: 800 900;
+  font-stretch: 125%;
   font-display: swap;
-  src: url('/fonts/outfit-variable.woff2') format('woff2');
+  src: url('/fonts/archivo-expanded-latin.woff2') format('woff2');
 }
-
-/* ──────────────────────────────────────────────
-   DAYLIGHT DISPATCH — Theme Configuration
-   Warm paper light theme, deep ink contrast sections,
-   safety-orange urgency accent, editorial motion.
-   ────────────────────────────────────────────── */
 
 @theme {
-  /* Paper foundation */
-  --color-paper: #faf6ee;
-  --color-cream: #f2ebdd;
-  --color-parchment: #e9e0cd;
-
-  /* Ink foundation (contrast sections, footer) */
-  --color-ink: #16181d;
-  --color-ink-deep: #101216;
-  --color-ink-soft: #3c4048;
-
-  /* Signal orange (courier urgency) */
-  --color-signal: #e8490f;
-  --color-signal-strong: #c93b08;
-  --color-signal-tint: #fdeae2;
-
-  /* Support */
-  --color-moss: #3f6212;
-
-  /* Typography */
+  --color-paper: #ffffff;
+  --color-cream: #f1f2f4;
+  --color-parchment: #dfe2e8;
+  --color-ink: #101116;
+  --color-ink-deep: #090a0d;
+  --color-ink-soft: #565b64;
+  --color-signal: #244ce8;
+  --color-signal-strong: #1738bd;
+  --color-signal-tint: #e9edff;
+  --color-moss: #237a45;
   --font-family-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Archivo', 'Arial Black', ui-sans-serif, system-ui, sans-serif;
 }
 
-/* ──────────────────────────────────────────────
-   Base Styles
-   ────────────────────────────────────────────── */
+:root {
+  color-scheme: light;
+  font-synthesis: none;
+}
+
+html {
+  background: #ffffff;
+  scroll-behavior: smooth;
+}
 
 body {
-  background-color: #faf6ee;
-  color: #16181d;
+  margin: 0;
+  min-width: 320px;
+  background: #ffffff;
+  color: #101116;
+  font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Custom scrollbar — warm tones */
+::selection {
+  background: #244ce8;
+  color: #ffffff;
+}
+
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f2ebdd;
+  background: #f1f2f4;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cdc3ad;
-  border-radius: 9999px;
+  background: #9ba1ad;
+  border: 2px solid #f1f2f4;
+  border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #b3a789;
-}
-
-::selection {
-  background: rgba(232, 73, 15, 0.18);
-  color: #16181d;
+  background: #565b64;
 }
 
 :focus-visible {
-  outline: 2px solid #e8490f;
+  outline: 3px solid #244ce8;
   outline-offset: 3px;
   border-radius: 4px;
 }
 
-@media (max-width: 767px) {
-  button,
-  input,
-  select,
-  summary {
-    min-height: 44px;
-  }
+a {
+  text-underline-offset: 0.2em;
 }
 
-/* ──────────────────────────────────────────────
-   SCROLL REVEAL SYSTEM
-   Prerendered HTML renders fully visible; the Reveal
-   component opts elements in after hydration so
-   no-JS visitors and crawlers always see content.
-   ────────────────────────────────────────────── */
-
-.reveal-init {
-  opacity: 0;
-  transform: translateY(26px);
-  transition:
-    opacity 0.7s ease,
-    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+.display-face {
+  font-family: 'Archivo', 'Arial Black', ui-sans-serif, system-ui, sans-serif;
+  font-weight: 900;
+  font-stretch: 125%;
+  letter-spacing: -0.045em;
 }
-
-.reveal-init.reveal-in {
-  opacity: 1;
-  transform: none;
-}
-
-/* ──────────────────────────────────────────────
-   MARQUEE TICKER — infinite horizontal drift
-   ────────────────────────────────────────────── */
-
-@keyframes marquee-drift {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-.marquee-track {
-  animation: marquee-drift 36s linear infinite;
-}
-
-.marquee-track:hover {
-  animation-play-state: paused;
-}
-
-/* ──────────────────────────────────────────────
-   ROUTE LINE — dashed path flow + courier dot
-   ────────────────────────────────────────────── */
-
-@keyframes route-dash {
-  to { stroke-dashoffset: -28; }
-}
-
-.route-dash {
-  stroke-dasharray: 10 12;
-  animation: route-dash 1.6s linear infinite;
-}
-
-@keyframes courier-travel {
-  0% { offset-distance: 0%; opacity: 0; }
-  6% { opacity: 1; }
-  94% { opacity: 1; }
-  100% { offset-distance: 100%; opacity: 0; }
-}
-
-.courier-dot {
-  offset-path: var(--route-path);
-  animation: courier-travel 7s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
-}
-
-@keyframes pulse-ring {
-  0% { transform: scale(0.85); opacity: 0.9; }
-  70% { transform: scale(1.9); opacity: 0; }
-  100% { transform: scale(1.9); opacity: 0; }
-}
-
-.pulse-ring {
-  transform-origin: center;
-  animation: pulse-ring 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-
-@keyframes float-gentle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-.float-gentle {
-  animation: float-gentle 7s ease-in-out infinite;
-}
-
-/* ──────────────────────────────────────────────
-   HEADER — frosted paper on scroll
-   ────────────────────────────────────────────── */
 
 .site-header {
-  background: transparent;
-  transition:
-    background-color 0.35s ease,
-    box-shadow 0.35s ease,
-    border-color 0.35s ease;
+  background: rgba(255, 255, 255, 0.98);
   border-bottom: 1px solid transparent;
+  transition: box-shadow 240ms ease, border-color 240ms ease;
 }
 
 .site-header.scrolled {
-  background: rgba(250, 246, 238, 0.86);
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
-  backdrop-filter: blur(14px) saturate(1.4);
-  border-bottom-color: rgba(22, 24, 29, 0.07);
-  box-shadow: 0 10px 30px -18px rgba(22, 24, 29, 0.25);
+  border-bottom-color: #dfe2e8;
+  box-shadow: 0 18px 45px -32px rgba(16, 17, 22, 0.65);
 }
 
-/* Animated nav underline */
 .nav-link {
   position: relative;
 }
 
 .nav-link::after {
-  content: '';
   position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: 6px;
+  right: 0;
+  bottom: 0;
+  left: 0;
   height: 2px;
-  background: #e8490f;
+  content: '';
+  background: #244ce8;
   transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: left;
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-link:hover::after,
@@ -227,139 +125,140 @@ body {
   transform: scaleX(1);
 }
 
-/* ──────────────────────────────────────────────
-   CARD SYSTEM — warm editorial surfaces
-   ────────────────────────────────────────────── */
+.hero-photo {
+  animation: hero-settle 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
 
-.card-lift {
+.hero-copy {
+  animation: headline-reveal 900ms 120ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hero-settle {
+  from {
+    clip-path: inset(0 0 100% 0);
+    transform: scale(1.04);
+  }
+  to {
+    clip-path: inset(0);
+    transform: scale(1);
+  }
+}
+
+@keyframes headline-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.reveal-init {
+  opacity: 0;
+  transform: translateY(18px);
+  clip-path: inset(0 0 14% 0);
   transition:
-    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.45s ease;
+    opacity 620ms ease,
+    transform 720ms cubic-bezier(0.16, 1, 0.3, 1),
+    clip-path 720ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.card-lift:hover {
-  transform: translateY(-6px);
-  box-shadow:
-    0 24px 48px -20px rgba(22, 24, 29, 0.22),
-    0 8px 20px -12px rgba(22, 24, 29, 0.14);
-}
-
-/* ──────────────────────────────────────────────
-   QUOTE FORM CARD
-   ────────────────────────────────────────────── */
-
-.quote-card {
-  background: #ffffff;
-  border: 1px solid rgba(22, 24, 29, 0.09);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    0 30px 60px -24px rgba(22, 24, 29, 0.28),
-    0 12px 24px -16px rgba(22, 24, 29, 0.18);
-  position: relative;
-  overflow: hidden;
-}
-
-.quote-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 5px;
-  background: repeating-linear-gradient(
-    -45deg,
-    #e8490f 0 14px,
-    #16181d 14px 28px
-  );
+.reveal-init.reveal-in {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0);
 }
 
 .field-input {
-  background: #fdfcf9;
-  border: 1px solid rgba(22, 24, 29, 0.14);
-  transition:
-    border-color 0.3s ease,
-    box-shadow 0.3s ease,
-    background-color 0.3s ease;
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid #c9cdd5;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #101116;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.field-input::placeholder {
+  color: #676c75;
 }
 
 .field-input:focus {
-  background: #ffffff;
-  border-color: #e8490f;
-  box-shadow: 0 0 0 4px rgba(232, 73, 15, 0.12);
+  border-color: #244ce8;
+  box-shadow: 0 0 0 3px rgba(36, 76, 232, 0.16);
   outline: none;
 }
 
 .field-input[aria-invalid='true'] {
-  border-color: #dc2626;
-  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1);
+  border-color: #b42318;
+  box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.12);
 }
 
-/* ──────────────────────────────────────────────
-   ACCORDION — smooth height via grid rows
-   ────────────────────────────────────────────── */
+.image-frame {
+  position: relative;
+  overflow: hidden;
+  background: #dfe2e8;
+}
+
+.image-frame img {
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.image-frame:hover img {
+  transform: scale(1.025);
+}
 
 .accordion-panel {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: grid-template-rows 280ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .accordion-panel.open {
   grid-template-rows: 1fr;
 }
 
-.accordion-panel > * {
+.accordion-panel > div {
   overflow: hidden;
 }
 
-/* ──────────────────────────────────────────────
-   PAPER TEXTURE / GRID BACKDROPS
-   ────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  button,
+  input,
+  select,
+  summary,
+  textarea {
+    font-size: 16px;
+  }
 
-.paper-grid {
-  background-image:
-    linear-gradient(to right, rgba(22, 24, 29, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(22, 24, 29, 0.05) 1px, transparent 1px);
-  background-size: 34px 34px;
-  mask-image: radial-gradient(ellipse 90% 80% at 50% 20%, black 30%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 20%, black 30%, transparent 75%);
+  button,
+  select,
+  summary {
+    min-height: 44px;
+  }
 }
-
-.ink-grid {
-  background-image:
-    linear-gradient(to right, rgba(250, 246, 238, 0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(250, 246, 238, 0.045) 1px, transparent 1px);
-  background-size: 34px 34px;
-}
-
-.halftone-fade {
-  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
-}
-
-/* ──────────────────────────────────────────────
-   ACCESSIBILITY — Reduced Motion
-   ────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track,
-  .route-dash,
-  .courier-dot,
-  .pulse-ring,
-  .float-gentle,
-  *[class*="animate-"] {
-    animation: none !important;
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 
   .reveal-init {
     opacity: 1;
     transform: none;
-    transition: none;
-  }
-
-  * {
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+    clip-path: none;
   }
 }

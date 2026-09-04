@@ -28,7 +28,7 @@ export const Reveal: React.FC<RevealProps> = ({ children, delay = 0, className =
     }
 
     element.classList.add('reveal-init');
-    let visible = true;
+    let visible = false;
 
     const observer = new IntersectionObserver(
       entries => {

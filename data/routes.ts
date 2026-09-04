@@ -36,14 +36,14 @@ const staticRoutes: RouteDefinition[] = [
     kind: 'faq',
     label: 'FAQ',
     title: 'Austin Courier FAQ | Speedy Bat',
-    description: 'Answers about Austin pickup eligibility, quotes, timing, direct drive, airport work, hand carry, legal documents, tracking, and sensitive information.'
+    description: 'Answers about Austin pickup eligibility, quotes, timing, direct drive, airport work, delivery updates, legal documents, and sensitive information.'
   },
   {
     slug: 'about',
     kind: 'about',
     label: 'About',
     title: 'About Speedy Bat Couriers | Austin, TX',
-    description: 'Speedy Bat is an Austin-based service-area courier business focused on urgent B2B requests and clear job-specific operating limits.'
+    description: 'Speedy Bat is an Austin-based courier business for same-day delivery, expedited freight, airport recovery, scheduled routes, and specialized courier work.'
   },
   {
     slug: 'privacy',

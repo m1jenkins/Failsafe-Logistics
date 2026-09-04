@@ -1,0 +1,442 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-04T21:00:27Z",
+  "title": "Design System: Speedy Bat Couriers",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "True Paper",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(25% 0 0)",
+          "oklch(35% 0 0)",
+          "oklch(45% 0 0)",
+          "oklch(58% 0 0)",
+          "oklch(70% 0 0)",
+          "oklch(82% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "cream": {
+        "role": "neutral",
+        "displayName": "Cool Soft Gray",
+        "canonical": "#f1f2f4",
+        "tonalRamp": [
+          "oklch(15% 0.003 264.5)",
+          "oklch(25% 0.003 264.5)",
+          "oklch(35% 0.003 264.5)",
+          "oklch(45% 0.003 264.5)",
+          "oklch(58% 0.003 264.5)",
+          "oklch(70% 0.003 264.5)",
+          "oklch(82% 0.003 264.5)",
+          "oklch(95% 0.003 264.5)"
+        ]
+      },
+      "parchment": {
+        "role": "neutral",
+        "displayName": "Rule Gray",
+        "canonical": "#dfe2e8",
+        "tonalRamp": [
+          "oklch(15% 0.009 264.5)",
+          "oklch(25% 0.009 264.5)",
+          "oklch(35% 0.009 264.5)",
+          "oklch(45% 0.009 264.5)",
+          "oklch(58% 0.009 264.5)",
+          "oklch(70% 0.009 264.5)",
+          "oklch(82% 0.009 264.5)",
+          "oklch(95% 0.009 264.5)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Night Ink",
+        "canonical": "#101116",
+        "tonalRamp": [
+          "oklch(15% 0.010 276.4)",
+          "oklch(25% 0.010 276.4)",
+          "oklch(35% 0.010 276.4)",
+          "oklch(45% 0.010 276.4)",
+          "oklch(58% 0.010 276.4)",
+          "oklch(70% 0.010 276.4)",
+          "oklch(82% 0.010 276.4)",
+          "oklch(95% 0.010 276.4)"
+        ]
+      },
+      "ink-deep": {
+        "role": "neutral",
+        "displayName": "Blacktop",
+        "canonical": "#090a0d",
+        "tonalRamp": [
+          "oklch(15% 0.007 270.5)",
+          "oklch(25% 0.007 270.5)",
+          "oklch(35% 0.007 270.5)",
+          "oklch(45% 0.007 270.5)",
+          "oklch(58% 0.007 270.5)",
+          "oklch(70% 0.007 270.5)",
+          "oklch(82% 0.007 270.5)",
+          "oklch(95% 0.007 270.5)"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Dispatch Gray",
+        "canonical": "#565b64",
+        "tonalRamp": [
+          "oklch(15% 0.016 262.3)",
+          "oklch(25% 0.016 262.3)",
+          "oklch(35% 0.016 262.3)",
+          "oklch(45% 0.016 262.3)",
+          "oklch(58% 0.016 262.3)",
+          "oklch(70% 0.016 262.3)",
+          "oklch(82% 0.016 262.3)",
+          "oklch(95% 0.016 262.3)"
+        ]
+      },
+      "signal": {
+        "role": "primary",
+        "displayName": "Dispatch Cobalt",
+        "canonical": "#244ce8",
+        "tonalRamp": [
+          "oklch(15% 0.238 265.9)",
+          "oklch(25% 0.238 265.9)",
+          "oklch(35% 0.238 265.9)",
+          "oklch(45% 0.238 265.9)",
+          "oklch(58% 0.238 265.9)",
+          "oklch(70% 0.238 265.9)",
+          "oklch(82% 0.238 265.9)",
+          "oklch(95% 0.238 265.9)"
+        ]
+      },
+      "signal-strong": {
+        "role": "primary",
+        "displayName": "Pressed Cobalt",
+        "canonical": "#1738bd",
+        "tonalRamp": [
+          "oklch(15% 0.209 265.7)",
+          "oklch(25% 0.209 265.7)",
+          "oklch(35% 0.209 265.7)",
+          "oklch(45% 0.209 265.7)",
+          "oklch(58% 0.209 265.7)",
+          "oklch(70% 0.209 265.7)",
+          "oklch(82% 0.209 265.7)",
+          "oklch(95% 0.209 265.7)"
+        ]
+      },
+      "field-stroke": {
+        "role": "neutral",
+        "displayName": "Field Wire",
+        "canonical": "#c9cdd5",
+        "tonalRamp": [
+          "oklch(15% 0.012 264.5)",
+          "oklch(25% 0.012 264.5)",
+          "oklch(35% 0.012 264.5)",
+          "oklch(45% 0.012 264.5)",
+          "oklch(58% 0.012 264.5)",
+          "oklch(70% 0.012 264.5)",
+          "oklch(82% 0.012 264.5)",
+          "oklch(95% 0.012 264.5)"
+        ]
+      },
+      "field-placeholder": {
+        "role": "neutral",
+        "displayName": "Placeholder Gray",
+        "canonical": "#676c75",
+        "tonalRamp": [
+          "oklch(15% 0.015 262.3)",
+          "oklch(25% 0.015 262.3)",
+          "oklch(35% 0.015 262.3)",
+          "oklch(45% 0.015 262.3)",
+          "oklch(58% 0.015 262.3)",
+          "oklch(70% 0.015 262.3)",
+          "oklch(82% 0.015 262.3)",
+          "oklch(95% 0.015 262.3)"
+        ]
+      },
+      "error": {
+        "role": "tertiary",
+        "displayName": "Error Red",
+        "canonical": "#b42318",
+        "tonalRamp": [
+          "oklch(15% 0.182 29.5)",
+          "oklch(25% 0.182 29.5)",
+          "oklch(35% 0.182 29.5)",
+          "oklch(45% 0.182 29.5)",
+          "oklch(58% 0.182 29.5)",
+          "oklch(70% 0.182 29.5)",
+          "oklch(82% 0.182 29.5)",
+          "oklch(95% 0.182 29.5)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero and page-title statements in the self-hosted expanded Archivo cut."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Major editorial band headings and conversion closers."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Service modules and compact editorial units."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Standard explanations, form help, and policy copy in DM Sans."
+      },
+      "body-large": {
+        "displayName": "Lead Body",
+        "purpose": "Page descriptions and primary supporting statements."
+      },
+      "control": {
+        "displayName": "Control",
+        "purpose": "Buttons, navigation actions, and form labels."
+      },
+      "label": {
+        "displayName": "Editorial Label",
+        "purpose": "Uppercase eyebrows, categories, captions, and compact metadata."
+      }
+    },
+    "shadows": [
+      {
+        "name": "scrolled-header",
+        "value": "0 18px 45px -32px rgba(16, 17, 22, 0.65)",
+        "purpose": "Separates the fixed white header from page content only after scrolling."
+      },
+      {
+        "name": "ticker-edge",
+        "value": "0 18px 36px -24px rgba(22, 24, 29, 0.55)",
+        "purpose": "Grounds the dark service ticker against adjacent photography or paper."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state-standard",
+        "value": "150ms cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "Default button, text-color, border-color, and background-color feedback."
+      },
+      {
+        "name": "field-focus",
+        "value": "180ms ease",
+        "purpose": "Field border and focus-halo changes."
+      },
+      {
+        "name": "nav-underline",
+        "value": "220ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Left-origin underline reveal on desktop navigation links."
+      },
+      {
+        "name": "header-structure",
+        "value": "240ms ease",
+        "purpose": "Scrolled-header border and shadow appearance."
+      },
+      {
+        "name": "accordion",
+        "value": "280ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "FAQ panel grid expansion and collapse."
+      },
+      {
+        "name": "reveal-opacity",
+        "value": "620ms ease",
+        "purpose": "Opacity portion of the general scroll reveal."
+      },
+      {
+        "name": "reveal-transform",
+        "value": "720ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "18px rise and 14% clip release for general scroll reveals."
+      },
+      {
+        "name": "image-hover",
+        "value": "700ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Subtle image scale from 1 to 1.025 on hover."
+      },
+      {
+        "name": "hero-copy",
+        "value": "900ms 120ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Headline rise, fade, and blur-clear after the hero begins."
+      },
+      {
+        "name": "hero-photo",
+        "value": "1200ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Opening photograph clip release and scale settle."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0.01ms",
+        "purpose": "Collapses all animations and transitions while keeping reveal content visible."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The cobalt action for quote requests and form submission.",
+      "html": "<button type=\"button\" class=\"ds-btn-primary\">Request a quote <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></button>",
+      "css": ".ds-btn-primary { display:inline-flex; min-height:48px; align-items:center; justify-content:center; gap:8px; padding:12px 24px; border:0; border-radius:5px; background:var(--color-signal, #244ce8); color:var(--color-paper, #fff); font-family:'DM Sans',ui-sans-serif,system-ui,sans-serif; font-size:14px; line-height:20px; font-weight:700; text-decoration:none; cursor:pointer; transition:color 150ms cubic-bezier(.4,0,.2,1),background-color 150ms cubic-bezier(.4,0,.2,1); } .ds-btn-primary svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; } .ds-btn-primary:hover { background:var(--color-signal-strong, #1738bd); } .ds-btn-primary:focus-visible { outline:3px solid var(--color-signal, #244ce8); outline-offset:3px; } .ds-btn-primary:active { transform:translateY(1px); }"
+    },
+    {
+      "name": "Ink Button",
+      "kind": "button",
+      "refersTo": "button-ink",
+      "description": "The dark filled action used on paper surfaces.",
+      "html": "<button type=\"button\" class=\"ds-btn-ink\">See all services</button>",
+      "css": ".ds-btn-ink { display:inline-flex; min-height:48px; align-items:center; justify-content:center; padding:12px 24px; border:0; border-radius:5px; background:var(--color-ink, #101116); color:var(--color-paper, #fff); font-family:'DM Sans',ui-sans-serif,system-ui,sans-serif; font-size:14px; line-height:20px; font-weight:700; cursor:pointer; transition:background-color 150ms cubic-bezier(.4,0,.2,1); } .ds-btn-ink:hover { background:var(--color-signal, #244ce8); } .ds-btn-ink:focus-visible { outline:3px solid var(--color-signal, #244ce8); outline-offset:3px; } .ds-btn-ink:active { transform:translateY(1px); }"
+    },
+    {
+      "name": "Inverse Button",
+      "kind": "button",
+      "refersTo": "button-inverse",
+      "description": "The white filled action used over photography, ink, or cobalt.",
+      "html": "<button type=\"button\" class=\"ds-btn-inverse\">Get a quote</button>",
+      "css": ".ds-btn-inverse { display:inline-flex; min-height:48px; align-items:center; justify-content:center; padding:12px 24px; border:0; border-radius:5px; background:var(--color-paper, #fff); color:var(--color-ink, #101116); font-family:'DM Sans',ui-sans-serif,system-ui,sans-serif; font-size:14px; line-height:20px; font-weight:700; cursor:pointer; transition:color 150ms cubic-bezier(.4,0,.2,1),background-color 150ms cubic-bezier(.4,0,.2,1); } .ds-btn-inverse:hover { background:var(--color-signal, #244ce8); color:var(--color-paper, #fff); } .ds-btn-inverse:focus-visible { outline:3px solid var(--color-signal, #244ce8); outline-offset:3px; } .ds-btn-inverse:active { transform:translateY(1px); }"
+    },
+    {
+      "name": "Outline Contact Button",
+      "kind": "button",
+      "description": "A secondary Call or Text action on an ink surface.",
+      "html": "<button type=\"button\" class=\"ds-btn-outline\">Call (512) 910-4938</button>",
+      "css": ".ds-btn-outline { display:inline-flex; min-height:48px; align-items:center; justify-content:center; padding:12px 20px; border:1px solid rgba(255,255,255,.35); border-radius:5px; background:transparent; color:#fff; font-family:'DM Sans',ui-sans-serif,system-ui,sans-serif; font-size:14px; line-height:20px; font-weight:700; cursor:pointer; transition:color 150ms cubic-bezier(.4,0,.2,1),background-color 150ms cubic-bezier(.4,0,.2,1),border-color 150ms cubic-bezier(.4,0,.2,1); } .ds-btn-outline:hover { border-color:#fff; background:#fff; color:var(--color-ink, #101116); } .ds-btn-outline:focus-visible { outline:3px solid var(--color-signal, #244ce8); outline-offset:3px; } .ds-btn-outline:active { transform:translateY(1px); }"
+    },
+    {
+      "name": "Quote Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "The labeled 48px field used throughout the public quote form.",
+      "html": "<label class=\"ds-field-label\" for=\"ds-pickup\">Pickup ZIP</label><input class=\"ds-field\" id=\"ds-pickup\" placeholder=\"78701\" inputmode=\"numeric\" />",
+      "css": ".ds-field-label { display:block; margin:0 0 8px; color:var(--color-ink, #101116); font-family:'DM Sans',ui-sans-serif,system-ui,sans-serif; font-size:14px; line-height:20px; font-weight:700; } .ds-field { box-sizing:border-box; width:100%; min-height:48px; padding:12px 14px; border:1px solid var(--color-field-stroke, #c9cdd5); border-radius:5px; background:var(--color-paper, #fff); color:var(--color-ink, #101116); font-family:'DM Sans',ui-sans-serif,system-ui,sans-serif; font-size:16px; line-height:24px; transition:border-color 180ms ease,box-shadow 180ms ease; } .ds-field::placeholder { color:var(--color-field-placeholder, #676c75); } .ds-field:hover { border-color:var(--color-ink-soft, #565b64); } .ds-field:focus { border-color:var(--color-signal, #244ce8); box-shadow:0 0 0 3px rgba(36,76,232,.16); outline:none; } .ds-field[aria-invalid='true'] { border-color:var(--color-error, #b42318); box-shadow:0 0 0 3px rgba(180,35,24,.12); }"
+    },
+    {
+      "name": "Desktop Navigation",
+      "kind": "nav",
+      "description": "The fixed white wordmark, link, contact, and quote-action band.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main navigation\"><a class=\"ds-wordmark\" href=\"#\"><strong>SPEEDY BAT</strong><span>COURIERS</span></a><div class=\"ds-nav-links\"><a class=\"ds-nav-link\" href=\"#\">Services</a><a class=\"ds-nav-link\" href=\"#\">Service area</a><a class=\"ds-nav-link\" href=\"#\">How it works</a><a class=\"ds-nav-link\" href=\"#\">About</a></div><a class=\"ds-nav-cta\" href=\"#\">Get a quote</a></nav>",
+      "css": ".ds-nav { display:flex; min-height:84px; align-items:center; justify-content:space-between; gap:28px; padding:0 40px; border-bottom:1px solid transparent; background:rgba(255,255,255,.98); color:var(--color-ink, #101116); font-family:'DM Sans',ui-sans-serif,system-ui,sans-serif; } .ds-wordmark { display:flex; flex-direction:column; color:inherit; line-height:1; text-decoration:none; } .ds-wordmark strong { font-family:'Archivo','Arial Black',ui-sans-serif,system-ui,sans-serif; font-size:24px; font-weight:900; font-stretch:125%; letter-spacing:-.045em; line-height:.85; } .ds-wordmark span { margin-top:4px; font-size:9px; font-weight:700; letter-spacing:.34em; } .ds-nav-links { display:flex; align-items:center; gap:28px; } .ds-nav-link { position:relative; padding:8px 0; color:inherit; font-size:14px; font-weight:600; text-decoration:none; transition:color 150ms cubic-bezier(.4,0,.2,1); } .ds-nav-link::after { position:absolute; right:0; bottom:0; left:0; height:2px; content:''; background:var(--color-signal, #244ce8); transform:scaleX(0); transform-origin:left; transition:transform 220ms cubic-bezier(.16,1,.3,1); } .ds-nav-link:hover { color:var(--color-signal, #244ce8); } .ds-nav-link:hover::after,.ds-nav-link:focus-visible::after { transform:scaleX(1); } .ds-nav-link:focus-visible,.ds-wordmark:focus-visible,.ds-nav-cta:focus-visible { outline:3px solid var(--color-signal, #244ce8); outline-offset:3px; } .ds-nav-cta { display:inline-flex; min-height:44px; align-items:center; padding:10px 20px; border-radius:5px; background:var(--color-ink, #101116); color:#fff; font-size:14px; font-weight:700; text-decoration:none; } .ds-nav-cta:hover { background:var(--color-signal, #244ce8); }"
+    },
+    {
+      "name": "Service Editorial Module",
+      "kind": "card",
+      "refersTo": "editorial-module",
+      "description": "A square-edged media plate with a rule, display title, and underlined action.",
+      "html": "<article class=\"ds-service\"><div class=\"ds-service-media\"><span>OPERATIONAL IMAGE</span></div><div class=\"ds-service-copy\"><h3>SAME-DAY COURIER</h3><p>Documents, parcels, parts, and supplies delivered across the Austin metro.</p><a href=\"#\">View service <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M7 17 17 7M7 7h10v10\"/></svg></a></div></article>",
+      "css": ".ds-service { width:min(100%,560px); background:var(--color-paper, #fff); color:var(--color-ink, #101116); } .ds-service-media { display:flex; aspect-ratio:16/9; align-items:flex-end; justify-content:flex-end; padding:12px; background:var(--color-parchment, #dfe2e8); color:var(--color-ink-soft, #565b64); font-family:'DM Sans',ui-sans-serif,system-ui,sans-serif; font-size:9px; font-weight:700; letter-spacing:.14em; } .ds-service-copy { margin-top:20px; padding-top:16px; border-top:1px solid rgba(16,17,22,.25); } .ds-service h3 { margin:0; font-family:'Archivo','Arial Black',ui-sans-serif,system-ui,sans-serif; font-size:clamp(22px,2.4vw,36px); font-weight:900; font-stretch:125%; letter-spacing:-.045em; line-height:.95; } .ds-service p { max-width:36rem; margin:12px 0 0; color:var(--color-ink-soft, #565b64); font-family:'DM Sans',ui-sans-serif,system-ui,sans-serif; font-size:16px; line-height:1.625; } .ds-service a { display:inline-flex; align-items:center; gap:6px; margin-top:16px; color:var(--color-ink, #101116); font-family:'DM Sans',ui-sans-serif,system-ui,sans-serif; font-size:14px; font-weight:700; text-underline-offset:4px; } .ds-service a:hover { color:var(--color-signal, #244ce8); } .ds-service a:focus-visible { outline:3px solid var(--color-signal, #244ce8); outline-offset:3px; } .ds-service svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }"
+    },
+    {
+      "name": "Dark Accordion Row",
+      "kind": "custom",
+      "refersTo": "accordion-dark",
+      "description": "The rule-separated question row used in service FAQs.",
+      "html": "<section class=\"ds-accordion\"><button type=\"button\" class=\"ds-accordion-trigger\" aria-expanded=\"true\"><span>Can this be delivered today?</span><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 12h14\"/></svg></button><div class=\"ds-accordion-panel\"><p>Dispatch confirms availability after reviewing the route, deadline, cargo, and vehicle fit.</p></div></section>",
+      "css": ".ds-accordion { max-width:640px; border-top:1px solid rgba(255,255,255,.25); border-bottom:1px solid rgba(255,255,255,.25); background:var(--color-ink, #101116); color:#fff; font-family:'DM Sans',ui-sans-serif,system-ui,sans-serif; } .ds-accordion-trigger { display:flex; width:100%; min-height:80px; align-items:center; justify-content:space-between; gap:20px; padding:20px 0; border:0; background:transparent; color:inherit; font:700 17px/1.35 'DM Sans',ui-sans-serif,system-ui,sans-serif; text-align:left; cursor:pointer; transition:color 150ms cubic-bezier(.4,0,.2,1); } .ds-accordion-trigger:hover { color:var(--color-signal, #244ce8); } .ds-accordion-trigger:focus-visible { outline:3px solid var(--color-signal, #244ce8); outline-offset:3px; } .ds-accordion-trigger svg { width:20px; height:20px; flex:none; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; } .ds-accordion-panel { display:grid; grid-template-rows:1fr; transition:grid-template-rows 280ms cubic-bezier(.16,1,.3,1); } .ds-accordion-panel p { max-width:40rem; margin:0; padding:0 0 24px; color:rgba(255,255,255,.7); font-size:16px; line-height:1.625; }"
+    },
+    {
+      "name": "Quote Band",
+      "kind": "custom",
+      "description": "The signature cobalt conversion band with a square white form panel.",
+      "html": "<section class=\"ds-quote-band\"><div class=\"ds-quote-intro\"><span>GET MOVING</span><h2>GET A COURIER QUOTE</h2><p>Share the route, deadline, and item size.</p></div><div class=\"ds-quote-panel\"><label for=\"ds-route\">Pickup ZIP</label><input id=\"ds-route\" placeholder=\"78701\"/><button type=\"button\">Request a quote</button></div></section>",
+      "css": ".ds-quote-band { display:grid; grid-template-columns:5fr 7fr; gap:48px; padding:64px 40px; background:var(--color-signal, #244ce8); color:#fff; } .ds-quote-intro > span { font:700 11px/1.25 'DM Sans',ui-sans-serif,system-ui,sans-serif; letter-spacing:.18em; } .ds-quote-intro h2 { max-width:560px; margin:20px 0 0; font-family:'Archivo','Arial Black',ui-sans-serif,system-ui,sans-serif; font-size:clamp(48px,6vw,88px); font-weight:900; font-stretch:125%; letter-spacing:-.045em; line-height:.86; } .ds-quote-intro p { margin:24px 0 0; color:rgba(255,255,255,.85); font:400 18px/1.625 'DM Sans',ui-sans-serif,system-ui,sans-serif; } .ds-quote-panel { padding:36px; background:#fff; color:var(--color-ink, #101116); font-family:'DM Sans',ui-sans-serif,system-ui,sans-serif; } .ds-quote-panel label { display:block; margin-bottom:8px; font-size:14px; font-weight:700; } .ds-quote-panel input { box-sizing:border-box; width:100%; min-height:48px; padding:12px 14px; border:1px solid var(--color-field-stroke, #c9cdd5); border-radius:5px; color:var(--color-ink, #101116); font-size:16px; } .ds-quote-panel input:focus { border-color:var(--color-signal, #244ce8); box-shadow:0 0 0 3px rgba(36,76,232,.16); outline:none; } .ds-quote-panel button { width:100%; min-height:48px; margin-top:20px; border:0; border-radius:5px; background:var(--color-signal, #244ce8); color:#fff; font-size:16px; font-weight:700; cursor:pointer; } .ds-quote-panel button:hover { background:var(--color-signal-strong, #1738bd); } .ds-quote-panel button:focus-visible { outline:3px solid var(--color-signal, #244ce8); outline-offset:3px; } @media (max-width:720px) { .ds-quote-band { grid-template-columns:1fr; gap:40px; padding:48px 20px; } .ds-quote-panel { padding:20px; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Cinematic Dispatch Board",
+    "overview": "Speedy Bat treats a small Austin courier with the scale and confidence of transport editorial: broad photographic fields, compressed headlines, decisive color bands, and direct operational language. The visual world feels fast and assured without imitating logistics software or wrapping every idea in a card.\n\nContrast carries the hierarchy. True white, near-black ink, cool soft gray, and cobalt alternate in full-width bands while fine rules organize detail inside an open 12-column frame. Operational photography supplies atmosphere; typography and space keep the composition legible and businesslike.\n\nThe drama always resolves into a clear request path. Controls stay compact, near-square, and accessible; body copy remains calm; movement reveals rather than distracts. This supports the product's central truth: a request begins a dispatch review rather than guaranteeing a booking.",
+    "keyCharacteristics": [
+      "A four-color visual core: true white, near-black ink, cool soft gray, and decisive cobalt.",
+      "Self-hosted expanded Archivo in compressed uppercase display lines; DM Sans for everything read or acted on.",
+      "Open 12-column bands capped at 1536px, with rules and tonal sections instead of card shells.",
+      "Near-square 5px controls with 44–48px touch targets and always-visible focus.",
+      "Clipped, purposeful entry motion with a complete reduced-motion fallback."
+    ],
+    "rules": [
+      {
+        "name": "The Cobalt Means Action Rule",
+        "body": "Use cobalt for primary actions, selected emphasis, small markers, and numbered steps; never wash an ordinary content surface in accent unless it is a deliberate CTA band.",
+        "section": "colors"
+      },
+      {
+        "name": "The Solid Field Rule",
+        "body": "Build contrast with solid white, gray, ink, or cobalt bands. Gradients and tinted glass are outside this visual world.",
+        "section": "colors"
+      },
+      {
+        "name": "The Compressed Headline Rule",
+        "body": "Set Archivo in uppercase, short editorial lines; never use it for paragraph copy or dense controls.",
+        "section": "typography"
+      },
+      {
+        "name": "The Calm Copy Rule",
+        "body": "Let DM Sans carry every qualification, instruction, and field label at comfortable line height; urgency comes from hierarchy, not cramped prose.",
+        "section": "typography"
+      },
+      {
+        "name": "The Open Band Rule",
+        "body": "Build hierarchy with full-width tonal bands and a 12-column inner grid, not isolated card stacks.",
+        "section": "layout"
+      },
+      {
+        "name": "The Quote Comes Early Rule",
+        "body": "On screens below 1024px, place the quote band immediately after the hero; from 1024px upward, place the service gallery before the quote band.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat-by-Default Rule",
+        "body": "Resting surfaces do not float. Use a tonal band or hairline rule first; reserve shadow for sticky or overlapping structure.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Five-Pixel Control Rule",
+        "body": "Buttons, menu triggers, and fields use the same near-square 5px radius; do not turn primary actions into pills.",
+        "section": "shapes"
+      },
+      {
+        "name": "The One Primary Action Rule",
+        "body": "In an action cluster, use one filled button and let Call, Text, or navigation alternatives use outlines or underlined text.",
+        "section": "components"
+      },
+      {
+        "name": "The Reveal, Don't Perform Rule",
+        "body": "Motion may uncover content, confirm hover, or clarify expansion; it must not compete with the route and quote tasks.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do alternate solid paper, soft-gray, ink, and cobalt bands to create a clear editorial sequence.",
+      "Do keep expanded Archivo headlines short, uppercase, tightly tracked, and intentionally wrapped.",
+      "Do use DM Sans for body copy, form content, navigation, and every qualification that must be read carefully.",
+      "Do preserve the 1536px open canvas, 12-column desktop splits, and 20px/32px/40px responsive gutters.",
+      "Do keep primary controls at a 5px radius with 44–48px minimum height and a visible cobalt focus treatment.",
+      "Do place the quote band directly after the hero on mobile and after the service gallery on large screens.",
+      "Do use operational photography in square-edged editorial crops and label illustrative imagery honestly."
+    ],
+    "donts": [
+      "Don't convert service modules, quote panels, or content bands into rounded software cards.",
+      "Don't use pill buttons, large corner radii, glass effects, gradients, or decorative shadows.",
+      "Don't spread cobalt across ordinary content; reserve it for actions, markers, numbering, focus, and deliberate CTA bands.",
+      "Don't use Archivo for paragraph copy or DM Sans as a substitute for the expanded display voice.",
+      "Don't remove the mobile Call/Text rail or push the mobile quote below the full service gallery.",
+      "Don't hide keyboard focus or let entry motion override the reduced-motion fallback."
+    ]
+  }
+}
